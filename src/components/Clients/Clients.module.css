@@ -1,0 +1,27 @@
+.clients {
+    max-width: 1100px;
+    text-align: center;
+    margin: 20px auto 0;
+}
+
+.table_header_item {
+    border: 1px solid #000;
+}
+
+.tech {
+    color: #333
+}
+
+.buttons {
+    margin-left: -30px;
+    padding-top: 12px;
+}
+
+.buttons li{
+    display: inline;
+    margin-right: 7px;
+}
+
+.edit_link {
+    background: #000;
+}

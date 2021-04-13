@@ -1,0 +1,12 @@
+.header {
+    display: grid;
+    max-width: 1000px;
+    text-align: center;
+    grid-template-columns: repeat(7, 1fr);
+    margin: 7px auto 0;
+    font-size: 20px;
+}
+
+.header a {
+    text-decoration: none;
+}

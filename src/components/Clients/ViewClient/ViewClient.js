@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import styles from '../Clients.module.css'
+import styles from './ViewClient.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
 import {getClient} from "../../../redux/actions/clients";

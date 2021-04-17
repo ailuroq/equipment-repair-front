@@ -3,15 +3,6 @@
     text-align: center;
     margin: 20px auto 0;
 }
-.view_client {
-    max-width: 930px;
-    text-align: center;
-    margin: 20px auto 0;
-}
-.client_info li{
-    display: inline;
-    margin-left: 40px;
-}
 
 .table_header_item {
     border: 1px solid #000;

@@ -1,0 +1,31 @@
+.client_devices {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.view_client {
+    max-width: 930px;
+    text-align: center;
+    margin: 20px auto 0;
+}
+.client_info li{
+    display: inline;
+    margin-left: 40px;
+}
+
+.device img {
+    max-width: 200px;
+}
+
+.device p {
+    margin: 0;
+}
+
+.forms {
+    margin-top: 30px;
+}
+
+
+.save_button {
+    margin-top: 20px;
+}

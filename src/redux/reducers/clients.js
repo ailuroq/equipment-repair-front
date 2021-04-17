@@ -8,7 +8,7 @@ const initialState = {
         phone: ''
     },
     clientViewInfo: {
-        client: '',
+        client: {},
         clientDevices: {}
     }
 }

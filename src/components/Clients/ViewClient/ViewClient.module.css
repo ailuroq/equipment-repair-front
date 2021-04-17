@@ -3,6 +3,16 @@
     grid-template-columns: 1fr 1fr 1fr;
 }
 
+.view_client {
+    max-width: 930px;
+    text-align: center;
+    margin: 20px auto 0;
+}
+.client_info li{
+    display: inline;
+    margin-left: 40px;
+}
+
 .device img {
     max-width: 200px;
 }

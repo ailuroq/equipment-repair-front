@@ -16,6 +16,7 @@ import {Button} from "@material-ui/core";
 
 const Clients = () => {
     const [dialogOpen, setDialogOpen] = useState(false)
+    const [userId, setUserId] = useState()
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'lastname', headerName: 'Фамилия', width: 160, sortable: false},
@@ -44,6 +45,7 @@ const Clients = () => {
                         <li>
                             <DeleteIcon style={{color: '#4f4f4f'}}
                                         onClick={(e) => {
+                                            setUserId(params.getValue("id"))
                                             handleGetPotentialDataToDelete(params.getValue("id"))
                                             handleOpenDialog()
                                         }}
@@ -100,8 +102,11 @@ const Clients = () => {
                     <Button onClick={handleCloseDialog} color="primary">
                         Не удалять
                     </Button>
-                    <Button onClick={handleCloseDialog} color="primary" autoFocus>
-                        Удалить
+                    <Button onClick={()=>{
+                        handleCloseDialog()
+                        handleDeleteClientById(userId)
+                    }} color="primary" autoFocus>
+                        Все равно удалить
                     </Button>
                 </DialogActions>
             </Dialog>

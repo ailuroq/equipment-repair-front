@@ -1,0 +1,12 @@
+.client_devices {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.device img {
+    max-width: 200px;
+}
+
+.device p {
+    margin: 0;
+}

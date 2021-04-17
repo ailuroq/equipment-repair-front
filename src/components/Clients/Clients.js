@@ -9,24 +9,12 @@ import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
 
 
 const Clients = () => {
-    const [limit, setLimit] = useState(10000)
-    const [openViewModal, setOpenViewModal] = useState(false)
-    const [openEditModal, setOpenEditModal] = useState(false)
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'lastname', headerName: 'Фамилия', width: 160, sortable: false},
         {field: 'firstname', headerName: 'Имя', width: 160, sortable: false},
         {field: 'middlename', headerName: 'Отчество', width: 160, sortable: false},
         {field: 'phone', headerName: 'Телефон', width: 140, sortable: false},
-        {
-            field: 'tech',
-            headerName: 'Техника',
-            sortable: false,
-            width: 165,
-            renderCell: (params) => (
-                <a className={styles.tech} href={'clients/' + params.getValue("id")}>Просмотреть технику</a>
-            )
-        },
         {
             field: 'actions',
             headerName: 'Действия',
@@ -42,7 +30,7 @@ const Clients = () => {
                             </a>
                         </li>
                         <li>
-                            <a href={'clients/watch/' + params.getValue("id")}>
+                            <a href={'clients/view/' + params.getValue("id")}>
                                 <VisibilityTwoToneIcon style={{color: '#3e78b6'}} />
                             </a>
                         </li>
@@ -62,8 +50,8 @@ const Clients = () => {
 
 
     useEffect(() => {
-        dispatch(getClients(limit))
-    }, [dispatch, limit])
+        dispatch(getClients())
+    }, [dispatch])
 
     return (
         <div className={styles.clients}>
@@ -84,7 +72,8 @@ const Clients = () => {
                     columns={columns}
                     pageSize={25}
                     rowsPerPageOptions={[25, 50, 100, 200]}
-                    checkboxSelection autoHeight={true}
+                    checkboxSelection
+                    autoHeight={true}
                     disableSelectionOnClick={true}
                 />}
             </div>

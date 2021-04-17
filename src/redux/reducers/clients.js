@@ -1,4 +1,4 @@
-import {GET_CLIENT, GET_CLIENTS} from "../actions/types";
+import {DELETE_CLIENT, GET_CLIENT, GET_CLIENTS, GET_POTENTIAL_DATA_TO_DELETE} from "../actions/types";
 
 const initialState = {
     clientData: {
@@ -10,10 +10,11 @@ const initialState = {
     clientViewInfo: {
         client: {},
         clientDevices: {}
-    }
+    },
+    potentialDataToDelete: {}
 }
 
-export default function clients (state = initialState, action) {
+export default function clients(state = initialState, action) {
     switch (action.type) {
         case GET_CLIENTS:
             return {
@@ -27,6 +28,19 @@ export default function clients (state = initialState, action) {
                     client: action.payload.client,
                     clientDevices: action.payload.clientDevices
                 }
+            }
+        case DELETE_CLIENT:
+            return {
+                ...state,
+                clientData: {
+                    ...state.clientData,
+                    ...action.payload
+                }
+            }
+        case GET_POTENTIAL_DATA_TO_DELETE:
+            return {
+                ...state,
+                potentialDataToDelete: action.payload
             }
         default:
             return state

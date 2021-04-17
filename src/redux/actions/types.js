@@ -1,2 +1,7 @@
 export const GET_CLIENTS = "GET_CLIENTS"
 export const GET_CLIENT = "GET_CLIENT"
+export const DELETE_CLIENT = "DELETE_CLIENT"
+export const GET_POTENTIAL_DATA_TO_DELETE = "GET_POTENTIAL_DATA_TO_DELETE"
+
+export const GET_DEVICES = "GET_DEVICES"
+export const GET_DEVICE = "GET_DEVICE"

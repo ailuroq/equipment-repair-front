@@ -69,28 +69,29 @@ const EditClient = () => {
                 <h2>Информация о клиенте</h2>
                 <form noValidate autoComplete="off">
                     <div className={styles.forms}>
-                        <TextField id="lastname" label="Фамилия" value={lastname} onChange={handleLastnameChange} />
-                        <TextField id="firstname" label="Имя" value={firstname} onChange={handleFirstnameChange} />
-                        <TextField id="middlename" label="Отчество" value={middlename} onChange={handleMiddlenameChange} />
-                        <TextField id="phone" label="Телефон" value={phone} onChange={handlePhoneChange} />
+                        <TextField className={styles.text_field_item} id="lastname" label="Фамилия" value={lastname} onChange={handleLastnameChange} />
+                        <TextField className={styles.text_field_item} id="firstname" label="Имя" value={firstname} onChange={handleFirstnameChange} />
+                        <TextField className={styles.text_field_item} id="middlename" label="Отчество" value={middlename} onChange={handleMiddlenameChange} />
+                        <TextField className={styles.text_field_item} id="phone" label="Телефон" value={phone} onChange={handlePhoneChange} />
                     </div>
                 </form>
-                <Button
-                    variant="contained"
-                    color="primary"
-                    size="small"
-                    startIcon={<SaveIcon />}
-                    disabled={disable}
-                    className={styles.save_button}
-                >
-                    Save
-                </Button>
+                <div className={styles.save_button}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        startIcon={<SaveIcon />}
+                        disabled={disable}
+                    >
+                        Save
+                    </Button>
+                </div>
 
             </div>
             }
             {clientDevices &&
             <div>
-                <h2>Техника пользователя</h2>
+                <h2>Техника клиента</h2>
                 {clientDevices && <ClientDevices devices={clientDevices}/>}
             </div>
             }

@@ -1,14 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import styles from './Clients.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {getClients} from "../../redux/actions/clients";
+import {getClients, deleteClient, getPotentialDataToDelete} from "../../redux/actions/clients";
 import {DataGrid} from "@material-ui/data-grid";
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityTwoToneIcon from '@material-ui/icons/VisibilityTwoTone';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import {Button} from "@material-ui/core";
 
 
 const Clients = () => {
+    const [dialogOpen, setDialogOpen] = useState(false)
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'lastname', headerName: 'Фамилия', width: 160, sortable: false},
@@ -26,18 +33,22 @@ const Clients = () => {
                     <ul className={styles.buttons}>
                         <li>
                             <a href={'clients/edit/' + params.getValue("id")}>
-                                <EditTwoToneIcon style={{color: 'green'}} />
+                                <EditTwoToneIcon style={{color: 'green'}}/>
                             </a>
                         </li>
                         <li>
                             <a href={'clients/view/' + params.getValue("id")}>
-                                <VisibilityTwoToneIcon style={{color: '#3e78b6'}} />
+                                <VisibilityTwoToneIcon style={{color: '#3e78b6'}}/>
                             </a>
                         </li>
                         <li>
-                            <a href={'clients/delete/' + params.getValue("id")}>
-                                <DeleteIcon style={{color: '#4f4f4f'}} />
-                            </a>
+                            <DeleteIcon style={{color: '#4f4f4f'}}
+                                        onClick={(e) => {
+                                            handleGetPotentialDataToDelete(params.getValue("id"))
+                                            handleOpenDialog()
+                                        }}
+                                        cursor={'pointer'}
+                            />
                         </li>
                     </ul>
                 </div>
@@ -46,22 +57,54 @@ const Clients = () => {
     ]
     const dispatch = useDispatch()
     const {clients} = useSelector((state) => state.clients.clientData)
+    const potentialDataToDelete = useSelector((state) => state.clients.potentialDataToDelete)
+
     console.log(clients)
+    console.log(potentialDataToDelete)
 
-
+    const handleDeleteClientById = (id) => {
+        dispatch(deleteClient(id))
+    }
+    const handleGetPotentialDataToDelete = (userId) => {
+        dispatch(getPotentialDataToDelete(userId))
+    }
     useEffect(() => {
         dispatch(getClients())
     }, [dispatch])
 
+    const handleOpenDialog = () => {
+        setDialogOpen(true)
+    }
+
+    const handleCloseDialog = () => {
+        setDialogOpen(false)
+    }
     return (
         <div className={styles.clients}>
-            {/*<div className={styles.menu}>
-                <button className={styles.buttons} style={{background:'red'}}>Добавить</button>
-                <button className={styles.buttons}>Удалить</button>
-                <button className={styles.buttons}>Редактировать</button>
-                <button className={styles.buttons}>Просмотреть</button>
-                <button className={styles.buttons}>Генерировать заново</button>
-            </div>*/}
+            <Dialog
+                open={dialogOpen}
+                onClose={handleCloseDialog}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        При удалении данного пользователя может быть удалены следующие данные: <br/>
+                        В таблице техники: {potentialDataToDelete.devices} строк<br/>
+                        В таблице заказов: {potentialDataToDelete.orders} строк<br/>
+                        В таблице работ: {potentialDataToDelete.repairs} строк<br/>
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialog} color="primary">
+                        Не удалять
+                    </Button>
+                    <Button onClick={handleCloseDialog} color="primary" autoFocus>
+                        Удалить
+                    </Button>
+                </DialogActions>
+            </Dialog>
             <div className={styles.find}>
 
             </div>

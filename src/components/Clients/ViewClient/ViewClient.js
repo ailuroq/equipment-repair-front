@@ -32,7 +32,7 @@ const ViewClient = () => {
             }
             {clientDevices &&
             <div>
-                <h2>Техника пользователя</h2>
+                <h2>Техника клиента</h2>
                 {clientDevices && <ClientDevices devices={clientDevices}/>}
             </div>
             }

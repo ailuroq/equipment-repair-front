@@ -12,6 +12,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {Button} from "@material-ui/core";
+import {caseOfNum} from "../common/convertCase";
 
 
 const Clients = () => {
@@ -92,10 +93,10 @@ const Clients = () => {
                 <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        При удалении данного пользователя может быть удалены следующие данные: <br/>
-                        В таблице техники: {potentialDataToDelete.devices} строк<br/>
-                        В таблице заказов: {potentialDataToDelete.orders} строк<br/>
-                        В таблице работ: {potentialDataToDelete.repairs} строк<br/>
+                        При удалении данного пользователя (id: {userId}) могут быть удалены следующие данные: <br/>
+                        В таблице техники: {potentialDataToDelete.devices} {caseOfNum(potentialDataToDelete.devices, ['строка', 'строки', 'строк'])}<br/>
+                        В таблице заказов: {potentialDataToDelete.orders} {caseOfNum(potentialDataToDelete.orders, ['строка', 'строки', 'строк'])}<br/>
+                        В таблице работ: {potentialDataToDelete.repairs} {caseOfNum(potentialDataToDelete.repairs, ['строка', 'строки', 'строк'])}<br/>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -118,8 +119,8 @@ const Clients = () => {
                 <DataGrid
                     rows={clients}
                     columns={columns}
-                    pageSize={25}
-                    rowsPerPageOptions={[25, 50, 100, 200]}
+                    pageSize={50}
+                    rowsPerPageOptions={[50, 250, 500]}
                     checkboxSelection
                     autoHeight={true}
                     disableSelectionOnClick={true}

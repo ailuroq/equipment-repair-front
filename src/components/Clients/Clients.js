@@ -11,8 +11,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {Button} from "@material-ui/core";
+import {Button, TextField} from "@material-ui/core";
 import {caseOfNum} from "../common/convertCase";
+import {updateSearchValue} from "../../redux/actions/search";
+import ClientFind from "./ClientFind";
 
 
 const Clients = () => {
@@ -82,6 +84,8 @@ const Clients = () => {
     const handleCloseDialog = () => {
         setDialogOpen(false)
     }
+
+
     return (
         <div className={styles.clients}>
             <Dialog
@@ -111,9 +115,7 @@ const Clients = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <div className={styles.find}>
-
-            </div>
+            <ClientFind/>
             <div className={styles.table}>
                 {clients &&
                 <DataGrid

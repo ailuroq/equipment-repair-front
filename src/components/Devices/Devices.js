@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import styles from './Clients.module.css'
+import styles from './Devices.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {getClients} from "../../redux/actions/clients";
+import {getDevices} from "../../redux/actions/devices";
 import {DataGrid} from "@material-ui/data-grid";
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityTwoToneIcon from '@material-ui/icons/VisibilityTwoTone';
@@ -12,9 +12,10 @@ const Devices = () => {
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'name', headerName: 'Название', width: 160, sortable: false},
-        {field: 'country', headerName: 'Страна', width: 160, sortable: false},
+        {field: 'country', headerName: 'Страна', width: 200, sortable: false},
         {field: 'brand', headerName: 'Бренд', width: 160, sortable: false},
         {field: 'model', headerName: 'Модель', width: 140, sortable: false},
+        {field: 'client', headerName: 'Клиент', witdh: 100, sortable: false},
         {
             field: 'actions',
             headerName: 'Действия',
@@ -25,12 +26,12 @@ const Devices = () => {
                 <div>
                     <ul className={styles.buttons}>
                         <li>
-                            <a href={'clients/edit/' + params.getValue("id")}>
+                            <a href={'devices/edit/' + params.getValue("id")}>
                                 <EditTwoToneIcon style={{color: 'green'}} />
                             </a>
                         </li>
                         <li>
-                            <a href={'clients/view/' + params.getValue("id")}>
+                            <a href={'devices/view/' + params.getValue("id")}>
                                 <VisibilityTwoToneIcon style={{color: '#3e78b6'}} />
                             </a>
                         </li>
@@ -48,13 +49,12 @@ const Devices = () => {
     const {devices} = useSelector((state) => state.devices.deviceData)
     console.log(devices)
 
-
     useEffect(() => {
         dispatch(getDevices())
     }, [dispatch])
 
     return (
-        <div className={styles.clients}>
+        <div className={styles.devices}>
             <div className={styles.find}>
             </div>
             <div className={styles.table}>

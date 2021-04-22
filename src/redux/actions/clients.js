@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {DELETE_CLIENT, GET_CLIENT, GET_CLIENTS, GET_POTENTIAL_DATA_TO_DELETE} from "./types";
+import {DELETE_CLIENT, FIND_CLIENT, GET_CLIENT, GET_CLIENTS, GET_POTENTIAL_DATA_TO_DELETE} from "./types";
 import {API_URL} from "../../constants/urlConstants";
 
 const _getClients = (clientData) => ({
@@ -67,6 +67,24 @@ export const getPotentialDataToDelete = (userId) => {
             .get(API_URL + 'clients/problems/' + userId)
             .then(result => {
                 dispatch(_getPotentialDataToDelete(result.data))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+const _findClient = (clientData) => ({
+    type: FIND_CLIENT,
+    payload: clientData
+})
+
+export const findClient = (clientData) => {
+    return (dispatch) => {
+        return axios
+            .get(API_URL + 'clients/' + clientData)
+            .then(result => {
+                dispatch(_findClient(result.data))
             })
             .catch(error => {
                 console.log(error)

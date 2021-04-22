@@ -1,12 +1,9 @@
-
-import Clients from "./components/Clients/Clients";
 import {Route, Switch} from "react-router";
 import Header from "./components/Header/Header";
-import ViewClient from "./components/Clients/ViewClient/ViewClient";
-import './App.css'
-import EditClient from "./components/Clients/EditClient/EditClient";
 import ClientsRouter from "./components/Clients/ClientsRouter";
 import DevicesRouter from "./components/Devices/DevicesRouter";
+import './App.css'
+import OrdersRouter from "./components/Orders/OrdersRouter";
 
 const App = () => {
     return (
@@ -16,6 +13,7 @@ const App = () => {
                 <Switch>
                     <Route path='/clients' component={ClientsRouter}/>
                     <Route path='/devices' component={DevicesRouter}/>
+                    <Route path='/orders' component={OrdersRouter}/>
                     {/*<Route path='/devices' component={Devices}/>
                     <Route path='/masters' component={Masters}/>
                     <Route path='/repair-firms' component={RepairFirms}/>

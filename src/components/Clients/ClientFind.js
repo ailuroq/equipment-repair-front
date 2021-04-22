@@ -1,0 +1,41 @@
+import React from 'react'
+import styles from "./Clients.module.css";
+import {Button, TextField} from "@material-ui/core";
+import {updateSearchValue} from "../../redux/actions/search";
+import {useDispatch, useSelector} from "react-redux";
+import {findClient} from "../../redux/actions/clients";
+
+const ClientFind = () => {
+    const dispatch = useDispatch()
+    const searchData = useSelector((state) => state.search.searchValue)
+    console.log(searchData)
+    const handleSearchDataChange = (e) => {
+        const searchData = e.target.value
+        dispatch(updateSearchValue(searchData))
+    }
+    const handleFindClient = () => {
+        dispatch(findClient(searchData))
+    }
+
+    return (
+        <div className={styles.find_or_add}>
+            <div>
+                <TextField className={styles.search_item} id="search" label="Поиск" value={searchData}
+                           onChange={handleSearchDataChange}/>
+            </div>
+            <div>
+                <Button
+                    id={styles.find_button}
+                    variant="outlined"
+                    color="primary"
+                    onClick={handleFindClient}
+                >Найти</Button>
+            </div>
+            <div>
+                <Button id={styles.add_button} variant="outlined" color="primary"><a href={'clients/new'}>Добавить</a></Button>
+            </div>
+        </div>
+    )
+}
+
+export default ClientFind

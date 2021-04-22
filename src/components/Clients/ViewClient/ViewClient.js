@@ -8,7 +8,7 @@ import ClientDevices from "./ClientDevices";
 const ViewClient = () => {
     const {id} = useParams()
     const dispatch = useDispatch()
-    let client = useSelector((state) => state.clients.clientViewInfo.client[0])
+    const client = useSelector((state) => state.clients.clientViewInfo.client[0])
     const clientDevices = useSelector((state) => state.clients.clientViewInfo.clientDevices)
     console.log(client)
     useEffect(() => {

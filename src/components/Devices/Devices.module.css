@@ -1,0 +1,19 @@
+.devices {
+    max-width: 1070px;
+    text-align: center;
+    margin: 20px auto 0;
+}
+
+.buttons {
+    margin-left: -30px;
+    padding-top: 12px;
+}
+
+.buttons li{
+    display: inline;
+    margin-right: 7px;
+}
+
+.edit_link {
+    background: #000;
+}

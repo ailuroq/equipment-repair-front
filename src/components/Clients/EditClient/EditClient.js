@@ -6,7 +6,6 @@ import {getClient} from "../../../redux/actions/clients";
 import ClientDevices from "../ViewClient/ClientDevices";
 import {Button, TextField} from "@material-ui/core";
 import SaveIcon from '@material-ui/icons/Save';
-import {load} from "dotenv";
 
 const EditClient = () => {
     const {id} = useParams()
@@ -18,7 +17,7 @@ const EditClient = () => {
     const [disable, setDisable] = useState(true)
     
     const dispatch = useDispatch()
-    let client = useSelector((state) => state.clients.clientViewInfo.client[0])
+    const client = useSelector((state) => state.clients.clientViewInfo.client[0])
     const clientDevices = useSelector((state) => state.clients.clientViewInfo.clientDevices)
     
     useEffect(() => {

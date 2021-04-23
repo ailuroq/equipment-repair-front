@@ -89,7 +89,7 @@ const _findClient = (clientData) => ({
 export const findClient = (clientData) => {
     return (dispatch) => {
         return axios
-            .get(API_URL + 'clients/' + clientData)
+            .get(API_URL + 'clients/search?clientData=' + clientData)
             .then(result => {
                 dispatch(_findClient(result.data))
             })

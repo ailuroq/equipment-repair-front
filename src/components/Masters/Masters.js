@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import styles from './Clients.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {getClients, deleteClient, getPotentialDataToDelete} from "../../redux/actions/clients";
 import {DataGrid} from "@material-ui/data-grid";
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityTwoToneIcon from '@material-ui/icons/VisibilityTwoTone';
@@ -11,15 +9,14 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {Button, TextField} from "@material-ui/core";
+import {Button} from "@material-ui/core";
 import {caseOfNum} from "../common/convertCase";
-import {updateSearchValue} from "../../redux/actions/search";
-import ClientFind from "./ClientFind";
-
+import styles from './Masters.module.css'
+import MastersFind from "./MastersFind";
 
 const Masters = () => {
     const [dialogOpen, setDialogOpen] = useState(false)
-    const [userId, setUserId] = useState()
+    const [masterId, setMasterId] = useState()
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'lastname', headerName: 'Фамилия', width: 160, sortable: false},
@@ -36,19 +33,19 @@ const Masters = () => {
                 <div>
                     <ul className={styles.buttons}>
                         <li>
-                            <a href={'clients/edit/' + params.getValue("id")}>
+                            <a href={'masters/edit/' + params.getValue("id")}>
                                 <EditTwoToneIcon style={{color: 'green'}}/>
                             </a>
                         </li>
                         <li>
-                            <a href={'clients/view/' + params.getValue("id")}>
+                            <a href={'masters/view/' + params.getValue("id")}>
                                 <VisibilityTwoToneIcon style={{color: '#3e78b6'}}/>
                             </a>
                         </li>
                         <li>
                             <DeleteIcon style={{color: '#4f4f4f'}}
                                         onClick={(e) => {
-                                            setUserId(params.getValue("id"))
+                                            setMasterId(params.getValue("id"))
                                             handleGetPotentialDataToDelete(params.getValue("id"))
                                             handleOpenDialog()
                                         }}
@@ -64,14 +61,14 @@ const Masters = () => {
     const {masters} = useSelector((state) => state.masters.masterData)
     const potentialDataToDelete = useSelector((state) => state.masters.potentialDataToDelete)
 
-    const handleDeleteClientById = (id) => {
-        dispatch(deleteClient(id))
+    const handleDeleteMasterById = (id) => {
+        dispatch(deleteMaster(id))
     }
-    const handleGetPotentialDataToDelete = (userId) => {
-        dispatch(getPotentialDataToDelete(userId))
+    const handleGetPotentialDataToDelete =(masterId) => {
+        dispatch(getPotentialDataToDelete(masterId))
     }
     useEffect(() => {
-        dispatch(getClients())
+        dispatch(getMasters())
     }, [dispatch])
 
     const handleOpenDialog = () => {
@@ -84,7 +81,7 @@ const Masters = () => {
 
 
     return (
-        <div className={styles.clients}>
+        <div className={styles.masters}>
             <Dialog
                 open={dialogOpen}
                 onClose={handleCloseDialog}
@@ -94,7 +91,7 @@ const Masters = () => {
                 <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        При удалении данного пользователя (id: {userId}) могут быть удалены следующие данные: <br/>
+                        При удалении данного пользователя (id: {masterId}) могут быть удалены следующие данные: <br/>
                         В таблице техники: {potentialDataToDelete.devices} {caseOfNum(potentialDataToDelete.devices, ['строка', 'строки', 'строк'])}<br/>
                         В таблице заказов: {potentialDataToDelete.orders} {caseOfNum(potentialDataToDelete.orders, ['строка', 'строки', 'строк'])}<br/>
                         В таблице работ: {potentialDataToDelete.repairs} {caseOfNum(potentialDataToDelete.repairs, ['строка', 'строки', 'строк'])}<br/>
@@ -106,13 +103,13 @@ const Masters = () => {
                     </Button>
                     <Button onClick={()=>{
                         handleCloseDialog()
-                        handleDeleteClientById(userId)
+                        handleDeleteMasterById(masterId)
                     }} color="primary" autoFocus>
                         Все равно удалить
                     </Button>
                 </DialogActions>
             </Dialog>
-            <ClientFind/>
+            <MastersFind/>
             <div className={styles.table}>
                 {masters &&
                 <DataGrid

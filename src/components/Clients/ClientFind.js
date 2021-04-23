@@ -8,7 +8,6 @@ import {findClient} from "../../redux/actions/clients";
 const ClientFind = () => {
     const dispatch = useDispatch()
     const searchData = useSelector((state) => state.search.searchValue)
-    console.log(searchData)
     const handleSearchDataChange = (e) => {
         const searchData = e.target.value
         dispatch(updateSearchValue(searchData))

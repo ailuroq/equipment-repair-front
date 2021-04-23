@@ -50,7 +50,6 @@ const Orders = () => {
     useEffect(() => {
         dispatch(getOrders())
     }, [dispatch])
-    console.log(orders)
     return (
         <div>
             <div className={styles.table}>

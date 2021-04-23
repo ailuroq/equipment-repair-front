@@ -47,7 +47,6 @@ const Devices = () => {
     ]
     const dispatch = useDispatch()
     const {devices} = useSelector((state) => state.devices.deviceData)
-    console.log(devices)
 
     useEffect(() => {
         dispatch(getDevices())

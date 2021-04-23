@@ -57,7 +57,6 @@ const EditClient = () => {
         const phone = e.target.value
         setPhone(phone)
         checkDefaultValues(lastname, firstname, middlename, phone)
-        console.log(phone)
     }
     
     

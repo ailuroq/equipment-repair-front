@@ -1,3 +1,47 @@
+.new_client {
+    max-width: 1000px;
+    text-align: center;
+    margin: 20px auto 0;
+}
+
+.new_device {
+    width: 300px;
+    margin-bottom: 50px;
+}
+
+.device_border {
+    border: 1px solid #000;
+    border-radius: 15px;
+    width: 200px;
+    text-align: center;
+    margin: 0 auto;
+    padding: 23px;
+}
+
 .text_field_item {
     margin-left: 20px;
+}
+
+.insert_button {
+    margin-top: 20px;
+}
+
+.forms {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+
+.new_devices_grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.add_button {
+    padding-top: 130px;
+    padding-bottom: 180px;
+}
+
+.icon_button {
+    background: #dbddff;
 }

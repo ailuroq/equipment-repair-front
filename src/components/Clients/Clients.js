@@ -64,9 +64,6 @@ const Clients = () => {
     const {clients} = useSelector((state) => state.clients.clientData)
     const potentialDataToDelete = useSelector((state) => state.clients.potentialDataToDelete)
 
-    console.log(clients)
-    console.log(potentialDataToDelete)
-
     const handleDeleteClientById = (id) => {
         dispatch(deleteClient(id))
     }

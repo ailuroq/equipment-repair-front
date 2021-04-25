@@ -1,13 +1,9 @@
 import React, {useState} from 'react'
 import styles from "./NewClient.module.css";
-import {Button, IconButton, TextField} from "@material-ui/core";
-import NewDevice from "./NewDevice";
+import {Button, TextField} from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import {insertClient} from "../../../redux/actions/clients";
 import {useDispatch} from "react-redux";
-import {isNumber} from "@material-ui/data-grid";
-import {Add} from "@material-ui/icons";
-import NewDevices from "./NewDevices";
 
 const NewClient = () => {
     const [lastname, setLastname] = useState('')
@@ -96,6 +92,7 @@ const NewClient = () => {
                                 onChange={handlePhoneChange}
                             />
                         </div>
+
                     </div>
                 </form>
                 <div className={styles.insert_button}>
@@ -111,7 +108,6 @@ const NewClient = () => {
                     </Button>
                 </div>
             </div>
-            <NewDevices/>
 
         </div>
     )

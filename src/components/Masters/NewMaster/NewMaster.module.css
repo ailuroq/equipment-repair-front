@@ -1,0 +1,11 @@
+.new_master {
+    max-width: 1000px;
+    text-align: center;
+    margin: 20px auto 0;
+}
+
+
+.forms {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}

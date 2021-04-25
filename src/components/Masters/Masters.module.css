@@ -1,0 +1,22 @@
+.masters {
+    max-width: 1050px;
+    text-align: center;
+    margin: 20px auto 0;
+}
+
+.buttons {
+    margin-left: -30px;
+    padding-top: 12px;
+}
+
+.buttons li{
+    display: inline;
+    margin-right: 7px;
+}
+.find_or_add {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    justify-items: left;
+    margin-bottom: 20px;
+}
+

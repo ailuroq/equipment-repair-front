@@ -8,6 +8,7 @@ import {
     INSERT_CLIENT
 } from "./types";
 import {API_URL} from "../../constants/urlConstants";
+import {errorAlert, successAlert} from "./alerts";
 
 const _getClients = (clientData) => ({
     type: GET_CLIENTS,
@@ -112,9 +113,11 @@ export const insertClient = (lastname, middlename, firstname, phone) => {
             })
             .then(result => {
                 dispatch(_insertClient(result.data))
+                dispatch(successAlert())
             })
             .catch(error => {
                 console.log(error)
+                dispatch(errorAlert())
             })
     }
 }

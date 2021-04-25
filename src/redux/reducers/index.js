@@ -4,11 +4,15 @@ import devices from "./devices"
 import firms from "./firms"
 import orders from './orders'
 import search from './search'
+import masters from './masters'
+import alerts from './alerts'
 
 export default combineReducers({
     clients,
     devices,
     firms,
     orders,
-    search
+    search,
+    masters,
+    alerts,
 })

@@ -4,16 +4,22 @@ import ClientsRouter from "./components/Clients/ClientsRouter";
 import DevicesRouter from "./components/Devices/DevicesRouter";
 import './App.css'
 import OrdersRouter from "./components/Orders/OrdersRouter";
+import MastersRouter from "./components/Masters/MastersRouter";
+import SuccessAlert from "./components/Alerts/SuccessAlert";
+import ErrorAlert from "./components/Alerts/ErrorAlert";
 
 const App = () => {
     return (
         <div className="App">
             <Header/>
+            <SuccessAlert/>
+            <ErrorAlert/>
             <div className="content">
                 <Switch>
                     <Route path='/clients' component={ClientsRouter}/>
                     <Route path='/devices' component={DevicesRouter}/>
                     <Route path='/orders' component={OrdersRouter}/>
+                    <Route path='/masters' component={MastersRouter}/>
                     {/*<Route path='/devices' component={Devices}/>
                     <Route path='/masters' component={Masters}/>
                     <Route path='/repair-firms' component={RepairFirms}/>

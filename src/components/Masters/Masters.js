@@ -13,6 +13,7 @@ import {Button} from "@material-ui/core";
 import {caseOfNum} from "../common/convertCase";
 import styles from './Masters.module.css'
 import MastersFind from "./MastersFind";
+import {deleteMaster, getMasters, getPotentialDataToDelete} from "../../redux/actions/masters";
 
 const Masters = () => {
     const [dialogOpen, setDialogOpen] = useState(false)
@@ -22,7 +23,8 @@ const Masters = () => {
         {field: 'lastname', headerName: 'Фамилия', width: 160, sortable: false},
         {field: 'firstname', headerName: 'Имя', width: 160, sortable: false},
         {field: 'middlename', headerName: 'Отчество', width: 160, sortable: false},
-        {field: 'phone', headerName: 'Телефон', width: 140, sortable: false},
+        {field: 'experience', headerName: 'Опыт', width: 120, sortable: false},
+        {field: 'post', headerName: 'Опыт работы', width: 140, sortable: false},
         {
             field: 'actions',
             headerName: 'Действия',
@@ -60,7 +62,7 @@ const Masters = () => {
     const dispatch = useDispatch()
     const {masters} = useSelector((state) => state.masters.masterData)
     const potentialDataToDelete = useSelector((state) => state.masters.potentialDataToDelete)
-
+    console.log(masters)
     const handleDeleteMasterById = (id) => {
         dispatch(deleteMaster(id))
     }
@@ -90,12 +92,7 @@ const Masters = () => {
             >
                 <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
                 <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        При удалении данного пользователя (id: {masterId}) могут быть удалены следующие данные: <br/>
-                        В таблице техники: {potentialDataToDelete.devices} {caseOfNum(potentialDataToDelete.devices, ['строка', 'строки', 'строк'])}<br/>
-                        В таблице заказов: {potentialDataToDelete.orders} {caseOfNum(potentialDataToDelete.orders, ['строка', 'строки', 'строк'])}<br/>
-                        В таблице работ: {potentialDataToDelete.repairs} {caseOfNum(potentialDataToDelete.repairs, ['строка', 'строки', 'строк'])}<br/>
-                    </DialogContentText>
+
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCloseDialog} color="primary">

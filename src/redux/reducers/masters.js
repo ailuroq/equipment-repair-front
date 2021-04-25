@@ -1,7 +1,8 @@
-import {GET_MASTERS} from "../actions/types";
+import {GET_INSERT_MASTER_INFO, GET_MASTERS} from "../actions/types";
 
 const initialState = {
-    masterData: {}
+    masterData: {},
+    insertInfo: {},
 }
 
 export default function masters(state = initialState, action) {
@@ -10,6 +11,11 @@ export default function masters(state = initialState, action) {
             return {
                 ...state,
                 masterData: action.payload
+            }
+        case GET_INSERT_MASTER_INFO:
+            return {
+                ...state,
+                insertInfo: action.payload
             }
         default:
             return state

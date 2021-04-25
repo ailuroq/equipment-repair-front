@@ -1,6 +1,6 @@
 import {
     DELETE_MASTER,
-    FIND_MASTER,
+    FIND_MASTER, GET_INSERT_MASTER_INFO,
     GET_MASTER,
     GET_MASTERS,
     GET_POTENTIAL_DATA_TO_DELETE,
@@ -8,6 +8,7 @@ import {
 } from "./types";
 import axios from "axios";
 import {API_URL} from "../../constants/urlConstants";
+import {errorAlert, successAlert} from "./alerts";
 
 const _getMasters = (masterData) => ({
     type: GET_MASTERS,
@@ -100,34 +101,36 @@ export const findMaster = (masterData) => {
 }
 
 const _insertMaster = (masterData) => ({
-    type: INSERT_CLIENT,
+    type: INSERT_MASTER,
     payload: masterData
 })
 
-export const insertMaster = (lastname, middlename, firstname, phone) => {
+export const insertMaster = (lastname, firstname, middlename, experience, post, firm ) => {
     return (dispatch) => {
         return axios
             .post(API_URL + 'masters/', {
-                lastname, middlename, firstname, phone
+                lastname, firstname, middlename, experience, post, firm
             })
             .then(result => {
                 dispatch(_insertMaster(result.data))
+                dispatch(successAlert())
             })
             .catch(error => {
                 console.log(error)
+                dispatch(errorAlert())
             })
     }
 }
 
 const _getInsertMasterInfo = (data) => ({
-    type: INSERT_MASTER_INFO,
+    type: GET_INSERT_MASTER_INFO,
     payload: data
 })
 
 export const getInsertMasterInfo = () => {
     return (dispatch) => {
         return axios
-            .get(API_URL +)
+            .get(API_URL + 'masters/new')
             .then(result => {
                 dispatch(_getInsertMasterInfo(result.data))
             })

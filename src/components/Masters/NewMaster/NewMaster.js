@@ -1,8 +1,8 @@
-import React, {useState} from 'react'
-import {useDispatch} from "react-redux";
+import React, {useEffect, useState} from 'react'
+import {useDispatch, useSelector} from "react-redux";
 import styles from './NewMaster.module.css'
 import {Button, TextField} from "@material-ui/core";
-import {insertMaster} from "../../../redux/actions/masters";
+import {getInsertMasterInfo, insertMaster} from "../../../redux/actions/masters";
 import SaveIcon from "@material-ui/icons/Save";
 import {Autocomplete} from "@material-ui/lab";
 
@@ -10,42 +10,49 @@ const NewMaster = () => {
     const [lastname, setLastname] = useState('')
     const [firstname, setFirstname] = useState('')
     const [middlename, setMiddlename] = useState('')
-    const [experience, setExperience] = useState('')
+    const [experience, setExperience] = useState()
     const [firm, setFirm] = useState()
     const [post, setPost] = useState()
     const [disable, setDisable] = useState(true)
 
     const dispatch = useDispatch()
+    const firms = useSelector((state) => state.masters.insertInfo.firms)
+    const posts = useSelector((state) => state.masters.insertInfo.posts)
+
+    useEffect(() => {
+       dispatch(getInsertMasterInfo())
+    }, [dispatch])
 
     const handleLastnameChange = (e) => {
         const lastname = e.target.value
         setLastname(lastname)
-        notEmptyFieldsValidation(lastname, firstname, middlename, experience)
+        notEmptyFieldsValidation(lastname, firstname, middlename, experience, post, firm)
     }
     const handleFirstnameChange = (e) => {
         const firstname = e.target.value
         setFirstname(firstname)
-        notEmptyFieldsValidation(lastname, firstname, middlename, experience)
+        notEmptyFieldsValidation(lastname, firstname, middlename, experience, post, firm)
     }
     const handleMiddlenameChange = (e) => {
         const middlename = e.target.value
         setMiddlename(middlename)
-        notEmptyFieldsValidation(lastname, firstname, middlename, experience)
+        notEmptyFieldsValidation(lastname, firstname, middlename, experience, post, firm)
     }
     const handleExperienceChange = (e) => {
         const exp = e.target.value
         setExperience(exp)
-        notEmptyFieldsValidation(lastname, firstname, middlename, experience)
+        notEmptyFieldsValidation(lastname, firstname, middlename, exp, post, firm)
     }
-    const notEmptyFieldsValidation = (lastname, firstname, middlename, experience) => {
-        if (lastname.length && firstname.length && middlename.length && experience.length) {
+
+    const notEmptyFieldsValidation = (lastname, firstname, middlename, experience,post , firm) => {
+        if (lastname.length && firstname.length && middlename.length && experience && !!post && !!firm) {
             setDisable(false)
         }
         else setDisable(true)
     }
 
     const handleInsertMaster = () => {
-        dispatch(insertMaster())
+        dispatch(insertMaster(lastname, firstname, middlename, experience, post, firm))
     }
     return (
         <div className={styles.new_master}>
@@ -90,6 +97,7 @@ const NewMaster = () => {
                                 className={styles.text_field_item}
                                 id="experience"
                                 label="Опыт работы"
+                                type="number"
                                 value={experience}
                                 helperText={middlename === "" ? 'Обязательное поле' : ' '}
                                 onChange={handleExperienceChange}
@@ -97,16 +105,53 @@ const NewMaster = () => {
                         </div>
                         <div>
                             <Autocomplete
-                                id="combo-box-demo"
-                                style={{ width: 300 }}
-                                renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+                                id="firms"
+                                className={styles.combo_box}
+                                options={firms}
+                                autoHighlight
+                                style={{ width: 200 }}
+                                getOptionLabel={(option) => option.id + ' ' + option.name}
+                                onChange={(e, value) => {
+                                    if (value) setFirm(value.id)
+                                    notEmptyFieldsValidation(lastname, firstname, middlename, experience, post, value)
+                                    console.log(value)
+                                }}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Выберите фирму"
+                                        variant="outlined"
+                                        inputProps={{
+                                            ...params.inputProps,
+                                            autoComplete: 'new-password',
+                                        }}
+                                    />
+                                )}
                             />
                         </div>
                         <div>
                             <Autocomplete
-                                id="combo-box-demo"
-                                style={{ width: 300 }}
-                                renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+                                id="posts"
+                                className={styles.combo_box}
+                                options={posts}
+                                autoHighlight
+                                style={{ width: 200 }}
+                                getOptionLabel={(option) => option.name}
+                                onChange={(e, value) => {
+                                    if (value) setPost(value.id)
+                                    notEmptyFieldsValidation(lastname, firstname, middlename, experience, value, firm)
+                                }}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Выберите должность"
+                                        variant="outlined"
+                                        inputProps={{
+                                            ...params.inputProps,
+                                            autoComplete: 'new-password',
+                                        }}
+                                    />
+                                )}
                             />
                         </div>
                     </div>

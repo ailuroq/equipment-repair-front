@@ -1,0 +1,15 @@
+.firms {
+    max-width: 930px;
+    text-align: center;
+    margin: 20px auto 0;
+}
+
+.buttons {
+    margin-left: -30px;
+    padding-top: 12px;
+}
+
+.buttons li{
+    display: inline;
+    margin-right: 7px;
+}

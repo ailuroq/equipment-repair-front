@@ -18,7 +18,7 @@ import ClientFind from "./ClientFind";
 
 const Clients = () => {
     const [dialogOpen, setDialogOpen] = useState(false)
-    const [userId, setUserId] = useState()
+    const [userId, setUserId] = useState([])
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'lastname', headerName: 'Фамилия', width: 160, sortable: false},

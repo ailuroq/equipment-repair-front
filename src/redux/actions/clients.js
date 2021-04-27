@@ -57,6 +57,7 @@ export const deleteClient = (id) => {
             .post(API_URL + 'clients/delete/' + id)
             .then(result => {
                 dispatch(_deleteClient(result.data))
+                dispatch(successAlert())
             })
             .catch(error => {
                 console.log(error)

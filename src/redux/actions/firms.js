@@ -1,10 +1,10 @@
 import axios from "axios";
-import {DELETE_CLIENT, GET_DEVICES, GET_POTENTIAL_DATA_TO_DELETE} from "./types";
+import {DELETE_CLIENT, GET_DEVICES, GET_FIRMS, GET_POTENTIAL_DATA_TO_DELETE} from "./types";
 import {API_URL} from "../../constants/urlConstants";
 import {errorAlert, successAlert} from "./alerts";
 
 const _getFirms = (firmData) => ({
-    type: GET_DEVICES,
+    type: GET_FIRMS,
     payload: firmData
 })
 

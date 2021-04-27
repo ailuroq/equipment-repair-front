@@ -57,6 +57,7 @@ export const deleteMaster = (masterId) => {
             .post(API_URL + 'masters/delete/' + masterId)
             .then(result => {
                 dispatch(_deleteMaster(result.data))
+                dispatch(successAlert())
             })
             .catch(error => {
                 console.log(error)

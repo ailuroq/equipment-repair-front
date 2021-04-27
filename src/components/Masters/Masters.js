@@ -23,7 +23,7 @@ const Masters = () => {
         {field: 'lastname', headerName: 'Фамилия', width: 160, sortable: false},
         {field: 'firstname', headerName: 'Имя', width: 160, sortable: false},
         {field: 'middlename', headerName: 'Отчество', width: 160, sortable: false},
-        {field: 'experience', headerName: 'Опыт', width: 120, sortable: false},
+        {field: 'experience', headerName: 'Опыт(лет)', width: 120, sortable: false},
         {field: 'post', headerName: 'Опыт работы', width: 140, sortable: false},
         {
             field: 'actions',
@@ -48,7 +48,6 @@ const Masters = () => {
                             <DeleteIcon style={{color: '#4f4f4f'}}
                                         onClick={(e) => {
                                             setMasterId(params.getValue("id"))
-                                            handleGetPotentialDataToDelete(params.getValue("id"))
                                             handleOpenDialog()
                                         }}
                                         cursor={'pointer'}
@@ -61,14 +60,11 @@ const Masters = () => {
     ]
     const dispatch = useDispatch()
     const {masters} = useSelector((state) => state.masters.masterData)
-    const potentialDataToDelete = useSelector((state) => state.masters.potentialDataToDelete)
     console.log(masters)
     const handleDeleteMasterById = (id) => {
         dispatch(deleteMaster(id))
     }
-    const handleGetPotentialDataToDelete =(masterId) => {
-        dispatch(getPotentialDataToDelete(masterId))
-    }
+
     useEffect(() => {
         dispatch(getMasters())
     }, [dispatch])
@@ -80,7 +76,6 @@ const Masters = () => {
     const handleCloseDialog = () => {
         setDialogOpen(false)
     }
-
 
     return (
         <div className={styles.masters}>

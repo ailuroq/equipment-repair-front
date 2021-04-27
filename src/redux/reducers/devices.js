@@ -1,7 +1,8 @@
-import {GET_DEVICE, GET_DEVICES} from "../actions/types";
+import {GET_DEVICE, GET_DEVICES, GET_INSERT_DEVICE_INFO} from "../actions/types";
 
 const initialState = {
-    deviceData: {}
+    deviceData: {},
+    insertInfo: {},
 }
 
 export default function devices (state = initialState, action) {
@@ -18,6 +19,11 @@ export default function devices (state = initialState, action) {
                     client: action.payload.client,
                     clientDevices: action.payload.clientDevices
                 }
+            }
+        case GET_INSERT_DEVICE_INFO:
+            return {
+                ...state,
+                insertInfo: action.payload
             }
 
         default:

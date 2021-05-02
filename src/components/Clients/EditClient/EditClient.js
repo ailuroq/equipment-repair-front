@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styles from './EditClient.module.css'
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {getClient} from "../../../redux/actions/clients";
+import {getClient, updateClient} from "../../../redux/actions/clients";
 import ClientDevices from "../ViewClient/ClientDevices";
 import {Button, TextField} from "@material-ui/core";
 import SaveIcon from '@material-ui/icons/Save';
@@ -15,11 +15,11 @@ const EditClient = () => {
     const [phone, setPhone] = useState('')
     const [loading, setLoading] = useState(true)
     const [disable, setDisable] = useState(true)
-    
+
     const dispatch = useDispatch()
     const client = useSelector((state) => state.clients.clientViewInfo.client[0])
     const clientDevices = useSelector((state) => state.clients.clientViewInfo.clientDevices)
-    
+
     useEffect(() => {
         dispatch(getClient(id))
     }, [dispatch, id])
@@ -58,8 +58,11 @@ const EditClient = () => {
         setPhone(phone)
         checkDefaultValues(lastname, firstname, middlename, phone)
     }
-    
-    
+
+    const handleSubmit = () => {
+        dispatch(updateClient(id, lastname, firstname, middlename, phone));
+    }
+
     return (
         <div className={styles.edit_client}>
             {client &&
@@ -80,8 +83,9 @@ const EditClient = () => {
                         size="small"
                         startIcon={<SaveIcon />}
                         disabled={disable}
+                        onClick={handleSubmit}
                     >
-                        Save
+                        Обновить
                     </Button>
                 </div>
 

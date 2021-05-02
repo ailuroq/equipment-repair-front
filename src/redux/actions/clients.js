@@ -5,7 +5,7 @@ import {
     GET_CLIENT,
     GET_CLIENTS,
     GET_POTENTIAL_DATA_TO_DELETE,
-    INSERT_CLIENT
+    INSERT_CLIENT, UPDATE_CLIENT
 } from "./types";
 import {API_URL} from "../../constants/urlConstants";
 import {errorAlert, successAlert} from "./alerts";
@@ -114,6 +114,29 @@ export const insertClient = (lastname, middlename, firstname, phone) => {
             })
             .then(result => {
                 dispatch(_insertClient(result.data))
+                dispatch(successAlert())
+            })
+            .catch(error => {
+                console.log(error)
+                dispatch(errorAlert())
+            })
+    }
+}
+
+const _updateClient = (clientData) => ({
+    type: UPDATE_CLIENT,
+    payload: clientData
+})
+
+export const updateClient = (id, lastname, firstname, middlename, phone) => {
+    return (dispatch) => {
+        return axios
+            .post(API_URL + 'clients/update', {
+                id, lastname,  firstname, middlename, phone
+            })
+            .then(result => {
+                console.log(result)
+                dispatch(_updateClient(result.data))
                 dispatch(successAlert())
             })
             .catch(error => {

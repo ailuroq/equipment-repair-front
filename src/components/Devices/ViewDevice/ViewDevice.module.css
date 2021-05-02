@@ -1,0 +1,15 @@
+.view_device img {
+    max-width: 350px;
+}
+
+.device_info li {
+    display: inline;
+    margin-left: 30px;
+    font-size: 21px;
+}
+
+.client_info li {
+    display: inline;
+    margin-left: 30px;
+    font-size: 21px;
+}

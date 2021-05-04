@@ -1,5 +1,12 @@
 import axios from "axios";
-import {GET_DEVICE, GET_DEVICE_UPDATE_DATA, GET_DEVICES, GET_INSERT_DEVICE_INFO, UPDATE_DEVICE} from "./types";
+import {
+    DELETE_DEVICES,
+    GET_DEVICE,
+    GET_DEVICE_UPDATE_DATA,
+    GET_DEVICES,
+    GET_INSERT_DEVICE_INFO, GET_POTENTIAL_DEVICE_DATA_TO_DELETE,
+    UPDATE_DEVICE
+} from "./types";
 import {API_URL} from "../../constants/urlConstants";
 import {errorAlert, successAlert} from "./alerts";
 
@@ -93,14 +100,55 @@ export const updateDevice = (id, name, country, photo, client, brand, model) => 
             .catch(error => {
                 console.log(error)
                 dispatch(errorAlert())
+                return;
             })
         return axios
-            .post(API_URL + 'device/update/' + id, {
+            .post(API_URL + 'devices/update/' + id, {
                 name, country, client, brand, model
             })
             .then(result => {
                 dispatch(_updateDevice(result.data))
                 dispatch(successAlert())
+            })
+            .catch(error => {
+                console.log(error)
+                dispatch(errorAlert())
+            })
+    }
+}
+
+const _deleteDevices = (deviceData) => ({
+    type: DELETE_DEVICES,
+    payload: deviceData
+})
+
+export const deleteDevices = (ids) => {
+    return dispatch => {
+        return axios
+            .post(API_URL + 'devices/delete', {
+                ids
+            })
+            .then(result => {
+                dispatch(_deleteDevices(result.data))
+            })
+            .catch(error => {
+                console.log(error)
+                dispatch(errorAlert())
+            })
+    }
+}
+
+const _getPotentialDeviceDataToDelete = (deviceData) => ({
+    type: GET_POTENTIAL_DEVICE_DATA_TO_DELETE,
+    payload: deviceData
+})
+
+export const getPotentialDeviceDataToDelete = id => {
+    return dispatch => {
+        return axios
+            .get(API_URL + 'devices/delete/info/' + id)
+            .then(result => {
+                dispatch(_getPotentialDeviceDataToDelete(result.data))
             })
             .catch(error => {
                 console.log(error)

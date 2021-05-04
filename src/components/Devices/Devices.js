@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from './Devices.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {getDevices} from "../../redux/actions/devices";
+import {getDevices, getPotentialDeviceDataToDelete} from "../../redux/actions/devices";
 import {DataGrid} from "@material-ui/data-grid";
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityTwoToneIcon from '@material-ui/icons/VisibilityTwoTone';
@@ -9,6 +9,8 @@ import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
 
 
 const Devices = () => {
+    const [deviceId, setDeviceId] = useState()
+    const [dialogOpen, setDialogOpen] = useState(false)
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'name', headerName: 'Название', width: 160, sortable: false},
@@ -37,7 +39,15 @@ const Devices = () => {
                         </li>
                         <li>
                             <a href={'clients/delete/' + params.getValue("id")}>
-                                <DeleteIcon style={{color: '#4f4f4f'}} />
+                                <DeleteIcon
+                                    style={{color: '#4f4f4f'}}
+                                    onClick={(e) => {
+                                        setDeviceId(params.getValue('id'))
+                                        handleGetPotentialDataToDelete(params.getValue('id'))
+                                        handleOpenDialog()
+                                    }}
+                                    cursor={'pointer'}
+                                />
                             </a>
                         </li>
                     </ul>
@@ -51,6 +61,14 @@ const Devices = () => {
     useEffect(() => {
         dispatch(getDevices())
     }, [dispatch])
+
+    const handleGetPotentialDataToDelete = deviceId => {
+        dispatch(getPotentialDeviceDataToDelete())
+    }
+
+    const handleOpenDialog = () => {
+        setDialogOpen(true)
+    }
 
     return (
         <div className={styles.devices}>

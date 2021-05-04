@@ -9,6 +9,8 @@ import ErrorAlert from "./components/Alerts/ErrorAlert";
 import FirmsRouter from "./components/Firms/FirmsRouter";
 import RepairsRouter from "./components/Repairs/RepairsRouter";
 import './App.css'
+import ReferencesRouter from "./components/References/ReferencesRouter";
+import QueriesRouter from "./components/Queries/QueriesRouter";
 
 const App = () => {
     return (
@@ -24,6 +26,8 @@ const App = () => {
                     <Route path='/masters' component={MastersRouter}/>
                     <Route path='/firms' component={FirmsRouter}/>
                     <Route path='/repairs' component={RepairsRouter}/>
+                    <Route path='/references' component={ReferencesRouter}/>
+                    <Route path='/complex-queries' component={QueriesRouter}/>
                 </Switch>
             </div>
         </div>

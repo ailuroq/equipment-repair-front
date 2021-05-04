@@ -1,0 +1,10 @@
+
+.forms {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-bottom: 30px;
+}
+.combo_box {
+    margin-left: 68px;
+    margin-top: 10px;
+}

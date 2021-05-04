@@ -7,6 +7,7 @@ import search from './search'
 import masters from './masters'
 import alerts from './alerts'
 import repairs from './repairs'
+import thirdQuery from './thirdQuery'
 
 export default combineReducers({
     clients,
@@ -16,5 +17,6 @@ export default combineReducers({
     search,
     masters,
     alerts,
-    repairs
+    repairs,
+    thirdQuery
 })

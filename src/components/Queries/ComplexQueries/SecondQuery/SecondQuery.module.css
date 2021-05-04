@@ -1,0 +1,11 @@
+.secondQuery {
+    max-width: 1400px;
+    text-align: center;
+    margin: 20px auto 0;
+}
+
+.queries {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+}

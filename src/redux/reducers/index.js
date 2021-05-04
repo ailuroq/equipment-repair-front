@@ -7,6 +7,7 @@ import search from './search'
 import masters from './masters'
 import alerts from './alerts'
 import repairs from './repairs'
+import secondQuery from './secondQuery'
 import thirdQuery from './thirdQuery'
 
 export default combineReducers({
@@ -18,5 +19,6 @@ export default combineReducers({
     masters,
     alerts,
     repairs,
+    secondQuery,
     thirdQuery
 })

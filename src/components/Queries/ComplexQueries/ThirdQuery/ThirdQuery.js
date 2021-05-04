@@ -7,24 +7,33 @@ import {
     KeyboardDatePicker,
 } from '@material-ui/pickers';
 import {Button} from "@material-ui/core";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getThirdQueryData} from "../../../../redux/actions/thirdQuery";
+import {DataGrid} from "@material-ui/data-grid";
+import styles from './ThirdQuery.module.css'
 
 const ThirdQuery = () => {
     const [selectedDate, setSelectedDate] = React.useState(Date.now());
+    const columns = [
+        {field: 'id', headerName: 'id', width: 100, sortable: false},
+        {field: 'name', headerName: 'Фирмы', width: 160, sortable: false},
+        {field: 'works', headerName: 'Работы', width: 160, sortable: false},
+        {field: 'sum', headerName: 'Сумма', width: 160, sortable: false},
+    ]
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
     };
 
     const dispatch = useDispatch()
-
+    const queryData = useSelector(state => state.thirdQuery.thirdQueryData.table)
+    console.log(queryData)
     const handleSubmit = () => {
         const date = new Date(selectedDate)
         dispatch(getThirdQueryData(date.getUTCMonth()+1, date.getFullYear()))
     }
     return (
-        <div>
+        <div className={styles.thirdQuery}>
             <h3>Третий запрос</h3>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <Grid container justify="space-around">
@@ -50,6 +59,18 @@ const ThirdQuery = () => {
             >
                 Найти
             </Button>
+            <div>
+                {queryData &&
+                    <DataGrid
+                        rows={queryData}
+                        columns={columns}
+                        pageSize={50}
+                        rowsPerPageOptions={[50, 250, 500]}
+                        autoHeight={true}
+                        disableSelectionOnClick={true}
+                    />
+                }
+            </div>
         </div>
     )
 }

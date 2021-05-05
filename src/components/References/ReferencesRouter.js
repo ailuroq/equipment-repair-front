@@ -13,11 +13,11 @@ const ReferencesRouter = () => {
         <div>
             <div>
                 <ul className={styles.references_header}>
-                    <li><Link>Марки</Link></li>
-                    <li><Link>Города</Link></li>
-                    <li><Link>Страны</Link></li>
-                    <li><Link>Должности</Link></li>
-                    <li><Link>Работы</Link></li>
+                    <li><Link to='/references/brands'>Марки</Link></li>
+                    <li><Link to='/references/cities'>Города</Link></li>
+                    <li><Link to='/references/countries'>Страны</Link></li>
+                    <li><Link to='/references/posts'>Должности</Link></li>
+                    <li><Link to='/references/works'>Работы</Link></li>
                 </ul>
             </div>
             <Switch>

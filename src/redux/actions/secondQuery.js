@@ -1,4 +1,4 @@
-import {GET_SECOND_QUERY_DATA} from "./types";
+import {GET_SECOND_QUERY_DATA, GET_SECOND_QUERY_DATA2} from "./types";
 import {API_URL} from "../../constants/urlConstants";
 import axios from "axios";
 

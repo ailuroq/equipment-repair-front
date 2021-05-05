@@ -1,7 +1,8 @@
-import {GET_SECOND_QUERY_DATA} from "../actions/types";
+import {GET_SECOND_QUERY_DATA, GET_SECOND_QUERY_DATA2} from "../actions/types";
 
 const initialState = {
-    secondQueryData: {}
+    secondQueryData: {},
+    secondQueryData2: {}
 }
 
 export default function secondQuery (state = initialState, action) {
@@ -10,6 +11,11 @@ export default function secondQuery (state = initialState, action) {
             return {
                 ...state,
                 secondQueryData: action.payload
+            }
+        case GET_SECOND_QUERY_DATA2:
+            return {
+                ...state,
+                secondQueryData2: action.payload
             }
         default:
             return state

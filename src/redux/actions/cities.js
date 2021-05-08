@@ -92,7 +92,7 @@ const _getPotentialDeleteCityProblems = (cityData) => ({
 export const getPotentialDeleteCityProblems = (id) => {
     return dispatch => {
         return axios
-            .post(API_URL + 'problems/' + id)
+            .post(API_URL + 'cities/problems/' + id)
             .then(result => {
                 dispatch(_getPotentialDeleteCityProblems(result.data))
             })

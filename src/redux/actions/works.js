@@ -86,7 +86,7 @@ const _getPotentialDeleteWorkProblems = (workData) => ({
 export const getPotentialDeleteWorkProblems = (id) => {
     return dispatch => {
         return axios
-            .post(API_URL + 'problems/' + id)
+            .post(API_URL + 'works/problems/' + id)
             .then(result => {
                 dispatch(_getPotentialDeleteWorkProblems(result.data))
             })

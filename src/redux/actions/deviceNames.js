@@ -16,7 +16,7 @@ const _getAllDeviceNames = (deviceNamesData) => ({
 export const getAllDeviceNames = () => {
     return dispatch => {
         return axios
-            .get(API_URL + 'deviceNames')
+            .get(API_URL + 'device-names')
             .then(result => {
                 dispatch(_getAllDeviceNames(result.data))
             })
@@ -34,7 +34,7 @@ const _insertBrand = (brandData) => ({
 export const insertBrand = (name) => {
     return dispatch => {
         return axios
-            .post(API_URL + 'deviceNames' , {
+            .post(API_URL + 'device-names' , {
                 name
             })
             .then(result => {
@@ -54,7 +54,7 @@ const _deleteDeviceNames = (deviceNamesData) => ({
 export const deleteDeviceNames = (ids) => {
     return dispatch => {
         return axios
-            .post(API_URL + 'deviceNames/delete', {
+            .post(API_URL + 'device-names/delete', {
                 ids
             })
             .then(result => {
@@ -74,7 +74,7 @@ const _updateBrand = (brandData) => ({
 export const updateBrand = (id, name) => {
     return dispatch => {
         return axios
-            .post(API_URL + 'deviceNames/update/' + id)
+            .post(API_URL + 'device-names/update/' + id)
             .then(result => {
                 dispatch(_updateBrand(result.data))
             })
@@ -92,7 +92,7 @@ const _getPotentialDeleteBrandProblems = (brandData) => ({
 export const getPotentialDeleteBrandProblems = (id) => {
     return dispatch => {
         return axios
-            .post(API_URL + 'problems/' + id)
+            .post(API_URL + 'device-names/problems/' + id)
             .then(result => {
                 dispatch(_getPotentialDeleteBrandProblems(result.data))
             })

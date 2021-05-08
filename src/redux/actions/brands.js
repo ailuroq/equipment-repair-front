@@ -86,7 +86,7 @@ const _getPotentialDeleteBrandProblems = (brandData) => ({
 export const getPotentialDeleteBrandProblems = (id) => {
     return dispatch => {
         return axios
-            .post(API_URL + 'problems/' + id)
+            .post(API_URL + 'brands/problems/' + id)
             .then(result => {
                 dispatch(_getPotentialDeleteBrandProblems(result.data))
             })

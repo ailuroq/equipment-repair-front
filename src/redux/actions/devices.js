@@ -1,6 +1,6 @@
 import axios from "axios";
 import {
-    DELETE_DEVICES,
+    DELETE_DEVICES, FIND_DEVICES,
     GET_DEVICE,
     GET_DEVICE_UPDATE_DATA,
     GET_DEVICES,
@@ -153,6 +153,24 @@ export const getPotentialDeviceDataToDelete = id => {
             .catch(error => {
                 console.log(error)
                 dispatch(errorAlert())
+            })
+    }
+}
+
+const _findDevices = (deviceData) => ({
+    type: FIND_DEVICES,
+    payload: deviceData
+})
+
+export const findDevices = data => {
+    return dispatch => {
+        return axios
+            .get(API_URL + '/devices/search?deviceData='+data)
+            .then(result => {
+                dispatch(_findDevices(result.data))
+            })
+            .catch(error => {
+                console.log(error)
             })
     }
 }

@@ -4,7 +4,7 @@ import {Button, TextField} from "@material-ui/core";
 import {updateSearchValue} from "../../redux/actions/search";
 import {useDispatch, useSelector} from "react-redux";
 
-const FirmFind = () => {
+const DeviceFind = () => {
     const dispatch = useDispatch()
     const searchData = useSelector((state) => state.search.searchValue)
     const handleSearchDataChange = (e) => {
@@ -12,7 +12,7 @@ const FirmFind = () => {
         dispatch(updateSearchValue(searchData))
     }
     const handleFindClient = () => {
-        dispatch(findFirm(searchData))
+        dispatch(findDevice(searchData))
     }
 
     return (
@@ -36,4 +36,4 @@ const FirmFind = () => {
     )
 }
 
-export default FirmFind
+export default DeviceFind

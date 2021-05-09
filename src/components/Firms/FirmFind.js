@@ -1,8 +1,9 @@
 import React from 'react'
-import styles from "./Clients.module.css";
+import styles from "./Firms.module.css";
 import {Button, TextField} from "@material-ui/core";
 import {updateSearchValue} from "../../redux/actions/search";
 import {useDispatch, useSelector} from "react-redux";
+import {findFirm} from "../../redux/actions/firms";
 
 const FirmFind = () => {
     const dispatch = useDispatch()
@@ -11,7 +12,7 @@ const FirmFind = () => {
         const searchData = e.target.value
         dispatch(updateSearchValue(searchData))
     }
-    const handleFindClient = () => {
+    const handleFindFirm = () => {
         dispatch(findFirm(searchData))
     }
 
@@ -26,11 +27,11 @@ const FirmFind = () => {
                     id={styles.find_button}
                     variant="outlined"
                     color="primary"
-                    onClick={handleFindClient}
+                    onClick={handleFindFirm}
                 >Найти</Button>
             </div>
             <div>
-                <Button id={styles.add_button} variant="outlined" color="primary"><a href={'clients/new'}>Добавить</a></Button>
+                <Button id={styles.add_button} variant="outlined" color="primary"><a href={'firms/new'}>Добавить</a></Button>
             </div>
         </div>
     )

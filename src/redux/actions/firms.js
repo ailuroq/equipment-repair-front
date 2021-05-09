@@ -1,11 +1,10 @@
 import axios from "axios";
 import {
-    DELETE_CLIENT,
+    DELETE_FIRM,
     FIND_FIRM,
-    GET_DEVICES,
     GET_FIRM_FOR_VIEW,
     GET_FIRMS,
-    GET_POTENTIAL_DATA_TO_DELETE, UPDATE_FIRM
+    GET_POTENTIAL_FIRM_DATA_TO_DELETE, GET_UPDATE_FIRM_DATA, UPDATE_FIRM
 } from "./types";
 import {API_URL} from "../../constants/urlConstants";
 import {errorAlert, successAlert} from "./alerts";
@@ -29,7 +28,7 @@ export const getFirms = () => {
 }
 
 const _getPotentialDataToDelete = (potentialDataToDelete) => ({
-    type: GET_POTENTIAL_DATA_TO_DELETE,
+    type: GET_POTENTIAL_FIRM_DATA_TO_DELETE,
     payload: potentialDataToDelete
 })
 
@@ -47,14 +46,16 @@ export const getPotentialDataToDelete = (firmId) => {
 }
 
 const _deleteFirm = (firmData) => ({
-    type: DELETE_CLIENT,
+    type: DELETE_FIRM,
     payload: firmData
 })
 
-export const deleteFirm = (id) => {
+export const deleteFirm = (ids) => {
     return (dispatch) => {
         return axios
-            .post(API_URL + 'firms/delete/' + id)
+            .post(API_URL + 'firms/delete/', {
+                ids
+            })
             .then(result => {
                 dispatch(_deleteFirm(result.data))
                 dispatch(successAlert())
@@ -71,10 +72,10 @@ const _findFirm = (firmData) => ({
     payload: firmData
 })
 
-export const findFirm = (name, address) => {
+export const findFirm = (data) => {
     return dispatch => {
         return axios
-            .get(API_URL + 'firms/search?name=' + name + '&address=' + address)
+            .get(API_URL + 'firms/search?findData='+data)
             .then(result => {
                 dispatch(_findFirm(result.data))
             })
@@ -89,7 +90,7 @@ const _getFirmForView = (firmData) => ({
     payload: firmData
 })
 
-export const getFirmForVIew = (id) => {
+export const getFirmForView = (id) => {
     return dispatch => {
         return axios
             .get(API_URL + 'firms/'+id)
@@ -110,11 +111,30 @@ const _updateFirm = (firmData) => ({
 export const updateFirm = (id, name, address, phone, cityId) => {
     return dispatch => {
         return axios
-            .put(API_URL + 'firms/', {
+            .put(API_URL + 'firms/update', {
                 id, name, address, phone, cityId
             })
             .then(result => {
                 dispatch(_updateFirm(result.data))
+                dispatch(successAlert())
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+const _getUpdateFirmData = (firmData) => ({
+    type: GET_UPDATE_FIRM_DATA,
+    payload: firmData
+})
+
+export const getUpdateFirmData = (id) => {
+    return dispatch => {
+        return axios
+            .get(API_URL + 'firms/update/info/' + id)
+            .then(result => {
+                dispatch(_getUpdateFirmData(result.data))
             })
             .catch(error => {
                 console.log(error)

@@ -13,3 +13,30 @@
     display: inline;
     margin-right: 7px;
 }
+
+.edit_link {
+    background: #000;
+}
+
+.find_or_add {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    justify-items: left;
+    margin-bottom: 20px;
+}
+
+.search_item {
+    width: 500px;
+}
+
+#find_button {
+    margin-top: 14px;
+    width: 150px;
+}
+
+#add_button {
+    margin-left: 20px;
+    margin-top: 14px;
+    width: 150px;
+}
+

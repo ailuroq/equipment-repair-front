@@ -1,0 +1,54 @@
+.cities {
+    max-width: 480px;
+    text-align: center;
+    margin: 20px auto 0;
+}
+.table_header_item {
+    border: 1px solid #000;
+}
+
+.tech {
+    color: #333
+}
+
+.buttons {
+    margin-left: -30px;
+    padding-top: 12px;
+}
+
+.buttons li{
+    display: inline;
+    margin-right: 7px;
+}
+
+.edit_link {
+    background: #000;
+}
+
+.find_or_add {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr;
+    justify-items: left;
+    margin-bottom: 20px;
+}
+
+.search_item {
+    width: 500px;
+}
+
+#find_button {
+    margin-top: 14px;
+    width: 150px;
+}
+
+#add_button {
+    margin-left: 20px;
+    margin-top: 14px;
+    width: 150px;
+}
+
+.delete_many {
+    position: absolute;
+    margin-left: -200px;
+    margin-top: 10px;
+}

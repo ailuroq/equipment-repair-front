@@ -2,8 +2,8 @@ import {
     DELETE_CITIES,
     GET_CITIES,
     GET_POTENTIAL_CITY_DATA_TO_DELETE,
-    INSERT_CITY,
-    UPDATE_CITY
+    INSERT_CITY, UPDATE_BRAND_DIALOG_CLOSE,
+    UPDATE_CITY, UPDATE_CITY_DIALOG_OPEN
 } from "./types";
 import {API_URL} from "../../constants/urlConstants";
 import axios from "axios";
@@ -101,3 +101,11 @@ export const getPotentialDeleteCityProblems = (id) => {
             })
     }
 }
+
+export const updateCityDialogOpen = () => ({
+    type: UPDATE_CITY_DIALOG_OPEN
+})
+
+export const updateCityDialogClose = () => ({
+    type: UPDATE_BRAND_DIALOG_CLOSE
+})

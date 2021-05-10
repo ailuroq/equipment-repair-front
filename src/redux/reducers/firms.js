@@ -1,7 +1,7 @@
 import {
     DELETE_FIRM,
-    FIND_FIRM,
-    GET_FIRMS,
+    FIND_FIRM, GET_FIRM_FOR_VIEW,
+    GET_FIRMS, GET_INSERT_FIRM_DATA,
     GET_POTENTIAL_FIRM_DATA_TO_DELETE,
     GET_UPDATE_FIRM_DATA
 } from "../actions/types";
@@ -9,12 +9,18 @@ import {
 const initialState = {
     firmData: {},
     potentialDataToDelete: {},
-    updateFirmData: {}
+    updateFirmData: {},
+    insertInfo: {}
 }
 
 export default function firms (state = initialState, action) {
     switch (action.type) {
         case GET_FIRMS:
+            return {
+                ...state,
+                firmData: action.payload
+            }
+        case GET_FIRM_FOR_VIEW:
             return {
                 ...state,
                 firmData: action.payload
@@ -41,6 +47,10 @@ export default function firms (state = initialState, action) {
             return {
                 ...state,
                 firmData: action.payload
+            }
+        case GET_INSERT_FIRM_DATA:
+            return {
+                insertInfo: action.payload
             }
         default:
             return state

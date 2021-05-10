@@ -7,7 +7,8 @@ import {getFirmForView} from "../../../redux/actions/firms";
 const ViewFirm = () => {
     const {id} = useParams()
     const dispatch = useDispatch()
-    const firm = useSelector(state => state.firms.firmViewInfo)
+    const firm = useSelector(state => state.firms.firmData)
+    console.log(firm)
     useEffect(() => {
         dispatch(getFirmForView(id))
     }, [dispatch, id])
@@ -16,9 +17,14 @@ const ViewFirm = () => {
             {firm &&
             <div>
                 <h2>Информация о фирме</h2>
-                
+                <p></p>
+                <p></p>
+                <p></p>
+                <p></p>
             </div>
             }
         </div>
     )
 }
+
+export default ViewFirm

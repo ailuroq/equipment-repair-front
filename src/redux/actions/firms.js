@@ -3,8 +3,8 @@ import {
     DELETE_FIRM,
     FIND_FIRM,
     GET_FIRM_FOR_VIEW,
-    GET_FIRMS,
-    GET_POTENTIAL_FIRM_DATA_TO_DELETE, GET_UPDATE_FIRM_DATA, UPDATE_FIRM
+    GET_FIRMS, GET_INSERT_FIRM_DATA,
+    GET_POTENTIAL_FIRM_DATA_TO_DELETE, GET_UPDATE_FIRM_DATA, INSERT_FIRM, UPDATE_FIRM
 } from "./types";
 import {API_URL} from "../../constants/urlConstants";
 import {errorAlert, successAlert} from "./alerts";
@@ -93,7 +93,7 @@ const _getFirmForView = (firmData) => ({
 export const getFirmForView = (id) => {
     return dispatch => {
         return axios
-            .get(API_URL + 'firms/'+id)
+            .get(API_URL + 'firms/info/'+id)
             .then(result => {
                 dispatch(_getFirmForView(result.data))
             })
@@ -138,6 +138,46 @@ export const getUpdateFirmData = (id) => {
             })
             .catch(error => {
                 console.log(error)
+            })
+    }
+}
+
+const _getInsertFirmData = (firmData) => ({
+    type: GET_INSERT_FIRM_DATA,
+    payload: firmData
+})
+
+export const getInsertFirmData = () => {
+    return dispatch => {
+        return axios
+            .get(API_URL + 'firms/new')
+            .then(result => {
+                dispatch(_getInsertFirmData(result.data))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+const _insertFirm = (firmData) => ({
+    type: INSERT_FIRM,
+    payload: firmData
+})
+
+export const insertFirm = (name, address, phone, cityId) => {
+    return dispatch => {
+        return axios
+            .post(API_URL + 'firms/', {
+                name, address, phone, cityId
+            })
+            .then(result => {
+                dispatch(_insertFirm(result.data))
+                dispatch(successAlert())
+            })
+            .catch(error => {
+                console.lor(error)
+                dispatch(errorAlert())
             })
     }
 }

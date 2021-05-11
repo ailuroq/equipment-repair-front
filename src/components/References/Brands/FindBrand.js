@@ -4,7 +4,7 @@ import {Button, TextField} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {createBrandDialogOpen, findBrand} from "../../../redux/actions/brands";
 import {updateSearchValue} from "../../../redux/actions/search";
-import AddBrand from "./CreateBrand";
+import CreateBrand from "./CreateBrand";
 
 const FindBrand = () => {
     const dispatch = useDispatch()
@@ -32,10 +32,12 @@ const FindBrand = () => {
                 >Найти</Button>
             </div>
             <div>
-                <Button id={styles.add_button} variant="outlined" color="primary"><a onClick={() => {
+                <Button id={styles.add_button} variant="outlined" color="primary" onClick={() => {
                     dispatch(createBrandDialogOpen())
-                }}>Добавить</a></Button>
+                }}>Добавить</Button>
             </div>
+
+            <CreateBrand/>
         </div>
     )
 }

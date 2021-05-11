@@ -19,12 +19,14 @@ import {
     getPotentialDeleteCityProblems,
     updateCityDialogOpen
 } from "../../../redux/actions/cities";
+import FindCity from "./FindCity";
 
 const Cities = () => {
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
     const [alertDialogOpen, setAlertDialogOpen] = useState(false)
     const [selectedRows, setSelectedRows] = useState([])
     const [cityId, setCityId] = useState([])
+    const [cityName, setCityName] = useState('')
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'name', headerName: 'Название', width: 160, sortable: false},
@@ -39,8 +41,8 @@ const Cities = () => {
                     <ul className={styles.buttons}>
                         <li>
                             <a onClick={() => {
-                                setCityId(params.getValue('id')-2)
-                                console.log('update',cities[cityId])
+                                setCityId(params.getValue('id'))
+                                setCityName(params.getValue('name'))
                                 dispatch(updateCityDialogOpen())
                             }}>
                                 <EditTwoToneIcon
@@ -58,7 +60,12 @@ const Cities = () => {
 
                             }}>
                                 <DeleteIcon style={{color: '#4f4f4f'}}
-                                            onClick={(e) => {}}
+                                            onClick={(e) => {
+                                                setCityId(params.getValue('id'))
+                                                setCityName(params.getValue('name'))
+                                                handleGetPotentialProblems(cityId)
+                                                handleOpenDeleteDialog()
+                                            }}
                                             cursor={'pointer'}
                                 />
                             </a>
@@ -70,7 +77,8 @@ const Cities = () => {
     ]
     const dispatch = useDispatch()
     const {cities} = useSelector(state => state.cities.cityData)
-    const potentialDataToDelete = useSelector(state => state.cities.potentialDataToDelete)
+    const potentialDataToDelete = useSelector(state => state.cities.potentialDataToDelete.problems)
+    console.log(potentialDataToDelete)
     const updateDialog = useSelector(state => state.cities.updateDialog)
     const handleGetPotentialProblems = (id) => {
         console.log(id)
@@ -100,6 +108,7 @@ const Cities = () => {
     return (
         <div className={styles.cities}>
             <div className={styles.table}>
+                <FindCity/>
                 {cities &&
                 <div>
                     {selectedRows.length !== 0 &&
@@ -108,6 +117,7 @@ const Cities = () => {
                             onClick={handleAlertDialogOpen}
                         >Удалить выбранное</Button>
                     </div>}
+                    {potentialDataToDelete &&
                     <Dialog
                         open={deleteDialogOpen}
                         onClose={handleCloseDeleteDialog}
@@ -117,10 +127,11 @@ const Cities = () => {
                         <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                                При удалении данного пользователя (id: {cityId}) могут быть удалены следующие данные: <br/>
-                                В таблице техники: {potentialDataToDelete.devices} {caseOfNum(potentialDataToDelete.devices, ['строка', 'строки', 'строк'])}<br/>
-                                В таблице заказов: {potentialDataToDelete.orders} {caseOfNum(potentialDataToDelete.orders, ['строка', 'строки', 'строк'])}<br/>
-                                В таблице работ: {potentialDataToDelete.repairs} {caseOfNum(potentialDataToDelete.repairs, ['строка', 'строки', 'строк'])}<br/>
+                                При удалении данного города (id: {cityId}) могут быть удалены следующие данные: <br/>
+                                В таблице фирм: {potentialDataToDelete.firm} {caseOfNum(potentialDataToDelete.firm, ['строка', 'строки', 'строк'])}<br/>
+                                В таблице мастеров: {potentialDataToDelete.master} {caseOfNum(potentialDataToDelete.master, ['строка', 'строки', 'строк'])}<br/>
+                                В таблице работ: {potentialDataToDelete.repair} {caseOfNum(potentialDataToDelete.repair, ['строка', 'строки', 'строк'])}<br/>
+                                В таблице заказов: {potentialDataToDelete.order} {caseOfNum(potentialDataToDelete.order, ['строка', 'строки', 'строк'])}<br/>
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
@@ -137,7 +148,7 @@ const Cities = () => {
                             </Button>
                         </DialogActions>
                     </Dialog>
-
+                    }
                     <Dialog
                         open={alertDialogOpen}
                         onClose={handleAlertDialogClose}
@@ -164,7 +175,7 @@ const Cities = () => {
                         </DialogActions>
                     </Dialog>
                     {updateDialog&&
-                    <UpdateCity currentValue={cities[cityId]}/>}
+                    <UpdateCity currentValue={{id: cityId, name: cityName}}/>}
                     <DataGrid
                         rows={cities}
                         columns={columns}

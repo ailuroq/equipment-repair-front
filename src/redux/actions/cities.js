@@ -1,9 +1,11 @@
 import {
-    DELETE_CITIES,
+    CREATE_BRAND_DIALOG_CLOSE,
+    CREATE_BRAND_DIALOG_OPEN, CREATE_CITY_DIALOG_CLOSE, CREATE_CITY_DIALOG_OPEN,
+    DELETE_CITIES, FIND_CITY,
     GET_CITIES,
     GET_POTENTIAL_CITY_DATA_TO_DELETE,
     INSERT_CITY, UPDATE_BRAND_DIALOG_CLOSE,
-    UPDATE_CITY, UPDATE_CITY_DIALOG_OPEN
+    UPDATE_CITY, UPDATE_CITY_DIALOG_CLOSE, UPDATE_CITY_DIALOG_OPEN
 } from "./types";
 import {API_URL} from "../../constants/urlConstants";
 import axios from "axios";
@@ -74,9 +76,12 @@ const _updateCity = (cityData) => ({
 export const updateCity = (id, name) => {
     return dispatch => {
         return axios
-            .post(API_URL + 'cities/update/' + id)
+            .post(API_URL + 'cities/update/' + id, {
+                name
+            })
             .then(result => {
                 dispatch(_updateCity(result.data))
+                dispatch(getAllCities())
             })
             .catch(error => {
                 console.log(error)
@@ -92,7 +97,7 @@ const _getPotentialDeleteCityProblems = (cityData) => ({
 export const getPotentialDeleteCityProblems = (id) => {
     return dispatch => {
         return axios
-            .post(API_URL + 'cities/problems/' + id)
+            .get(API_URL + 'cities/problems/' + id)
             .then(result => {
                 dispatch(_getPotentialDeleteCityProblems(result.data))
             })
@@ -107,5 +112,31 @@ export const updateCityDialogOpen = () => ({
 })
 
 export const updateCityDialogClose = () => ({
-    type: UPDATE_BRAND_DIALOG_CLOSE
+    type: UPDATE_CITY_DIALOG_CLOSE
 })
+
+export const createCityDialogOpen = () => ({
+    type: CREATE_CITY_DIALOG_OPEN,
+})
+
+export const createCityDialogClose = () => ({
+    type: CREATE_CITY_DIALOG_CLOSE
+})
+
+const _findCity = (findData) => ({
+    type: FIND_CITY,
+    payload: findData
+})
+
+export const findCity = (data) => {
+    return dispatch => {
+        return axios
+            .get(API_URL + 'cities/search?data=' + data)
+            .then(result => {
+                dispatch(_findCity(result.data))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}

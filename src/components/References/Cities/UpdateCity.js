@@ -9,7 +9,6 @@ import {updateCity, updateCityDialogClose} from "../../../redux/actions/cities";
 import {useDispatch, useSelector} from "react-redux";
 
 const UpdateCity = (props) => {
-    console.log('current', props.currentValue)
     const [updateDialogOpen, setUpdateDialogOpen] = useState(false)
     const [cityName, setCityName] = useState('')
     const [cityId, setCityId] = useState()

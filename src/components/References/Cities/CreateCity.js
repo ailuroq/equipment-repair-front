@@ -2,31 +2,31 @@ import React, {useEffect, useState} from 'react'
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import {Button, TextField} from "@material-ui/core";
-import styles from "./Brands.module.css";
+import styles from "./Cities.module.css";
 import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
-import {createBrandDialogClose, getAllBrands, insertBrand, updateBrandDialogClose} from "../../../redux/actions/brands";
 import {useDispatch, useSelector} from "react-redux";
+import {createCityDialogClose, getAllCities, insertCity} from "../../../redux/actions/cities";
 
-const CreateBrand = () => {
+const CreateCity = () => {
     const [updateDialogOpen, setUpdateDialogOpen] = useState(false)
-    const [brandName, setBrandName] = useState('')
+    const [cityName, setCityName] = useState('')
     const [disable, setDisable] = useState(true)
     const dispatch = useDispatch()
-    const updateDialog = useSelector(state => state.brands.createDialog)
+    const updateDialog = useSelector(state => state.cities.createDialog)
     console.log()
     useEffect(() => {
         if (updateDialog) setUpdateDialogOpen(true)
         else setUpdateDialogOpen(false)
     }, [updateDialog])
 
-    const handleCreateBrand = (name) => {
-        dispatch(insertBrand(name))
+    const handleCreateCity = (name) => {
+        dispatch(insertCity(name))
     }
-    const handleBrandNameChange = (e) => {
-        const brand = e.target.value
-        setBrandName(brand)
-        handleUpdateValidate(brand)
+    const handleCityNameChange = (e) => {
+        const city = e.target.value
+        setCityName(city)
+        handleUpdateValidate(city)
     }
     const handleUpdateValidate = (name) => {
         console.log(name.length)
@@ -36,7 +36,7 @@ const CreateBrand = () => {
         } else setDisable(false)
     }
     const handleCloseUpdateDialog = () => {
-        dispatch(createBrandDialogClose())
+        dispatch(createCityDialogClose())
         setUpdateDialogOpen(false)
     }
     return (
@@ -49,7 +49,7 @@ const CreateBrand = () => {
             >
                 <DialogTitle id="alert-dialog-title">{"Добавление марки"}</DialogTitle>
                 <DialogContent>
-                    <TextField className={styles.text_field_item} id="name" label="Название" value={brandName} onChange={handleBrandNameChange} />
+                    <TextField className={styles.text_field_item} id="name" label="Название" value={cityName} onChange={handleCityNameChange} />
                 </DialogContent>
                 <DialogActions>
                     <Button
@@ -58,8 +58,8 @@ const CreateBrand = () => {
                         autoFocus
                         onClick={()=>{
                             handleCloseUpdateDialog()
-                            handleCreateBrand(brandName)
-                            dispatch(getAllBrands())
+                            handleCreateCity(cityName)
+                            dispatch(getAllCities())
                         }}>
                         Сохранить
                     </Button>
@@ -69,4 +69,4 @@ const CreateBrand = () => {
     )
 }
 
-export default CreateBrand
+export default CreateCity

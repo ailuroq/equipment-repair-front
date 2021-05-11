@@ -61,6 +61,7 @@ export const deleteCities = (ids) => {
             })
             .then(result => {
                 dispatch(_deleteCities(result.data))
+                dispatch(getAllCities())
             })
             .catch(error => {
                 console.log(error)

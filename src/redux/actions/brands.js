@@ -63,6 +63,7 @@ export const deleteBrands = (ids) => {
             })
             .then(result => {
                 dispatch(_deleteBrands(result.data))
+                dispatch(getAllBrands())
             })
             .catch(error => {
                 console.log(error)

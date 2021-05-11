@@ -1,12 +1,12 @@
 import React from 'react'
-import styles from './Cities.module.css'
+import styles from './Countries.module.css'
 import {Button, TextField} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {updateSearchValue} from "../../../redux/actions/search";
-import {createCityDialogOpen, findCity} from "../../../redux/actions/cities";
-import CreateCity from "./CreateCity";
+import {createCountryDialogOpen, findCountry} from "../../../redux/actions/countries";
+import CreateCountry from "./CreateCountry";
 
-const FindCity = () => {
+const FindCountry = () => {
     const dispatch = useDispatch()
     const searchData = useSelector((state) => state.search.searchValue)
     const handleSearchDataChange = (e) => {
@@ -14,7 +14,7 @@ const FindCity = () => {
         dispatch(updateSearchValue(searchData))
     }
     const handleFindFirm = () => {
-        dispatch(findCity(searchData))
+        dispatch(findCountry(searchData))
     }
 
     return (
@@ -33,12 +33,12 @@ const FindCity = () => {
             </div>
             <div>
                 <Button id={styles.add_button} variant="outlined" color="primary" onClick={() => {
-                    dispatch(createCityDialogOpen())
+                    dispatch(createCountryDialogOpen())
                 }}>Добавить</Button>
             </div>
-            <CreateCity/>
+            <CreateCountry/>
         </div>
     )
 }
 
-export default FindCity
+export default FindCountry

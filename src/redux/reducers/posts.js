@@ -1,70 +1,70 @@
 import {
-    CREATE_CITY_DIALOG_CLOSE,
-    CREATE_CITY_DIALOG_OPEN,
-    DELETE_CITIES,
-    FIND_CITY,
-    GET_CITIES,
-    GET_POTENTIAL_CITY_DATA_TO_DELETE, UPDATE_BRAND_DIALOG_CLOSE,
-    UPDATE_CITY,
-    UPDATE_CITY_DIALOG_OPEN
+    CREATE_POST_DIALOG_CLOSE,
+    CREATE_POST_DIALOG_OPEN,
+    DELETE_POSTS,
+    FIND_POST,
+    GET_POSTS,
+    GET_POTENTIAL_POST_DATA_TO_DELETE,
+    UPDATE_POST, UPDATE_POST_DIALOG_CLOSE, UPDATE_POST_DIALOG_OPEN
 } from "../actions/types";
 
 const initialState = {
-    cityData: {},
+    postData: {},
     potentialDataToDelete: {},
+    newPostData: {},
     updateDialog: false,
     createDialog: false
 }
 
-export default function cities(state = initialState, action) {
+export default function posts(state = initialState, action) {
     switch (action.type) {
-        case GET_CITIES:
+        case GET_POSTS:
             return {
                 ...state,
-                cityData: action.payload
+                postData: action.payload
             }
-        case DELETE_CITIES:
+        case DELETE_POSTS:
             return {
                 ...state,
-                cityData: {
-                    ...state.cityData,
+                postData: {
+                    ...state.postData,
                     ...action.payload
                 }
             }
-        case GET_POTENTIAL_CITY_DATA_TO_DELETE:
+        case GET_POTENTIAL_POST_DATA_TO_DELETE:
             return {
                 ...state,
                 potentialDataToDelete: action.payload
             }
-        case FIND_CITY:
+        case FIND_POST:
             return {
                 ...state,
-                cityData: action.payload
+                postData: action.payload
             }
-        case UPDATE_CITY:
+        case UPDATE_POST:
             return {
                 ...state,
-                cityData: {
-                    ...state.cityData,
+                postData: {
+                    ...state.postData,
                     ...action.payload
                 }
             }
-        case UPDATE_CITY_DIALOG_OPEN:
+        case UPDATE_POST_DIALOG_OPEN:
             return {
                 ...state,
                 updateDialog: true
             }
-        case UPDATE_BRAND_DIALOG_CLOSE:
+        case UPDATE_POST_DIALOG_CLOSE:
             return {
                 ...state,
                 updateDialog: false
             }
-        case CREATE_CITY_DIALOG_OPEN:
+        case CREATE_POST_DIALOG_OPEN:
             return {
                 ...state,
                 createDialog: true
             }
-        case CREATE_CITY_DIALOG_CLOSE:
+        case CREATE_POST_DIALOG_CLOSE:
             return {
                 ...state,
                 createDialog: false

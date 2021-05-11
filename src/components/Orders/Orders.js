@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {getOrders} from "../../redux/actions/orders";
-import styles from "../Clients/Clients.module.css";
+import styles from './Orders.module.css'
 import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
 import VisibilityTwoToneIcon from "@material-ui/icons/VisibilityTwoTone";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -12,8 +12,30 @@ const Orders = () => {
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'receipt_number', headerName: 'Квитанция №', width: 160, sortable: false},
         {field: 'order_date', headerName: 'Дата заказа', width: 160, sortable: false},
-        {field: 'completion_date', headerName: 'Дата выполнения', width: 160, sortable: false},
-        {field: 'order_completed', headerName: 'Заказ выполнен', width: 140, sortable: false},
+        {
+            field: 'completion_date',
+            headerName: 'Дата выполнения',
+            width: 160,
+            sortable: false,
+            renderCell: params => (
+                <div>
+                    <p>{params.getValue('completion_date')}</p>
+                    <p>{!params.getValue('completion_date') && <div>Не выполнен</div>}</p>
+                </div>
+            )
+        },
+        {
+            field: 'order_completed',
+            headerName: 'Заказ выполнен',
+            width: 140,
+            sortable: false,
+            renderCell: (params) => (
+                <div>
+                    <p>{params.getValue('order_completed') && <div>Выполнен</div>}</p>
+                    <p>{!params.getValue('order_completed') && <div>Не выполнен</div>}</p>
+                </div>
+            )
+        },
         {
             field: 'actions',
             headerName: 'Действия',
@@ -51,7 +73,7 @@ const Orders = () => {
         dispatch(getOrders())
     }, [dispatch])
     return (
-        <div>
+        <div className={styles.orders}>
             <div className={styles.table}>
                 {orders &&
                 <DataGrid

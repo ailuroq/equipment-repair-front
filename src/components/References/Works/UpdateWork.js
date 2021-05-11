@@ -2,41 +2,52 @@ import React, {useEffect, useState} from 'react'
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import {Button, TextField} from "@material-ui/core";
-import styles from "./Cities.module.css";
+import styles from "./Works.module.css";
 import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
+import {updateWork, updateWorkDialogClose} from "../../../redux/actions/works";
 import {useDispatch, useSelector} from "react-redux";
-import {createCityDialogClose, getAllCities, insertCity} from "../../../redux/actions/cities";
 
-const CreateCity = () => {
+const UpdateWork = (props) => {
+    console.log('current', props.currentValue)
     const [updateDialogOpen, setUpdateDialogOpen] = useState(false)
-    const [cityName, setCityName] = useState('')
+    const [workName, setWorkName] = useState('')
+    const [workId, setWorkId] = useState()
     const [disable, setDisable] = useState(true)
     const dispatch = useDispatch()
-    const updateDialog = useSelector(state => state.cities.createDialog)
-    console.log(updateDialog)
+    const updateDialog = useSelector(state => state.works.updateDialog)
+
     useEffect(() => {
         if (updateDialog) setUpdateDialogOpen(true)
         else setUpdateDialogOpen(false)
     }, [updateDialog])
 
-    const handleCreateCity = (name) => {
-        dispatch(insertCity(name))
+    useEffect(() => {
+        console.log('props', props)
+        setWorkId(props.currentValue.id)
+        setWorkName(props.currentValue.name)
+    }, [props.currentValue])
+
+
+    const handleUpdateWork = (id, name) => {
+        console.log(id, name)
+        dispatch(updateWork(id, name))
     }
-    const handleCityNameChange = (e) => {
-        const city = e.target.value
-        setCityName(city)
-        handleUpdateValidate(city)
+    const handleWorkNameChange = (e) => {
+        const work = e.target.value
+        setWorkName(work)
+        handleUpdateValidate(work)
     }
     const handleUpdateValidate = (name) => {
-        console.log(name.length)
-        if (!name.length) {
-            console.log('true')
+        if (name.length === 0 || name === props.currentValue.name) {
             setDisable(true)
         } else setDisable(false)
     }
+    const handleUpdateDialogOpen = () => {
+        setUpdateDialogOpen(true)
+    }
     const handleCloseUpdateDialog = () => {
-        dispatch(createCityDialogClose())
+        dispatch(updateWorkDialogClose())
         setUpdateDialogOpen(false)
     }
     return (
@@ -47,19 +58,18 @@ const CreateCity = () => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"Добавление марки"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
                 <DialogContent>
-                    <TextField className={styles.text_field_item} id="name" label="Название" value={cityName} onChange={handleCityNameChange} />
+                    <TextField className={styles.text_field_item} id="name" label="Название" value={workName} onChange={handleWorkNameChange} />
                 </DialogContent>
                 <DialogActions>
                     <Button
                         color="primary"
-                        disabled={disable}
                         autoFocus
+                        disable={disable}
                         onClick={()=>{
                             handleCloseUpdateDialog()
-                            handleCreateCity(cityName)
-                            dispatch(getAllCities())
+                            handleUpdateWork(workId, workName)
                         }}>
                         Сохранить
                     </Button>
@@ -69,4 +79,4 @@ const CreateCity = () => {
     )
 }
 
-export default CreateCity
+export default UpdateWork

@@ -168,7 +168,6 @@ const Cities = () => {
                             <Button onClick={()=>{
                                 handleAlertDialogClose()
                                 handleDeleteCity(selectedRows)
-                                window.location.reload();
                             }} color="primary" autoFocus>
                                 Все равно удалить
                             </Button>

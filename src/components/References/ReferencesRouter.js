@@ -17,7 +17,7 @@ const ReferencesRouter = () => {
                     <li><Link to='/references/cities'>Города</Link></li>
                     <li><Link to='/references/countries'>Страны</Link></li>
                     <li><Link to='/references/posts'>Должности</Link></li>
-                    <li><Link to='/references/works'>Работы</Link></li>
+                    <li><Link to='/references/works'>Виды работ</Link></li>
                 </ul>
             </div>
             <Switch>

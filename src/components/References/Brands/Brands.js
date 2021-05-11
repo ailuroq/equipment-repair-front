@@ -161,7 +161,6 @@ const Brands = () => {
                                 <Button onClick={()=>{
                                     handleAlertDialogClose()
                                     handleDeleteBrand(selectedRows)
-                                    window.location.reload();
                                 }} color="primary" autoFocus>
                                     Все равно удалить
                                 </Button>

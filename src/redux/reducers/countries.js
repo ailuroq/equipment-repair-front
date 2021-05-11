@@ -1,75 +1,74 @@
 import {
-    CREATE_CITY_DIALOG_CLOSE,
-    CREATE_CITY_DIALOG_OPEN,
-    DELETE_CITIES,
-    FIND_CITY,
-    GET_CITIES,
-    GET_POTENTIAL_CITY_DATA_TO_DELETE, UPDATE_BRAND_DIALOG_CLOSE,
-    UPDATE_CITY,
-    UPDATE_CITY_DIALOG_OPEN
+    CREATE_COUNTRY_DIALOG_CLOSE,
+    CREATE_COUNTRY_DIALOG_OPEN,
+    DELETE_COUNTRIES,
+    FIND_COUNTRY,
+    GET_COUNTRIES,
+    GET_POTENTIAL_COUNTRY_DATA_TO_DELETE,
+    UPDATE_COUNTRY, UPDATE_COUNTRY_DIALOG_CLOSE, UPDATE_COUNTRY_DIALOG_OPEN
 } from "../actions/types";
 
 const initialState = {
-    cityData: {},
+    countryData: {},
     potentialDataToDelete: {},
     updateDialog: false,
-    createDialog: false
+    createDialog: false,
 }
 
-export default function cities(state = initialState, action) {
+export default function countries(state = initialState, action) {
     switch (action.type) {
-        case GET_CITIES:
+        case GET_COUNTRIES:
             return {
                 ...state,
-                cityData: action.payload
+                countryData: action.payload
             }
-        case DELETE_CITIES:
+        case DELETE_COUNTRIES:
             return {
                 ...state,
-                cityData: {
-                    ...state.cityData,
-                    ...action.payload
+                countryData: {
+                    ...state.countryData,
+                    ...action.payload,
                 }
             }
-        case GET_POTENTIAL_CITY_DATA_TO_DELETE:
+        case GET_POTENTIAL_COUNTRY_DATA_TO_DELETE:
             return {
                 ...state,
                 potentialDataToDelete: action.payload
             }
-        case FIND_CITY:
+        case FIND_COUNTRY:
             return {
                 ...state,
-                cityData: action.payload
+                countryData: action.payload
             }
-        case UPDATE_CITY:
+        case UPDATE_COUNTRY:
             return {
                 ...state,
-                cityData: {
-                    ...state.cityData,
+                countryData: {
+                    ...state.countryData,
                     ...action.payload
                 }
             }
-        case UPDATE_CITY_DIALOG_OPEN:
+        case UPDATE_COUNTRY_DIALOG_OPEN:
             return {
                 ...state,
                 updateDialog: true
             }
-        case UPDATE_BRAND_DIALOG_CLOSE:
+        case UPDATE_COUNTRY_DIALOG_CLOSE:
             return {
                 ...state,
                 updateDialog: false
             }
-        case CREATE_CITY_DIALOG_OPEN:
+        case CREATE_COUNTRY_DIALOG_OPEN:
             return {
                 ...state,
                 createDialog: true
             }
-        case CREATE_CITY_DIALOG_CLOSE:
+        case CREATE_COUNTRY_DIALOG_CLOSE:
             return {
                 ...state,
                 createDialog: false
             }
         default:
-            return state
+            return state;
     }
 }

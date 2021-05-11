@@ -2,31 +2,32 @@ import React, {useEffect, useState} from 'react'
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
 import {Button, TextField} from "@material-ui/core";
-import styles from "./Cities.module.css";
+import styles from "./Countries.module.css";
 import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
 import {useDispatch, useSelector} from "react-redux";
-import {createCityDialogClose, getAllCities, insertCity} from "../../../redux/actions/cities";
+import {createCountryDialogClose, getAllCountries, insertCountry} from "../../../redux/actions/countries";
 
-const CreateCity = () => {
+
+const CreateCountry = () => {
     const [updateDialogOpen, setUpdateDialogOpen] = useState(false)
-    const [cityName, setCityName] = useState('')
+    const [countryName, setCountryName] = useState('')
     const [disable, setDisable] = useState(true)
     const dispatch = useDispatch()
-    const updateDialog = useSelector(state => state.cities.createDialog)
+    const updateDialog = useSelector(state => state.countries.createDialog)
     console.log(updateDialog)
     useEffect(() => {
         if (updateDialog) setUpdateDialogOpen(true)
         else setUpdateDialogOpen(false)
     }, [updateDialog])
 
-    const handleCreateCity = (name) => {
-        dispatch(insertCity(name))
+    const handleCreateCountry = (name) => {
+        dispatch(insertCountry(name))
     }
-    const handleCityNameChange = (e) => {
-        const city = e.target.value
-        setCityName(city)
-        handleUpdateValidate(city)
+    const handleCountryNameChange = (e) => {
+        const country = e.target.value
+        setCountryName(country)
+        handleUpdateValidate(country)
     }
     const handleUpdateValidate = (name) => {
         console.log(name.length)
@@ -36,7 +37,7 @@ const CreateCity = () => {
         } else setDisable(false)
     }
     const handleCloseUpdateDialog = () => {
-        dispatch(createCityDialogClose())
+        dispatch(createCountryDialogClose())
         setUpdateDialogOpen(false)
     }
     return (
@@ -47,9 +48,9 @@ const CreateCity = () => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"Добавление марки"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{"Добавление страны"}</DialogTitle>
                 <DialogContent>
-                    <TextField className={styles.text_field_item} id="name" label="Название" value={cityName} onChange={handleCityNameChange} />
+                    <TextField className={styles.text_field_item} id="name" label="Название" value={countryName} onChange={handleCountryNameChange} />
                 </DialogContent>
                 <DialogActions>
                     <Button
@@ -58,8 +59,7 @@ const CreateCity = () => {
                         autoFocus
                         onClick={()=>{
                             handleCloseUpdateDialog()
-                            handleCreateCity(cityName)
-                            dispatch(getAllCities())
+                            handleCreateCountry(countryName)
                         }}>
                         Сохранить
                     </Button>
@@ -69,4 +69,4 @@ const CreateCity = () => {
     )
 }
 
-export default CreateCity
+export default CreateCountry

@@ -9,6 +9,9 @@ import alerts from './alerts'
 import repairs from './repairs'
 import brands from './brands'
 import cities from './cities'
+import countries from './countries'
+import posts from './posts'
+import works from './works'
 import firstQuery from './firstQuery'
 import secondQuery from './secondQuery'
 import thirdQuery from './thirdQuery'
@@ -24,6 +27,9 @@ export default combineReducers({
     repairs,
     brands,
     cities,
+    countries,
+    posts,
+    works,
     firstQuery,
     secondQuery,
     thirdQuery

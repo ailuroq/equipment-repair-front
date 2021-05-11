@@ -1,12 +1,12 @@
 import React from 'react'
-import styles from './Cities.module.css'
+import styles from "./Posts.module.css"
 import {Button, TextField} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
+import {createPostDialogOpen, findPost} from "../../../redux/actions/posts";
 import {updateSearchValue} from "../../../redux/actions/search";
-import {createCityDialogOpen, findCity} from "../../../redux/actions/cities";
-import CreateCity from "./CreateCity";
+import CreatePost from "./CreatePost";
 
-const FindCity = () => {
+const FindPost = () => {
     const dispatch = useDispatch()
     const searchData = useSelector((state) => state.search.searchValue)
     const handleSearchDataChange = (e) => {
@@ -14,7 +14,7 @@ const FindCity = () => {
         dispatch(updateSearchValue(searchData))
     }
     const handleFindFirm = () => {
-        dispatch(findCity(searchData))
+        dispatch(findPost(searchData))
     }
 
     return (
@@ -33,12 +33,13 @@ const FindCity = () => {
             </div>
             <div>
                 <Button id={styles.add_button} variant="outlined" color="primary" onClick={() => {
-                    dispatch(createCityDialogOpen())
+                    dispatch(createPostDialogOpen())
                 }}>Добавить</Button>
             </div>
-            <CreateCity/>
+
+            <CreatePost/>
         </div>
     )
 }
 
-export default FindCity
+export default FindPost

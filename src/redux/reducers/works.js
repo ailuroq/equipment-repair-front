@@ -1,70 +1,70 @@
 import {
-    CREATE_CITY_DIALOG_CLOSE,
-    CREATE_CITY_DIALOG_OPEN,
-    DELETE_CITIES,
-    FIND_CITY,
-    GET_CITIES,
-    GET_POTENTIAL_CITY_DATA_TO_DELETE, UPDATE_BRAND_DIALOG_CLOSE,
-    UPDATE_CITY,
-    UPDATE_CITY_DIALOG_OPEN
+    CREATE_WORK_DIALOG_CLOSE,
+    CREATE_WORK_DIALOG_OPEN,
+    DELETE_WORKS,
+    FIND_WORK,
+    GET_WORKS,
+    GET_POTENTIAL_WORK_DATA_TO_DELETE,
+    UPDATE_WORK, UPDATE_WORK_DIALOG_CLOSE, UPDATE_WORK_DIALOG_OPEN
 } from "../actions/types";
 
 const initialState = {
-    cityData: {},
+    workData: {},
     potentialDataToDelete: {},
+    newWorkData: {},
     updateDialog: false,
     createDialog: false
 }
 
-export default function cities(state = initialState, action) {
+export default function works(state = initialState, action) {
     switch (action.type) {
-        case GET_CITIES:
+        case GET_WORKS:
             return {
                 ...state,
-                cityData: action.payload
+                workData: action.payload
             }
-        case DELETE_CITIES:
+        case DELETE_WORKS:
             return {
                 ...state,
-                cityData: {
-                    ...state.cityData,
+                workData: {
+                    ...state.workData,
                     ...action.payload
                 }
             }
-        case GET_POTENTIAL_CITY_DATA_TO_DELETE:
+        case GET_POTENTIAL_WORK_DATA_TO_DELETE:
             return {
                 ...state,
                 potentialDataToDelete: action.payload
             }
-        case FIND_CITY:
+        case FIND_WORK:
             return {
                 ...state,
-                cityData: action.payload
+                workData: action.payload
             }
-        case UPDATE_CITY:
+        case UPDATE_WORK:
             return {
                 ...state,
-                cityData: {
-                    ...state.cityData,
+                workData: {
+                    ...state.workData,
                     ...action.payload
                 }
             }
-        case UPDATE_CITY_DIALOG_OPEN:
+        case UPDATE_WORK_DIALOG_OPEN:
             return {
                 ...state,
                 updateDialog: true
             }
-        case UPDATE_BRAND_DIALOG_CLOSE:
+        case UPDATE_WORK_DIALOG_CLOSE:
             return {
                 ...state,
                 updateDialog: false
             }
-        case CREATE_CITY_DIALOG_OPEN:
+        case CREATE_WORK_DIALOG_OPEN:
             return {
                 ...state,
                 createDialog: true
             }
-        case CREATE_CITY_DIALOG_CLOSE:
+        case CREATE_WORK_DIALOG_CLOSE:
             return {
                 ...state,
                 createDialog: false

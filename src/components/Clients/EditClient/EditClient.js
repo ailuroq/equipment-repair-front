@@ -18,7 +18,6 @@ const EditClient = () => {
 
     const dispatch = useDispatch()
     const client = useSelector((state) => state.clients.clientViewInfo.client[0])
-    const clientDevices = useSelector((state) => state.clients.clientViewInfo.clientDevices)
 
     useEffect(() => {
         dispatch(getClient(id))
@@ -89,12 +88,6 @@ const EditClient = () => {
                     </Button>
                 </div>
 
-            </div>
-            }
-            {clientDevices &&
-            <div>
-                <h2>Техника клиента</h2>
-                {clientDevices && <ClientDevices devices={clientDevices}/>}
             </div>
             }
         </div>

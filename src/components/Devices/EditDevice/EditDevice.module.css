@@ -1,7 +1,7 @@
 
 .forms {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     margin-bottom: 30px;
 }
 .combo_box {

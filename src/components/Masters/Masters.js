@@ -24,6 +24,7 @@ const Masters = () => {
         {field: 'firstname', headerName: 'Имя', width: 160, sortable: false},
         {field: 'middlename', headerName: 'Отчество', width: 160, sortable: false},
         {field: 'experience', headerName: 'Опыт(лет)', width: 120, sortable: false},
+        {field: 'firm', headerName: 'Фирма', width: 120, sortable: false},
         {field: 'post', headerName: 'Опыт работы', width: 140, sortable: false},
         {
             field: 'actions',
@@ -48,6 +49,7 @@ const Masters = () => {
                             <DeleteIcon style={{color: '#4f4f4f'}}
                                         onClick={(e) => {
                                             setMasterId(params.getValue("id"))
+                                            handleGetPotentialDataToDelete(masterId)
                                             handleOpenDialog()
                                         }}
                                         cursor={'pointer'}
@@ -60,11 +62,14 @@ const Masters = () => {
     ]
     const dispatch = useDispatch()
     const {masters} = useSelector((state) => state.masters.masterData)
-    console.log(masters)
+    const potentialDataToDelete = useSelector(state => state.masters.problems.problems)
+    console.log(potentialDataToDelete)
     const handleDeleteMasterById = (id) => {
         dispatch(deleteMaster(id))
     }
-
+    const handleGetPotentialDataToDelete = (masterId) => {
+        dispatch(getPotentialDataToDelete(masterId))
+    }
     useEffect(() => {
         dispatch(getMasters())
     }, [dispatch])
@@ -79,6 +84,7 @@ const Masters = () => {
 
     return (
         <div className={styles.masters}>
+            {potentialDataToDelete &&
             <Dialog
                 open={dialogOpen}
                 onClose={handleCloseDialog}
@@ -87,7 +93,11 @@ const Masters = () => {
             >
                 <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
                 <DialogContent>
-
+                    <DialogContentText id="alert-dialog-description">
+                        При удалении данного пользователя (id: {masterId}) могут быть удалены следующие данные: <br/>
+                        В таблице заказов: {potentialDataToDelete.orders} {caseOfNum(potentialDataToDelete.orders, ['строка', 'строки', 'строк'])}<br/>
+                        В таблице работ: {potentialDataToDelete.repairs} {caseOfNum(potentialDataToDelete.repairs, ['строка', 'строки', 'строк'])}<br/>
+                    </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCloseDialog} color="primary">
@@ -100,7 +110,7 @@ const Masters = () => {
                         Все равно удалить
                     </Button>
                 </DialogActions>
-            </Dialog>
+            </Dialog>}
             <MastersFind/>
             <div className={styles.table}>
                 {masters &&

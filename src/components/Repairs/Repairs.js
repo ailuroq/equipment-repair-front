@@ -6,11 +6,20 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import {useDispatch, useSelector} from "react-redux";
 import {DataGrid} from "@material-ui/data-grid";
 import {getClients} from "../../redux/actions/clients";
-import {getRepairs} from "../../redux/actions/repairs";
+import {deleteRepairs, getRepairs} from "../../redux/actions/repairs";
 import RepairFind from "./RepairFind";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import {caseOfNum} from "../common/convertCase";
+import DialogActions from "@material-ui/core/DialogActions";
+import {Button} from "@material-ui/core";
 
 const Repairs = () => {
     const [repairId, setRepairId] = useState()
+    const [openDialog, setOpenDialog] = useState(false)
+    const [ids, setIds] = useState([])
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'receipt_number', headerName: 'Номер заказа', width: 160, sortable: false},
@@ -51,6 +60,8 @@ const Repairs = () => {
                         <li>
                             <DeleteIcon style={{color: '#4f4f4f'}}
                                         onClick={(e) => {
+                                            setRepairId(params.getValue('id'))
+                                            handleOpenDialog()
                                             /*setUserId(params.getValue("id"))
                                             handleGetPotentialDataToDelete(params.getValue("id"))
                                             handleOpenDialog()*/
@@ -65,6 +76,12 @@ const Repairs = () => {
     ]
     const dispatch = useDispatch()
     const {repairs} = useSelector(state => state.repairs.repairData)
+    const handleOpenDialog = () => {
+        setOpenDialog(true)
+    }
+    const handleCloseDialog = () => {
+        setOpenDialog(false)
+    }
     console.log(repairs)
     useEffect(() => {
         dispatch(getRepairs())
@@ -73,6 +90,34 @@ const Repairs = () => {
     return (
         <div className={styles.repairs}>
             <RepairFind/>
+            <Dialog
+                open={openDialog}
+                onClose={handleCloseDialog}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Действительно хотите эту работу?
+                        Никакие данные не пострадают
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseDialog} color="primary">
+                        Не удалять
+                    </Button>
+                    <Button onClick={()=>{
+                        handleCloseDialog()
+                        const array = []
+                        array.push(repairId)
+                        console.log(array)
+                        dispatch(deleteRepairs(array))
+                    }} color="primary" autoFocus>
+                        Все равно удалить
+                    </Button>
+                </DialogActions>
+            </Dialog>
             <div className={styles.table}>
                 {repairs &&
                 <DataGrid

@@ -87,6 +87,7 @@ const NewClient = () => {
                                 className={styles.text_field_item}
                                 id="phone"
                                 label="Телефон"
+                                type='number'
                                 value={phone}
                                 helperText={phone === "" ? 'Обязательное поле' : ' '}
                                 onChange={handlePhoneChange}

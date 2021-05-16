@@ -74,14 +74,19 @@ const _findFirm = (firmData) => ({
 
 export const findFirm = (data) => {
     return dispatch => {
-        return axios
-            .get(API_URL + 'firms/search?findData='+data)
-            .then(result => {
-                dispatch(_findFirm(result.data))
-            })
-            .catch(error => {
-                console.log(error)
-            })
+        if (!data) {
+            dispatch(getFirms())
+        }
+        else {
+            return axios
+                .get(API_URL + 'firms/search?findData='+data)
+                .then(result => {
+                    dispatch(_findFirm(result.data))
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
     }
 }
 

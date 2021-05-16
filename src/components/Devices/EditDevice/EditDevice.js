@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import {getDeviceUpdateData, updateDevice} from "../../../redux/actions/devices";
+import {getDeviceUpdateData, updateDevice, updateDevicePhoto} from "../../../redux/actions/devices";
 import {Button, TextField} from "@material-ui/core";
 import styles from './EditDevice.module.css'
 import {Autocomplete} from "@material-ui/lab";
@@ -15,7 +15,6 @@ const EditDevice = () => {
     const [name, setName] = useState()
     const [client, setClient] = useState()
     const [disable, setDisable] = useState(true)
-    const [formData, setFormData] = useState()
 
     const dispatch = useDispatch()
     const deviceData = useSelector(state => state.devices.deviceInfo)
@@ -27,17 +26,18 @@ const EditDevice = () => {
     useEffect(() => {
         if (deviceData.defaultData) {
             setModel(deviceData.defaultData.model)
-            setBrand(deviceData.defaultData.brand)
-            setCountry(deviceData.defaultData.country)
-            setName(deviceData.defaultData.name)
-            setClient(deviceData.defaultData.client)
-            setImage(deviceData.defaultData.photo)
+            setBrand(deviceData.defaultData.brandid)
+            setCountry(deviceData.defaultData.countryid)
+            setName(deviceData.defaultData.nameid)
+            setClient(deviceData.defaultData.clientid)
+
         }
     }, [deviceData])
     const handlePhotoChange = (e) => {
-        const data = e.target.value
+        const data = e.target.files[0]
         console.log(data)
-        fieldValidation(name, country, image, client, brand, model)
+        setImage(data)
+        fieldValidation(name, country, data, client, brand, model)
     }
 
     const handleModelChange = (e) => {
@@ -71,8 +71,9 @@ const EditDevice = () => {
     }
 
     const handleSubmit = () => {
-        console.log(formData)
-        dispatch(updateDevice(id, name, country, formData, client, brand, model))
+        console.log('here', image)
+        dispatch(updateDevicePhoto(id, image))
+        dispatch(updateDevice(id, name, country, client, brand, model))
     }
 
     const fieldValidation = (name, country, image, client, brand, model) => {
@@ -115,7 +116,7 @@ const EditDevice = () => {
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label={deviceData.defaultData?.brand + ' ' + deviceData.brands[deviceData.defaultData?.brand].name}
+                                label={deviceData.defaultData?.brandid + ' ' + deviceData.defaultData?.brand}
                                 helperText='Марка'
                                 variant="outlined"
                                 inputProps={{
@@ -144,7 +145,7 @@ const EditDevice = () => {
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label={deviceData.defaultData?.client + ' ' + deviceData.clients[deviceData.defaultData?.client-1].lastname}
+                                label={deviceData.defaultData?.clientid + ' ' + deviceData.defaultData?.lastname}
                                 variant="outlined"
                                 helperText='Клиент'
                                 inputProps={{
@@ -173,7 +174,7 @@ const EditDevice = () => {
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label={deviceData.defaultData?.country + ' ' + deviceData.countries[deviceData.defaultData?.country].name}
+                                label={deviceData.defaultData?.countryid + ' ' + deviceData.defaultData?.country}
                                 helperText='Страна'
                                 variant="outlined"
                                 inputProps={{
@@ -202,7 +203,7 @@ const EditDevice = () => {
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                label={deviceData.defaultData?.name + ' ' + deviceData.names[deviceData.defaultData?.name].name}
+                                label={deviceData.defaultData?.nameid + ' ' + deviceData.defaultData?.name}
                                 variant="outlined"
                                 helperText={'Название'}
                                 inputProps={{
@@ -217,7 +218,7 @@ const EditDevice = () => {
 
             }
             <div>
-                <input type="file" onChange={handlePhotoChange}/>
+                <input type="file" name="file" onChange={handlePhotoChange}/>
                 <Button
                     onClick={handleSubmit}
                     color="primary"

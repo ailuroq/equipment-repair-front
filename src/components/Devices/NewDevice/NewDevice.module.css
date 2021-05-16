@@ -1,5 +1,18 @@
 .new_device {
-    max-width: 1000px;
+    max-width: 1300px;
     text-align: center;
     margin: 20px auto 0;
+}
+
+.forms {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    margin: 70px;
+}
+
+.stuff {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
+    margin: 0 auto;
 }

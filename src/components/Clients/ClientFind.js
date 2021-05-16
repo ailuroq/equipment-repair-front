@@ -19,7 +19,7 @@ const ClientFind = () => {
     return (
         <div className={styles.find_or_add}>
             <div>
-                <TextField className={styles.search_item} id="search" label="Поиск" value={searchData}
+                <TextField className={styles.search_item} id="search" label="Поиск по фамилии или имени" value={searchData}
                            onChange={handleSearchDataChange}/>
             </div>
             <div>

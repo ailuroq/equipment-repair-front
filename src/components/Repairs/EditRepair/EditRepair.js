@@ -32,6 +32,7 @@ const EditRepair = () => {
             setPrice(repairData.current?.price)
             setOrderId(repairData.current?.order)
             setWorkId(repairData.current?.work)
+            setCompletion(repairData.current?.completion)
         }
     }, [repairData])
 
@@ -41,8 +42,6 @@ const EditRepair = () => {
         setPrice(price)
     }
     const validateFields = (orderId, workId, price, completion) => {
-        console.log(orderId, workId, price, completion)
-
         if (orderId && workId && price && completion) {
             setDisable(false)
         } else setDisable(true)
@@ -75,8 +74,8 @@ const EditRepair = () => {
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                helperText='Выбрать заказ'
-                                label={repairData.current?.work + ' ' + repairData.works[repairData.current?.work].type}
+                                helperText='Выбрать работу'
+                                label={repairData.current?.work + ' ' + repairData.current?.type}
                                 variant="outlined"
                                 inputProps={{
                                     ...params.inputProps,
@@ -104,9 +103,9 @@ const EditRepair = () => {
                         renderInput={(params) => (
                             <TextField
                                 {...params}
-                                helperText='Выбрать работу'
+                                helperText='Выбрать заказ'
                                 variant="outlined"
-                                label={repairData.current?.order + ' ' + repairData.orders[repairData.current?.order].receipt_number}
+                                label={repairData.current?.order + ' ' + repairData.current.receipt_number}
                                 inputProps={{
                                     ...params.inputProps,
                                     autoComplete: 'new-password',
@@ -160,18 +159,18 @@ const EditRepair = () => {
                         onChange={handlePriceChange}
                     />
                 </div>
-                <div className={styles.insert_button}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        startIcon={<SaveIcon />}
-                        onClick={handleSubmit}
-                        disabled={disable}
-                    >
-                        Сохранить
-                    </Button>
-                </div>
             </div>}
+            <div className={styles.insert_button}>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<SaveIcon />}
+                    onClick={handleSubmit}
+                    disabled={disable}
+                >
+                    Сохранить
+                </Button>
+            </div>
         </div>
     )
 }

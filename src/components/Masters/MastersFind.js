@@ -12,14 +12,14 @@ const MastersFind = () => {
         const searchData = e.target.value
         dispatch(updateSearchValue(searchData))
     }
-    const handleFindClient = () => {
+    const handleFindMaster = () => {
         dispatch(findMaster(searchData))
     }
 
     return (
         <div className={styles.find_or_add}>
             <div>
-                <TextField className={styles.search_item} id="search" label="Поиск" value={searchData}
+                <TextField className={styles.search_item} id="search" label="Поиск по фамилии и имени" value={searchData}
                            onChange={handleSearchDataChange}/>
             </div>
             <div>
@@ -27,7 +27,7 @@ const MastersFind = () => {
                     id={styles.find_button}
                     variant="outlined"
                     color="primary"
-                    onClick={handleFindClient}
+                    onClick={handleFindMaster}
                 >Найти</Button>
             </div>
             <div>

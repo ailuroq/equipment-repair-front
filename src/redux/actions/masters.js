@@ -3,8 +3,8 @@ import {
     FIND_MASTER, GET_INSERT_MASTER_INFO,
     GET_MASTER,
     GET_MASTERS,
-    GET_POTENTIAL_DATA_TO_DELETE,
-    INSERT_CLIENT, INSERT_INFO, INSERT_MASTER, INSERT_MASTER_INFO
+    GET_POTENTIAL_DATA_TO_DELETE, GET_POTENTIAL_MASTER_DATA_TO_DELETE, GET_UPDATE_MASTER_INFO,
+    INSERT_CLIENT, INSERT_INFO, INSERT_MASTER, INSERT_MASTER_INFO, UPDATE_MASTER
 } from "./types";
 import axios from "axios";
 import {API_URL} from "../../constants/urlConstants";
@@ -36,7 +36,7 @@ const _getMaster = (masterData) => ({
 export const getMaster = (masterId) => {
     return (dispatch) => {
         return axios
-            .get(API_URL + 'masters/' + masterId)
+            .get(API_URL + 'masters/info/' + masterId)
             .then(result => {
                 dispatch(_getMaster(result.data))
             })
@@ -57,6 +57,7 @@ export const deleteMaster = (masterId) => {
             .post(API_URL + 'masters/delete/' + masterId)
             .then(result => {
                 dispatch(_deleteMaster(result.data))
+                dispatch(getMasters())
                 dispatch(successAlert())
             })
             .catch(error => {
@@ -65,12 +66,13 @@ export const deleteMaster = (masterId) => {
     }
 }
 
-const _getPotentialDataToDelete = (potentialDataToDelete) => ({
-    type: GET_POTENTIAL_DATA_TO_DELETE,
+    const _getPotentialDataToDelete = (potentialDataToDelete) => ({
+    type: GET_POTENTIAL_MASTER_DATA_TO_DELETE,
     payload: potentialDataToDelete
 })
 
 export const getPotentialDataToDelete = (masterId) => {
+    console.log(masterId)
     return (dispatch) => {
         return axios
             .get(API_URL + 'masters/problems/' + masterId)
@@ -91,7 +93,7 @@ const _findMaster = (masterData) => ({
 export const findMaster = (masterData) => {
     return (dispatch) => {
         return axios
-            .get(API_URL + 'masters/search?masterData=' + masterData)
+            .get(API_URL + 'masters/search?data=' + masterData)
             .then(result => {
                 dispatch(_findMaster(result.data))
             })
@@ -134,6 +136,44 @@ export const getInsertMasterInfo = () => {
             .get(API_URL + 'masters/new')
             .then(result => {
                 dispatch(_getInsertMasterInfo(result.data))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+const _getUpdateMasterInfo = (data) => ({
+    type: GET_UPDATE_MASTER_INFO,
+    payload: data
+})
+
+export const getUpdateMasterInfo = (data) => {
+    return dispatch => {
+        return axios
+            .get(API_URL + 'masters/update/info?data='+data)
+            .then(result => {
+                dispatch(_getUpdateMasterInfo(result.data))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+const _updateMaster = (data) => ({
+    type: UPDATE_MASTER,
+    payload: data
+})
+
+export const updateMaster = (id, lastname, firstname, middlename, experience, firmId, postId) => {
+    return dispatch => {
+        return axios
+            .post(API_URL + 'masters/update', {
+                id, lastname, firstname, middlename, experience, firmId, postId
+            })
+            .then(result => {
+                dispatch(_updateMaster(result.data))
             })
             .catch(error => {
                 console.log(error)

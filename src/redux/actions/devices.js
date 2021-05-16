@@ -4,8 +4,8 @@ import {
     GET_DEVICE,
     GET_DEVICE_UPDATE_DATA,
     GET_DEVICES,
-    GET_INSERT_DEVICE_INFO, GET_POTENTIAL_DEVICE_DATA_TO_DELETE,
-    UPDATE_DEVICE
+    GET_INSERT_DEVICE_INFO, GET_POTENTIAL_DEVICE_DATA_TO_DELETE, INSERT_DEVICE,
+    UPDATE_DEVICE, UPDATE_DEVICE_PHOTO
 } from "./types";
 import {API_URL} from "../../constants/urlConstants";
 import {errorAlert, successAlert} from "./alerts";
@@ -81,27 +81,37 @@ export const getDeviceUpdateData = (id) => {
             })
     }
 }
+const _updateDevicePhoto = (data) => ({
+    type: UPDATE_DEVICE_PHOTO,
+    payload: data
+})
+
+export const updateDevicePhoto = (id, photo) => {
+    return dispatch => {
+        const formData = new FormData()
+        formData.append('file', photo)
+        console.log(photo)
+        return axios
+            .post(API_URL + 'devices/update-photo/' + id, formData)
+            .then(result => {
+                dispatch(_updateDevicePhoto(result.data))
+                dispatch(successAlert())
+            })
+            .catch(error => {
+                console.log(error)
+                dispatch(errorAlert())
+            })
+    }
+}
+
 
 const _updateDevice = (deviceInfo) => ({
     type: UPDATE_DEVICE,
     payload: deviceInfo
 })
 
-export const updateDevice = (id, name, country, photo, client, brand, model) => {
-    return async dispatch => {
-        await axios
-            .post(API_URL + 'devices/update-photo/' + id, {
-                photo
-            }, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                }
-            })
-            .catch(error => {
-                console.log(error)
-                dispatch(errorAlert())
-                return;
-            })
+export const updateDevice = (id, name, country, client, brand, model) => {
+    return dispatch => {
         return axios
             .post(API_URL + 'devices/update/' + id, {
                 name, country, client, brand, model
@@ -116,6 +126,8 @@ export const updateDevice = (id, name, country, photo, client, brand, model) => 
             })
     }
 }
+
+
 
 const _deleteDevices = (deviceData) => ({
     type: DELETE_DEVICES,
@@ -171,6 +183,25 @@ export const findDevice = data => {
             })
             .catch(error => {
                 console.log(error)
+            })
+    }
+}
+
+const _insertDevice = data => ({
+    type: INSERT_DEVICE,
+    payload: data
+})
+
+export const insertDevice = (nameId, clientId, photo, countryId, brandId, model) => {
+    return async dispatch => {
+        await axios
+            .post(API_URL + 'devices/', {
+                nameId, clientId, countryId, brandId, model
+            })
+            .then(result => {
+                dispatch(_insertDevice(result.data))
+                console.log(result.data)
+                dispatch(updateDevicePhoto(result.data.id.id, photo))
             })
     }
 }

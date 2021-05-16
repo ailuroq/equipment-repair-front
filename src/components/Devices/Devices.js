@@ -63,8 +63,8 @@ const Devices = () => {
     ]
     const dispatch = useDispatch()
     const {devices} = useSelector((state) => state.devices.deviceData)
-    const potentialDataToDelete = useSelector(state => state.devices.potentialDataToDelete)
-
+    const potentialDataToDelete = useSelector(state => state.devices.potentialDataToDelete.result)
+    console.log(potentialDataToDelete)
     useEffect(() => {
         dispatch(getDevices())
     }, [dispatch])
@@ -90,6 +90,7 @@ const Devices = () => {
     return (
         <div className={styles.devices}>
             <DeviceFind/>
+            {potentialDataToDelete &&
             <Dialog
                 open={dialogOpen}
                 onClose={handleCloseDialog}
@@ -115,7 +116,7 @@ const Devices = () => {
                         Все равно удалить
                     </Button>
                 </DialogActions>
-            </Dialog>
+            </Dialog>}
             <div className={styles.find}>
             </div>
             <div className={styles.table}>

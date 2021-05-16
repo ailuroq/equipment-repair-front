@@ -13,6 +13,7 @@ import {caseOfNum} from "../common/convertCase";
 import DialogActions from "@material-ui/core/DialogActions";
 import {Button} from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
+import DeviceFind from "./DeviceFind";
 
 
 const Devices = () => {
@@ -88,6 +89,7 @@ const Devices = () => {
 
     return (
         <div className={styles.devices}>
+            <DeviceFind/>
             <Dialog
                 open={dialogOpen}
                 onClose={handleCloseDialog}

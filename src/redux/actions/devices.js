@@ -162,7 +162,7 @@ const _findDevices = (deviceData) => ({
     payload: deviceData
 })
 
-export const findDevices = data => {
+export const findDevice = data => {
     return dispatch => {
         return axios
             .get(API_URL + '/devices/search?deviceData='+data)

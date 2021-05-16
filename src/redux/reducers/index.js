@@ -12,6 +12,7 @@ import cities from './cities'
 import countries from './countries'
 import posts from './posts'
 import works from './works'
+import deviceNames from './deviceNames'
 import firstQuery from './firstQuery'
 import secondQuery from './secondQuery'
 import thirdQuery from './thirdQuery'
@@ -30,6 +31,7 @@ export default combineReducers({
     countries,
     posts,
     works,
+    deviceNames,
     firstQuery,
     secondQuery,
     thirdQuery

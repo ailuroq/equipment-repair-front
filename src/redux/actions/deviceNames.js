@@ -1,9 +1,11 @@
 import {
-    DELETE_DEVICE_NAMES,
+    CREATE_DEVICE_NAME_DIALOG_CLOSE,
+    CREATE_DEVICE_NAME_DIALOG_OPEN,
+    DELETE_DEVICE_NAMES, FIND_DEVICE_NAME,
     GET_DEVICE_NAMES,
     GET_POTENTIAL_DEVICE_NAME_DATA_TO_DELETE,
     INSERT_DEVICE_NAME,
-    UPDATE_DEVICE_NAME
+    UPDATE_DEVICE_NAME, UPDATE_DEVICE_NAME_DIALOG_CLOSE, UPDATE_DEVICE_NAME_DIALOG_OPEN
 } from "./types";
 import {API_URL} from "../../constants/urlConstants";
 import axios from "axios";
@@ -26,19 +28,20 @@ export const getAllDeviceNames = () => {
     }
 }
 
-const _insertBrand = (brandData) => ({
+const _insertDeviceName = (deviceNameData) => ({
     type: INSERT_DEVICE_NAME,
-    payload: brandData
+    payload: deviceNameData
 })
 
-export const insertBrand = (name) => {
+export const insertDeviceName = (name) => {
     return dispatch => {
         return axios
             .post(API_URL + 'device-names' , {
                 name
             })
             .then(result => {
-                dispatch(_insertBrand(result.data))
+                dispatch(_insertDeviceName(result.data))
+                dispatch(getAllDeviceNames())
             })
             .catch(error => {
                 console.log(error)
@@ -59,6 +62,7 @@ export const deleteDeviceNames = (ids) => {
             })
             .then(result => {
                 dispatch(_deleteDeviceNames(result.data))
+                dispatch(getAllDeviceNames())
             })
             .catch(error => {
                 console.log(error)
@@ -66,17 +70,20 @@ export const deleteDeviceNames = (ids) => {
     }
 }
 
-const _updateBrand = (brandData) => ({
+const _updateDeviceName = (deviceNameData) => ({
     type: UPDATE_DEVICE_NAME,
-    payload: brandData
+    payload: deviceNameData
 })
 
-export const updateBrand = (id, name) => {
+export const updateDeviceName = (id, name) => {
     return dispatch => {
         return axios
-            .post(API_URL + 'device-names/update/' + id)
+            .post(API_URL + 'device-names/update/' + id, {
+                name
+            })
             .then(result => {
-                dispatch(_updateBrand(result.data))
+                dispatch(_updateDeviceName(result.data))
+                dispatch(getAllDeviceNames())
             })
             .catch(error => {
                 console.log(error)
@@ -84,17 +91,51 @@ export const updateBrand = (id, name) => {
     }
 }
 
-const _getPotentialDeleteBrandProblems = (brandData) => ({
+const _getPotentialDeleteDeviceNameProblems = (deviceNameData) => ({
     type: GET_POTENTIAL_DEVICE_NAME_DATA_TO_DELETE,
-    payload: brandData
+    payload: deviceNameData
 })
 
-export const getPotentialDeleteBrandProblems = (id) => {
+export const getPotentialDeleteDeviceNameProblems = (id) => {
     return dispatch => {
         return axios
             .post(API_URL + 'device-names/problems/' + id)
             .then(result => {
-                dispatch(_getPotentialDeleteBrandProblems(result.data))
+                dispatch(_getPotentialDeleteDeviceNameProblems(result.data))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+export const updateDeviceNameDialogOpen = () => ({
+    type: UPDATE_DEVICE_NAME_DIALOG_OPEN
+})
+
+export const updateDeviceNameDialogClose = () => ({
+    type: UPDATE_DEVICE_NAME_DIALOG_CLOSE
+})
+
+export const createDeviceNameDialogOpen = () => ({
+    type: CREATE_DEVICE_NAME_DIALOG_OPEN
+})
+
+export const createDeviceNameDialogClose = () => ({
+    type: CREATE_DEVICE_NAME_DIALOG_CLOSE
+})
+
+const _findDeviceName = (data) => ({
+    type: FIND_DEVICE_NAME,
+    payload: data
+})
+
+export const findDeviceName = (data) => {
+    return dispatch => {
+        return axios
+            .get(API_URL + 'device-names/search?data=' + data)
+            .then(result => {
+                dispatch(_findDeviceName(result.data))
             })
             .catch(error => {
                 console.log(error)

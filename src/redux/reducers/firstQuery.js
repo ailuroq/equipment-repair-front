@@ -1,24 +1,26 @@
 import {
+    FIRST_QUERY_DATA,
     GET_FIRST_QUERY_DATA,
-    GET_FIRST_QUERY_DATA2,
+    GET_FIRST_QUERY_DATA2, GET_FIRST_QUERY_INFO,
 } from "../actions/types";
 
 const initialState = {
-    firstQueryData: {},
-    firstQueryData2: {}
+    queryData: {},
+    firstQueryData2: {},
+    queryInfo: {}
 }
 
 export default function firstQuery (state = initialState, action) {
     switch (action.type) {
-        case GET_FIRST_QUERY_DATA:
+        case FIRST_QUERY_DATA:
             return {
                 ...state,
-                firstQueryData: action.payload
+                queryData: action.payload
             }
-        case GET_FIRST_QUERY_DATA2:
+        case GET_FIRST_QUERY_INFO:
             return {
                 ...state,
-                firstQueryData2: action.payload
+                queryInfo: action.payload
             }
         default:
             return state

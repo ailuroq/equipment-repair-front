@@ -1,0 +1,13 @@
+.new {
+    max-width: 1000px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
+}
+
+.insert_button {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+}

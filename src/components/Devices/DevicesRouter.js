@@ -12,6 +12,7 @@ const DevicesRouter = () => {
                 <Route exact path='/devices' component={Devices}/>
                 <Route exact path='/devices/edit/:id' component={EditDevice}/>
                 <Route exact path='/devices/view/:id' component={ViewDevice}/>
+                <Route exact path='/devices/new' component={NewDevice}/>
             </Switch>
         </div>
     )

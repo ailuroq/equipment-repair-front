@@ -46,18 +46,17 @@ const Orders = () => {
                 <div>
                     <ul className={styles.buttons}>
                         <li>
-                            <a href={'clients/edit/' + params.getValue("id")}>
+                            <a href={'orders/edit/' + params.getValue("id")}>
                                 <EditTwoToneIcon style={{color: 'green'}}/>
                             </a>
                         </li>
                         <li>
-                            <a href={'clients/view/' + params.getValue("id")}>
+                            <a href={'orders/view/' + params.getValue("id")}>
                                 <VisibilityTwoToneIcon style={{color: '#3e78b6'}}/>
                             </a>
                         </li>
                         <li>
                             <DeleteIcon style={{color: '#4f4f4f'}}
-
                                         cursor={'pointer'}
                             />
                         </li>
@@ -67,8 +66,8 @@ const Orders = () => {
         }
     ]
     const dispatch = useDispatch()
-    const orders = useSelector((state) => state.orders.orderData)
-
+    const {orders} = useSelector((state) => state.orders.orderData)
+    console.log(orders)
     useEffect(() => {
         dispatch(getOrders())
     }, [dispatch])

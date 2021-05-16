@@ -6,7 +6,8 @@ import {
     GET_POTENTIAL_BRAND_DATA_TO_DELETE,
     INSERT_BRAND,
     UPDATE_BRAND,
-    UPDATE_BRAND_DIALOG_CHANGE, UPDATE_BRAND_DIALOG_CLOSE, UPDATE_BRAND_DIALOG_OPEN
+    UPDATE_BRAND_DIALOG_CLOSE,
+    UPDATE_BRAND_DIALOG_OPEN
 } from "./types";
 import {API_URL} from "../../constants/urlConstants";
 import axios from "axios";

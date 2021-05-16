@@ -1,19 +1,20 @@
 import React from 'react'
-import styles from "./Devices.module.css";
+import styles from "./DeviceNames.module.css"
 import {Button, TextField} from "@material-ui/core";
-import {updateSearchValue} from "../../redux/actions/search";
 import {useDispatch, useSelector} from "react-redux";
-import {findDevice} from "../../redux/actions/devices";
+import {createDeviceNameDialogOpen, findDeviceName} from "../../../redux/actions/deviceNames";
+import {updateSearchValue} from "../../../redux/actions/search";
+import CreateDeviceName from "./CreateDeviceName";
 
-const DeviceFind = () => {
+const FindDeviceName = () => {
     const dispatch = useDispatch()
     const searchData = useSelector((state) => state.search.searchValue)
     const handleSearchDataChange = (e) => {
         const searchData = e.target.value
         dispatch(updateSearchValue(searchData))
     }
-    const handleFindClient = () => {
-        dispatch(findDevice(searchData))
+    const handleFindFirm = () => {
+        dispatch(findDeviceName(searchData))
     }
 
     return (
@@ -27,14 +28,18 @@ const DeviceFind = () => {
                     id={styles.find_button}
                     variant="outlined"
                     color="primary"
-                    onClick={handleFindClient}
+                    onClick={handleFindFirm}
                 >Найти</Button>
             </div>
             <div>
-                <Button id={styles.add_button} variant="outlined" color="primary"><a href={'devices/new'}>Добавить</a></Button>
+                <Button id={styles.add_button} variant="outlined" color="primary" onClick={() => {
+                    dispatch(createDeviceNameDialogOpen())
+                }}>Добавить</Button>
             </div>
+
+            <CreateDeviceName/>
         </div>
     )
 }
 
-export default DeviceFind
+export default FindDeviceName

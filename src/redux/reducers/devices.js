@@ -1,5 +1,5 @@
 import {
-    DELETE_DEVICES,
+    DELETE_DEVICES, FIND_DEVICES,
     GET_DEVICE,
     GET_DEVICE_UPDATE_DATA,
     GET_DEVICES,
@@ -48,6 +48,11 @@ export default function devices (state = initialState, action) {
                     ...state.deviceData,
                     ...action.payload
                 }
+            }
+        case FIND_DEVICES:
+            return {
+                ...state,
+                deviceData: action.payload
             }
         default:
             return state

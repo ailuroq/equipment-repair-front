@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {DataGrid} from "@material-ui/data-grid";
 import {getClients} from "../../redux/actions/clients";
 import {getRepairs} from "../../redux/actions/repairs";
+import RepairFind from "./RepairFind";
 
 const Repairs = () => {
     const [repairId, setRepairId] = useState()
@@ -14,6 +15,7 @@ const Repairs = () => {
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'receipt_number', headerName: 'Номер заказа', width: 160, sortable: false},
         {field: 'type', headerName: 'Вид работы', width: 260, sortable: false},
+        {field: 'price', headerName: 'Стоимость', width: 150, sortable: false},
         {
             field: 'completion',
             headerName: 'Состояние',
@@ -70,6 +72,7 @@ const Repairs = () => {
 
     return (
         <div className={styles.repairs}>
+            <RepairFind/>
             <div className={styles.table}>
                 {repairs &&
                 <DataGrid

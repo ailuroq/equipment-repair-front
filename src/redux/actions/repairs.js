@@ -1,14 +1,15 @@
 import {
     DELETE_REPAIRS,
-    FIND_REPAIRS,
+    FIND_REPAIRS, GET_INSERT_REPAIR_INFO,
     GET_POTENTIAL_REPAIR_DATA_TO_DELETE,
     GET_REPAIR_FOR_VIEW,
-    GET_REPAIRS,
+    GET_REPAIRS, GET_UPDATE_REPAIR_DATA,
     INSERT_REPAIR,
     UPDATE_REPAIR
 } from "./types";
 import {API_URL} from "../../constants/urlConstants";
 import axios from "axios";
+import {errorAlert, successAlert} from "./alerts";
 
 const _getRepairs = (repairData) => ({
     type: GET_REPAIRS,
@@ -29,7 +30,7 @@ export const getRepairs = () => {
 }
 
 const _getInsertRepairData = (repairData) => ({
-    type: GET_POTENTIAL_REPAIR_DATA_TO_DELETE,
+    type: GET_INSERT_REPAIR_INFO,
     payload: repairData,
 })
 
@@ -59,9 +60,11 @@ export const insertRepair = (orderId, workId, completion, price) => {
             })
             .then(result => {
                 dispatch(_insertRepair(result.data))
+                dispatch(successAlert())
             })
             .catch(error => {
                 console.log(error)
+                dispatch(errorAlert())
             })
     }
 }
@@ -74,9 +77,31 @@ const _updateRepair = (repairData) => ({
 export const updateRepair = (id, orderId, workId, completion, price) => {
     return dispatch => {
         return axios
-            .put(API_URL + 'repairs/'+id)
+            .post(API_URL + 'repairs/update', {
+                id, orderId, workId, completion, price
+            })
             .then(result => {
                 dispatch(_updateRepair(result.data))
+                dispatch(successAlert())
+            })
+            .catch(error => {
+                dispatch(errorAlert())
+                console.log(error)
+            })
+    }
+}
+
+const _getRepairUpdateInfo = (data) => ({
+    type: GET_UPDATE_REPAIR_DATA,
+    payload: data
+})
+
+export const getRepairUpdateInfo = (id) => {
+    return dispatch => {
+        return axios
+            .get(API_URL + '/repairs/update/info/' + id)
+            .then(result => {
+                dispatch(_getRepairUpdateInfo(result.data))
             })
             .catch(error => {
                 console.log(error)
@@ -89,10 +114,10 @@ const _findRepairs = (repairsData) => ({
     payload: repairsData
 })
 
-export const findRepairs = (completion, price) => {
+export const findRepairs = (data) => {
     return dispatch => {
         return axios
-            .get(API_URL + 'repairs/search?completion=' + completion + '&price=' + price)
+            .get(API_URL + 'repairs/search?data=' + data)
             .then(result => {
                 dispatch(_findRepairs(result.data))
             })

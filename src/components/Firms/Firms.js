@@ -18,6 +18,8 @@ import FirmFind from "./FirmFind";
 const Firms = () => {
     const [dialogOpen, setDialogOpen] = useState(false)
     const [firmId, setFirmId] = useState()
+    const [selectedRows, setSelectedRows] = useState([])
+    const [alertDialogOpen, setAlertDialogOpen] = useState(false)
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'name', headerName: 'Название', width: 160, sortable: false},
@@ -75,6 +77,12 @@ const Firms = () => {
     const handleCloseDialog = () => {
         setDialogOpen(false)
     }
+    const handleAlertDialogOpen = () => {
+        setAlertDialogOpen(true)
+    }
+    const handleAlertDialogClose = () => {
+        setAlertDialogOpen(false)
+    }
     const handleGetPotentialDataToDelete = (firmId) => {
         console.log(firmId)
         dispatch(getPotentialDataToDelete(firmId))
@@ -88,6 +96,12 @@ const Firms = () => {
     return (
         <div className={styles.firms}>
             <div className={styles.table}>
+                {selectedRows.length !== 0 &&
+                <div className={styles.delete_many}>
+                    <Button
+                        onClick={handleAlertDialogOpen}
+                    >Удалить выбранное</Button>
+                </div>}
                 <FirmFind/>
                 <Dialog
                     open={dialogOpen}
@@ -125,6 +139,18 @@ const Firms = () => {
                     checkboxSelection
                     autoHeight={true}
                     disableSelectionOnClick={true}
+                    onSelectionModelChange={(GridSelectionModelChangeParams) => {
+                        // This will return {selections: [selected row indexes]}
+                        console.log(GridSelectionModelChangeParams);
+                        if (Array.isArray(GridSelectionModelChangeParams.selectionModel)) {
+                            // Iterate the selection indexes:
+                            setSelectedRows([])
+                            GridSelectionModelChangeParams.selectionModel.forEach(
+                                // Get the row data:
+                                (selection_index) => setSelectedRows(selectedRows =>[...selectedRows, Number(selection_index)] )
+                            );
+                        }
+                    }}
                 />}
             </div>
         </div>

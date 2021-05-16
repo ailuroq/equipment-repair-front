@@ -1,0 +1,11 @@
+.autocompletes {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+    max-width: 800px;
+    margin: 30px auto 0;
+}
+
+.insert_button {
+    margin-top: 30px;
+}

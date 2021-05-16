@@ -26,6 +26,9 @@ const Header = () => {
             <div>
                 <Link to='/references'>Справочники</Link>
             </div>
+            <div>
+                <Link to='/complex-queries'>Запросы</Link>
+            </div>
         </div>
     );
 }

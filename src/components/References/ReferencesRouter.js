@@ -7,6 +7,7 @@ import Countries from "./Countries/Countries";
 import Posts from "./Posts/Posts";
 import Works from "./Works/Works";
 import {Link} from "react-router-dom";
+import DeviceNames from "./DeviceNames/DeviceNames";
 
 const ReferencesRouter = () => {
     return (
@@ -18,6 +19,7 @@ const ReferencesRouter = () => {
                     <li><Link to='/references/countries'>Страны</Link></li>
                     <li><Link to='/references/posts'>Должности</Link></li>
                     <li><Link to='/references/works'>Виды работ</Link></li>
+                    <li><Link to='/references/device-names'>Название техники</Link></li>
                 </ul>
             </div>
             <Switch>
@@ -26,6 +28,7 @@ const ReferencesRouter = () => {
                 <Route exact path='/references/countries' component={Countries}/>
                 <Route exact path='/references/posts' component={Posts}/>
                 <Route exact path='/references/works' component={Works}/>
+                <Route exact path='/references/device-names' component={DeviceNames}/>
             </Switch>
         </div>
     )

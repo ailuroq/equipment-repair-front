@@ -1,19 +1,16 @@
-.repairs {
-    max-width: 1040px;
+.deviceNames {
+    max-width: 480px;
     text-align: center;
     margin: 20px auto 0;
 }
-
-
-.buttons {
-    margin-left: -30px;
-    padding-top: 12px;
+.table_header_item {
+    border: 1px solid #000;
 }
 
-.buttons li{
-    display: inline;
-    margin-right: 7px;
+.tech {
+    color: #333
 }
+
 .buttons {
     margin-left: -30px;
     padding-top: 12px;
@@ -48,4 +45,10 @@
     margin-left: 20px;
     margin-top: 14px;
     width: 150px;
+}
+
+.delete_many {
+    position: absolute;
+    margin-left: -200px;
+    margin-top: 10px;
 }

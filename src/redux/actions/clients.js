@@ -51,12 +51,15 @@ const _deleteClient = (clientData) => ({
     payload: clientData
 })
 
-export const deleteClient = (id) => {
+export const deleteClient = (ids) => {
     return (dispatch) => {
         return axios
-            .post(API_URL + 'clients/delete/' + id)
+            .post(API_URL + 'clients/delete/', {
+                ids
+            })
             .then(result => {
                 dispatch(_deleteClient(result.data))
+                dispatch(getClients())
                 dispatch(successAlert())
             })
             .catch(error => {

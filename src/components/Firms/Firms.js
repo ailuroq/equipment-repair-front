@@ -20,6 +20,7 @@ const Firms = () => {
     const [firmId, setFirmId] = useState()
     const [selectedRows, setSelectedRows] = useState([])
     const [alertDialogOpen, setAlertDialogOpen] = useState(false)
+
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'name', headerName: 'Название', width: 160, sortable: false},
@@ -87,22 +88,20 @@ const Firms = () => {
         console.log(firmId)
         dispatch(getPotentialDataToDelete(firmId))
     }
-    const handleDeleteFirmById = firmId => {
-        const ids = []
-        ids.push(firmId)
+    const handleDeleteFirmById = ids => {
         dispatch(deleteFirm(ids))
     }
 
     return (
         <div className={styles.firms}>
             <div className={styles.table}>
+                <FirmFind/>
                 {selectedRows.length !== 0 &&
                 <div className={styles.delete_many}>
                     <Button
                         onClick={handleAlertDialogOpen}
                     >Удалить выбранное</Button>
                 </div>}
-                <FirmFind/>
                 <Dialog
                     open={dialogOpen}
                     onClose={handleCloseDialog}
@@ -124,34 +123,67 @@ const Firms = () => {
                         </Button>
                         <Button onClick={()=>{
                             handleCloseDialog()
-                            handleDeleteFirmById(firmId)
+                            const ids = []
+                            ids.push(firmId)
+                            handleDeleteFirmById(ids)
                         }} color="primary" autoFocus>
                             Все равно удалить
                         </Button>
                     </DialogActions>
                 </Dialog>
+
                 {firms &&
-                <DataGrid
-                    rows={firms}
-                    columns={columns}
-                    pageSize={50}
-                    rowsPerPageOptions={[50, 250, 500]}
-                    checkboxSelection
-                    autoHeight={true}
-                    disableSelectionOnClick={true}
-                    onSelectionModelChange={(GridSelectionModelChangeParams) => {
-                        // This will return {selections: [selected row indexes]}
-                        console.log(GridSelectionModelChangeParams);
-                        if (Array.isArray(GridSelectionModelChangeParams.selectionModel)) {
-                            // Iterate the selection indexes:
-                            setSelectedRows([])
-                            GridSelectionModelChangeParams.selectionModel.forEach(
-                                // Get the row data:
-                                (selection_index) => setSelectedRows(selectedRows =>[...selectedRows, Number(selection_index)] )
-                            );
-                        }
-                    }}
-                />}
+                    <div>
+                        <Dialog
+                            open={alertDialogOpen}
+                            onClose={() => setAlertDialogOpen(false)}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    Вы действительно хотите удалить выбранные данные? Могут пострадать невинные
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setAlertDialogOpen(false)} color="primary">
+                                    Не удалять
+                                </Button>
+                                <Button onClick={()=>{
+                                    setAlertDialogOpen(false)
+                                    console.log(selectedRows)
+                                    handleDeleteFirmById(selectedRows)
+                                }} color="primary" autoFocus>
+                                    Все равно удалить
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                        <div>
+                            <DataGrid
+                                rows={firms}
+                                columns={columns}
+                                pageSize={50}
+                                rowsPerPageOptions={[50, 250, 500]}
+                                checkboxSelection
+                                autoHeight={true}
+                                disableSelectionOnClick={true}
+                                onSelectionModelChange={(GridSelectionModelChangeParams) => {
+                                    // This will return {selections: [selected row indexes]}
+                                    console.log(GridSelectionModelChangeParams);
+                                    if (Array.isArray(GridSelectionModelChangeParams.selectionModel)) {
+                                        // Iterate the selection indexes:
+                                        setSelectedRows([])
+                                        GridSelectionModelChangeParams.selectionModel.forEach(
+                                            // Get the row data:
+                                            (selection_index) => setSelectedRows(selectedRows =>[...selectedRows, Number(selection_index)] )
+                                        );
+                                    }
+                                }}
+                            />
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     )

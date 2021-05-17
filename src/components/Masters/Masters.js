@@ -18,6 +18,8 @@ import {deleteMaster, getMasters, getPotentialDataToDelete} from "../../redux/ac
 const Masters = () => {
     const [dialogOpen, setDialogOpen] = useState(false)
     const [masterId, setMasterId] = useState()
+    const [selectedRows, setSelectedRows] = useState([])
+    const [alertDialogOpen, setAlertDialogOpen] = useState(false)
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'lastname', headerName: 'Фамилия', width: 160, sortable: false},
@@ -85,6 +87,7 @@ const Masters = () => {
     return (
         <div className={styles.masters}>
             {potentialDataToDelete &&
+
             <Dialog
                 open={dialogOpen}
                 onClose={handleCloseDialog}
@@ -105,24 +108,73 @@ const Masters = () => {
                     </Button>
                     <Button onClick={()=>{
                         handleCloseDialog()
-                        handleDeleteMasterById(masterId)
+                        const array = []
+                        array.push(masterId)
+                        console.log(array)
+                        handleDeleteMasterById(array)
                     }} color="primary" autoFocus>
                         Все равно удалить
                     </Button>
                 </DialogActions>
             </Dialog>}
             <MastersFind/>
+            {selectedRows.length !== 0 &&
+            <div className={styles.delete_many}>
+                <Button
+                    onClick={() => setAlertDialogOpen(true)}
+                >Удалить выбранное</Button>
+            </div>}
             <div className={styles.table}>
                 {masters &&
-                <DataGrid
-                    rows={masters}
-                    columns={columns}
-                    pageSize={50}
-                    rowsPerPageOptions={[50, 250, 500]}
-                    checkboxSelection
-                    autoHeight={true}
-                    disableSelectionOnClick={true}
-                />}
+                    <div>
+                        <Dialog
+                            open={alertDialogOpen}
+                            onClose={() => setAlertDialogOpen(false)}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    Вы действительно хотите удалить выбранные данные? Могут пострадать невинные
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setAlertDialogOpen(false)} color="primary">
+                                    Не удалять
+                                </Button>
+                                <Button onClick={()=>{
+                                    setAlertDialogOpen(false)
+                                    console.log(selectedRows)
+                                    handleDeleteMasterById(selectedRows)
+                                }} color="primary" autoFocus>
+                                    Все равно удалить
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                        <DataGrid
+                            rows={masters}
+                            columns={columns}
+                            pageSize={50}
+                            rowsPerPageOptions={[50, 250, 500]}
+                            checkboxSelection
+                            onSelectionModelChange={(GridSelectionModelChangeParams) => {
+                                // This will return {selections: [selected row indexes]}
+                                console.log(GridSelectionModelChangeParams);
+                                if (Array.isArray(GridSelectionModelChangeParams.selectionModel)) {
+                                    // Iterate the selection indexes:
+                                    setSelectedRows([])
+                                    GridSelectionModelChangeParams.selectionModel.forEach(
+                                        // Get the row data:
+                                        (selection_index) => setSelectedRows(selectedRows =>[...selectedRows, Number(selection_index)] )
+                                    );
+                                }
+                            }}
+                            autoHeight={true}
+                            disableSelectionOnClick={true}
+                        />
+                    </div>
+                }
             </div>
         </div>
 

@@ -142,6 +142,7 @@ export const deleteDevices = (ids) => {
             })
             .then(result => {
                 dispatch(_deleteDevices(result.data))
+                dispatch(getDevices())
             })
             .catch(error => {
                 console.log(error)

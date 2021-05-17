@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {getOrders} from "../../redux/actions/orders";
 import styles from './Orders.module.css'
@@ -6,8 +6,16 @@ import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
 import VisibilityTwoToneIcon from "@material-ui/icons/VisibilityTwoTone";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {DataGrid} from "@material-ui/data-grid";
+import {Button} from "@material-ui/core";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
+import Dialog from "@material-ui/core/Dialog";
 
 const Orders = () => {
+    const [selectedRows, setSelectedRows] = useState([])
+    const [alertDialogOpen, setAlertDialogOpen] = useState(false)
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'receipt_number', headerName: 'Квитанция №', width: 160, sortable: false},
@@ -73,17 +81,50 @@ const Orders = () => {
     }, [dispatch])
     return (
         <div className={styles.orders}>
+            {selectedRows.length !== 0 &&
+            <div className={styles.delete_many}>
+                <Button
+                    onClick={() => setAlertDialogOpen(true)}
+                >Удалить выбранное</Button>
+            </div>}
             <div className={styles.table}>
                 {orders &&
-                <DataGrid
-                    rows={orders}
-                    columns={columns}
-                    pageSize={50}
-                    rowsPerPageOptions={[50, 250, 500]}
-                    checkboxSelection
-                    autoHeight={true}
-                    disableSelectionOnClick={true}
-                />}
+                    <div>
+                        <Dialog
+                            open={alertDialogOpen}
+                            onClose={() => setAlertDialogOpen(false)}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    Вы действительно хотите удалить выбранные данные? Могут пострадать невинные
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setAlertDialogOpen(false)} color="primary">
+                                    Не удалять
+                                </Button>
+                                <Button onClick={()=>{
+                                    setAlertDialogOpen(false)
+                                    console.log(selectedRows)
+                                }} color="primary" autoFocus>
+                                    Все равно удалить
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                        <DataGrid
+                            rows={orders}
+                            columns={columns}
+                            pageSize={50}
+                            rowsPerPageOptions={[50, 250, 500]}
+                            checkboxSelection
+                            autoHeight={true}
+                            disableSelectionOnClick={true}
+                        />
+                    </div>
+                }
             </div>
         </div>
     )

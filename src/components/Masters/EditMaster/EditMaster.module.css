@@ -1,0 +1,13 @@
+.forms {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    max-width: 1500px;
+    margin: 40px auto;
+}
+
+.update_button {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+}

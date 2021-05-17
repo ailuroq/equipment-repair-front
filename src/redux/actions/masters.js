@@ -51,10 +51,12 @@ const _deleteMaster = (masterData) => ({
     payload: masterData
 })
 
-export const deleteMaster = (masterId) => {
+export const deleteMaster = (ids) => {
     return (dispatch) => {
         return axios
-            .post(API_URL + 'masters/delete/' + masterId)
+            .post(API_URL + 'masters/delete', {
+                ids
+            })
             .then(result => {
                 dispatch(_deleteMaster(result.data))
                 dispatch(getMasters())
@@ -148,10 +150,10 @@ const _getUpdateMasterInfo = (data) => ({
     payload: data
 })
 
-export const getUpdateMasterInfo = (data) => {
+export const getUpdateMasterInfo = (id) => {
     return dispatch => {
         return axios
-            .get(API_URL + 'masters/update/info?data='+data)
+            .get(API_URL + 'masters/update/info/'+id)
             .then(result => {
                 dispatch(_getUpdateMasterInfo(result.data))
             })
@@ -174,9 +176,11 @@ export const updateMaster = (id, lastname, firstname, middlename, experience, fi
             })
             .then(result => {
                 dispatch(_updateMaster(result.data))
+                dispatch(successAlert())
             })
             .catch(error => {
                 console.log(error)
+                dispatch(errorAlert())
             })
     }
 }

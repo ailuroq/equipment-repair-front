@@ -159,8 +159,10 @@ export const deleteRepairs = (ids) => {
             .then(result => {
                 dispatch(_deleteRepairs(result.data))
                 dispatch(getRepairs())
+                dispatch(successAlert())
             })
             .catch(error => {
+                dispatch(errorAlert())
                 console.log(error)
             })
     }

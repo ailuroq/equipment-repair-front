@@ -19,6 +19,8 @@ import ClientFind from "./ClientFind";
 const Clients = () => {
     const [dialogOpen, setDialogOpen] = useState(false)
     const [userId, setUserId] = useState([])
+    const [selectedRows, setSelectedRows] = useState([])
+    const [alertDialogOpen, setAlertDialogOpen] = useState(false)
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'lastname', headerName: 'Фамилия', width: 160, sortable: false},
@@ -106,7 +108,9 @@ const Clients = () => {
                     </Button>
                     <Button onClick={()=>{
                         handleCloseDialog()
-                        handleDeleteClientById(userId)
+                        const array = []
+                        array.push(userId)
+                        handleDeleteClientById(array)
                     }} color="primary" autoFocus>
                         Все равно удалить
                     </Button>
@@ -115,15 +119,63 @@ const Clients = () => {
             <ClientFind/>
             <div className={styles.table}>
                 {clients &&
-                <DataGrid
-                    rows={clients}
-                    columns={columns}
-                    pageSize={50}
-                    rowsPerPageOptions={[50, 250, 500]}
-                    checkboxSelection
-                    autoHeight={true}
-                    disableSelectionOnClick={true}
-                />}
+                    <div>
+                        {selectedRows.length !== 0 &&
+                        <div className={styles.delete_many}>
+                            <Button
+                                onClick={() => setAlertDialogOpen(true)}
+                            >Удалить выбранное</Button>
+                        </div>}
+                        <Dialog
+                            open={alertDialogOpen}
+                            onClose={() => setAlertDialogOpen(false)}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText id="alert-dialog-description">
+                                    Вы действительно хотите удалить выбранные данные? Могут пострадать невинные
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={() => setAlertDialogOpen(false)} color="primary">
+                                    Не удалять
+                                </Button>
+                                <Button onClick={()=>{
+                                    setAlertDialogOpen(false)
+                                    console.log(selectedRows)
+                                    handleDeleteClientById(selectedRows)
+                                }} color="primary" autoFocus>
+                                    Все равно удалить
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                        <div>
+                            <DataGrid
+                                rows={clients}
+                                columns={columns}
+                                pageSize={50}
+                                rowsPerPageOptions={[50, 250, 500]}
+                                checkboxSelection
+                                onSelectionModelChange={(GridSelectionModelChangeParams) => {
+                                    // This will return {selections: [selected row indexes]}
+                                    console.log(GridSelectionModelChangeParams);
+                                    if (Array.isArray(GridSelectionModelChangeParams.selectionModel)) {
+                                        // Iterate the selection indexes:
+                                        setSelectedRows([])
+                                        GridSelectionModelChangeParams.selectionModel.forEach(
+                                            // Get the row data:
+                                            (selection_index) => setSelectedRows(selectedRows =>[...selectedRows, Number(selection_index)] )
+                                        );
+                                    }
+                                }}
+                                autoHeight={true}
+                                disableSelectionOnClick={true}
+                            />
+                        </div>
+                    </div>
+                }
             </div>
         </div>
 

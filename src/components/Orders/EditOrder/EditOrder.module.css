@@ -1,0 +1,5 @@
+.forms {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    margin: 50px;
+}

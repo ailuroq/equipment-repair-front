@@ -4,13 +4,14 @@ import {
     GET_ORDER,
     GET_ORDER_UPDATE_DATA,
     GET_ORDERS,
-    GET_POTENTIAL_ORDER_DATA_TO_DELETE
+    GET_POTENTIAL_ORDER_DATA_TO_DELETE, GET_UPDATE_INFO_ORDER
 } from "../actions/types";
 
 const initialState = {
     orderData: {},
     insertInfo: {},
-    potentialDataToDelete: {}
+    potentialDataToDelete: {},
+    updateInfo: {}
 }
 
 export default function orders (state = initialState, action) {
@@ -46,6 +47,11 @@ export default function orders (state = initialState, action) {
                     ...state.orderData,
                     ...action.payload
                 }
+            }
+        case GET_UPDATE_INFO_ORDER:
+            return {
+                ...state,
+                updateInfo: action.payload
             }
         case FIND_ORDERS:
             return {

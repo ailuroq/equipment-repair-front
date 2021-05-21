@@ -1,4 +1,14 @@
 .queries_header li {
     display: inline;
     margin-left: 30px;
+    font-size: 18px;
+}
+
+.queries p {
+    font-size: 20px;
+}
+
+.queries a {
+    color: black;
+    text-decoration: none;
 }

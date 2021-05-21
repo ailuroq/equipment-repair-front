@@ -1,0 +1,22 @@
+.view_order p {
+    font-size: 19px;
+}
+
+.view_order img {
+    max-width: 200px;
+}
+
+.repairs {
+    max-width: 1000px;
+    margin: 0 auto;
+    justify-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.repair {
+    margin-left: 30px;
+}
+.repair p {
+    font-size: 19px;
+}

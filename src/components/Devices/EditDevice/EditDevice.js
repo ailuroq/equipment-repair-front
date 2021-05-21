@@ -71,7 +71,6 @@ const EditDevice = () => {
     }
 
     const handleSubmit = () => {
-        console.log('here', image)
         dispatch(updateDevicePhoto(id, image))
         dispatch(updateDevice(id, name, country, client, brand, model))
     }

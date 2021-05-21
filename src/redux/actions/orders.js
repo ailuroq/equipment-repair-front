@@ -4,7 +4,7 @@ import {
     FIND_ORDERS, GET_INSERT_ORDER_INFO,
     GET_ORDER,
     GET_ORDERS,
-    GET_POTENTIAL_ORDER_DATA_TO_DELETE,
+    GET_POTENTIAL_ORDER_DATA_TO_DELETE, GET_UPDATE_INFO_ORDER,
     INSERT_ORDER, UPDATE_ORDER
 } from "./types";
 import {API_URL} from "../../constants/urlConstants";
@@ -159,6 +159,24 @@ export const updateOrder = (id, receiptNumber, orderDate, completionDate, device
             .catch(error => {
                 console.log(error)
                 dispatch(errorAlert())
+            })
+    }
+}
+
+const _updateOrderInfo = data => ({
+    type: GET_UPDATE_INFO_ORDER,
+    payload: data
+})
+
+export const getUpdateOrderInfo = id => {
+    return dispatch => {
+        return axios
+            .get(API_URL + 'orders/update/info/' + id)
+            .then(result => {
+                dispatch(_updateOrderInfo(result.data))
+            })
+            .catch(error => {
+                console.log(error)
             })
     }
 }

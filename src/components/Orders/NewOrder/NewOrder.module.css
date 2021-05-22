@@ -1,11 +1,15 @@
 .autocompletes {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     justify-items: center;
-    max-width: 800px;
+    max-width: 900px;
     margin: 30px auto 0;
 }
 
 .insert_button {
     margin-top: 30px;
+}
+
+.combo_box {
+    margin-left: 35px;
 }

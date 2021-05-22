@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router";
-import {getUpdateOrderInfo} from "../../../redux/actions/orders";
+import {getUpdateOrderInfo, updateOrder} from "../../../redux/actions/orders";
 import styles from './EditOrder.module.css';
 import {Button, TextField} from "@material-ui/core";
 import DateFnsUtils from "@date-io/date-fns";
 import Grid from "@material-ui/core/Grid";
 import {KeyboardDatePicker, MuiPickersUtilsProvider} from "@material-ui/pickers";
 import {Autocomplete} from "@material-ui/lab";
+
 
 const EditOrder = () => {
     const {id} = useParams()
@@ -69,6 +70,7 @@ const EditOrder = () => {
 
     const handleSubmit = () => {
         if (!orderCompleted) setCompletionDate(null)
+        dispatch(updateOrder(id, receiptNumber, orderDate, completionDate, orderCompleted, deviceId, masterId))
     }
     return (
         <div>

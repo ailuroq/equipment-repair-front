@@ -12,3 +12,27 @@
     color: black;
     text-decoration: none;
 }
+
+.master_orders {
+    max-width: 900px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.button {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    margin-bottom: 40px;
+}
+
+.masters_result {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.master_result_item {
+    max-width: 700px;
+    margin-left: 200px;
+}

@@ -151,7 +151,8 @@ const Works = () => {
                         <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                                Вы действительно хотите удалить выбранные данные? Могут пострадать невинные
+                                Вы действительно хотите удалить выбранные данные?
+                                Не будет нежелательного удаления данных
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>

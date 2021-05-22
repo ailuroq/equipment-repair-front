@@ -17,7 +17,9 @@ const NewOrder = () => {
     const [deviceId, setDeviceId] = useState()
     const [masterId, setMasterId] = useState()
     const [ready, setReady] = useState()
-    const [disable, setDisable] = useState()
+    const [disable, setDisable] = useState(true)
+    const [dateAlert, setDateAlert] = useState(false)
+
 
 
     const dispatch = useDispatch()
@@ -25,25 +27,35 @@ const NewOrder = () => {
     console.log(insertData)
     const handleOrderDateChange = (date) => {
         setOrderDate(date)
+        validateFields(receiptNumber, date, completionDate, orderCompleted, deviceId, masterId)
     }
     const handleCompletionDateChange = date => {
         setCompletionDate(date)
+        validateFields(receiptNumber, orderDate, date, orderCompleted, deviceId, masterId)
     }
-    const handleOrderCompletedChange = data => {
-        setOrderCompleted(data)
-    }
-    const handleDeviceChange = id => {
-        setDeviceId(id)
-    }
-    const handleMasterChange = id => {
-        setMasterId(id)
+    const handleReceiptNumberChange = (e) => {
+        const receiptNumber = e.target.value;
+        setReceiptNumber(receiptNumber);
+        validateFields(receiptNumber, orderDate, completionDate, orderCompleted, deviceId, masterId)
     }
     const handleSubmit = () => {
         dispatch(insertOrder())
     }
-
+    const validateFields = (receiptNumber, orderDate, completionDate, orderCompleted, deviceId, masterId) => {
+        if (receiptNumber && orderCompleted !== null && deviceId && masterId) {
+            setDisable(false)
+        }
+        else setDisable(true)
+        if (new Date(orderDate) > new Date(completionDate)) {
+            setDisable(true)
+            setDateAlert(true)
+        }
+        else setDateAlert(false)
+    }
     useEffect(() => {
         dispatch(getInsertOrderInfo())
+        setOrderDate(new Date())
+        setCompletionDate(new Date())
     }, [dispatch])
 
     return (
@@ -63,7 +75,7 @@ const NewOrder = () => {
                                 format="dd/MM/yyyy"
                                 margin="normal"
                                 id="date-picker-inline"
-                                label="Выбор даты"
+                                label="Выбор даты заказа"
                                 value={orderDate}
                                 onChange={handleOrderDateChange}
                                 KeyboardButtonProps={{
@@ -80,7 +92,7 @@ const NewOrder = () => {
                                 format="dd/MM/yyyy"
                                 margin="normal"
                                 id="date-picker-inline"
-                                label="Выбор даты"
+                                label="Выбор даты выполнения"
                                 value={completionDate}
                                 onChange={handleCompletionDateChange}
                                 KeyboardButtonProps={{
@@ -92,15 +104,30 @@ const NewOrder = () => {
                 </div>
                 <div className={styles.autocompletes}>
                     <div>
+                        <TextField
+                            className={styles.text_field_item}
+                            id="model"
+                            label="Номер заказа"
+                            type='number'
+                            value={receiptNumber}
+                            helperText={receiptNumber === "" ? 'Обязательное поле' : ' '}
+                            onChange={handleReceiptNumberChange}
+                        />
+                    </div>
+                    <div>
                         <Autocomplete
                             id="name"
                             className={styles.combo_box}
                             options={insertData.masters}
                             autoHighlight
+                            disableClearable
                             style={{ width: 200 }}
                             getOptionLabel={(option) => option.id + ' ' +option.firstname}
                             onChange={(e, value) => {
-                                if (value) setMasterId(value.id)
+                                if (value) {
+                                    setMasterId(value.id)
+                                    validateFields(receiptNumber, orderDate, completionDate, orderCompleted, deviceId, value.id)
+                                }
                             }}
                             renderInput={(params) => (
                                 <TextField
@@ -121,10 +148,14 @@ const NewOrder = () => {
                             className={styles.combo_box}
                             options={insertData.devices}
                             autoHighlight
+                            disableClearable
                             style={{ width: 200 }}
                             getOptionLabel={(option) => option.id + ' ' + option.name}
                             onChange={(e, value) => {
-                                if (value) setDeviceId(value.id)
+                                if (value) {
+                                    setDeviceId(value.id)
+                                    validateFields(receiptNumber, orderDate, completionDate, orderCompleted, value.id, masterId)
+                                }
                             }}
                             renderInput={(params) => (
                                 <TextField
@@ -148,10 +179,17 @@ const NewOrder = () => {
                                {ready: 'Не готов'}
                            ]}
                            autoHighlight
+                           disableClearable
                            style={{ width: 200 }}
                            getOptionLabel={(option) => option.ready}
                            onChange={(e, value) => {
-                               if (value) setReady(value.ready)
+                               if (value) {
+                                   let ready
+                                   if (value.ready === 'Готов') ready = true
+                                   if (value.ready === 'Не готов') ready = false
+                                   setReady(ready)
+                                   validateFields(receiptNumber, orderDate, completionDate, ready, deviceId, masterId)
+                               }
                            }}
                            renderInput={(params) => (
                                <TextField
@@ -167,6 +205,7 @@ const NewOrder = () => {
                        />
                    </div>
                 </div>
+                {dateAlert && <p>Дата заказа должна быть меньше, чем дата выполнения</p>}
                 <div className={styles.insert_button}>
                     <Button
                         variant="contained"

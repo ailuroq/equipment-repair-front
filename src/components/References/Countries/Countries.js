@@ -157,7 +157,8 @@ const Countries = () => {
                         <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                                Вы действительно хотите удалить выбранные данные? Могут пострадать невинные
+                                Вы действительно хотите удалить выбранные данные?
+                                Может произойти нежелательное удаление в таблицах: техники, заказов, работ
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>

@@ -36,3 +36,61 @@
     max-width: 700px;
     margin-left: 200px;
 }
+
+.brand_and_devices {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.brand_and_devices_grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+}
+
+.brand_submit_button {
+    margin: 30px;
+}
+.not_made_orders {
+    max-width: 700px;
+    margin: 30px auto;
+}
+
+.not_made_orders button {
+    margin-bottom: 30px;
+}
+
+.count_masters_per_firm {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.count_masters_per_firm button {
+    margin: 25px;
+}
+
+.group_devices_by_countries {
+    max-width: 970px;
+    margin: 0 auto;
+}
+
+.group_devices_by_countries button {
+    margin: 30px 0;
+}
+.group_repairs_by_type {
+    max-width: 770px;
+    margin: 0 auto;
+}
+
+.group_repairs_by_type button {
+    margin: 30px 0;
+}
+
+.count_orders_per_firm {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.count_orders_per_firm button {
+    margin: 20px 0;
+}

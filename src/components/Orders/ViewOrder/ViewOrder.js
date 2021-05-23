@@ -43,6 +43,7 @@ const ViewOrder = () => {
                                 )
                             })}
                         </div>}
+                        {orderInfo && <p>Итоговая цена за весь заказ: <b>{orderInfo?.price?.sum}</b></p>}
                     </div>
                 </div>
             </div>}

@@ -7,7 +7,8 @@ import {getFirmForView} from "../../../redux/actions/firms";
 const ViewFirm = () => {
     const {id} = useParams()
     const dispatch = useDispatch()
-    const firm = useSelector(state => state.firms.firmData[0])
+    const firm = useSelector(state => state.firms.firmData.firm)
+    const count = useSelector(state => state.firms.firmData.count)
     console.log(firm)
     useEffect(() => {
         dispatch(getFirmForView(id))
@@ -21,6 +22,7 @@ const ViewFirm = () => {
                 <p>Адрес: {firm.address}</p>
                 <p>Телефон: {firm.phone}</p>
                 <p>Город: {firm.city}</p>
+                <p>Количество заказов у данной фирмы: {count.count}</p>
             </div>
             }
         </div>

@@ -10,39 +10,32 @@ import {Autocomplete} from "@material-ui/lab";
 import SaveIcon from "@material-ui/icons/Save";
 
 const NewOrder = () => {
-    const [receiptNumber, setReceiptNumber] = useState()
     const [orderDate, setOrderDate] = useState()
     const [completionDate, setCompletionDate] = useState()
     const [orderCompleted, setOrderCompleted] = useState(false)
     const [deviceId, setDeviceId] = useState()
     const [masterId, setMasterId] = useState()
-    const [ready, setReady] = useState()
+    const [ready, setReady] = useState(null)
     const [disable, setDisable] = useState(true)
     const [dateAlert, setDateAlert] = useState(false)
-
-
 
     const dispatch = useDispatch()
     const insertData = useSelector(state => state.orders.insertInfo)
     console.log(insertData)
     const handleOrderDateChange = (date) => {
         setOrderDate(date)
-        validateFields(receiptNumber, date, completionDate, orderCompleted, deviceId, masterId)
+        validateFields(date, completionDate, orderCompleted, deviceId, masterId)
     }
     const handleCompletionDateChange = date => {
         setCompletionDate(date)
-        validateFields(receiptNumber, orderDate, date, orderCompleted, deviceId, masterId)
-    }
-    const handleReceiptNumberChange = (e) => {
-        const receiptNumber = e.target.value;
-        setReceiptNumber(receiptNumber);
-        validateFields(receiptNumber, orderDate, completionDate, orderCompleted, deviceId, masterId)
+        validateFields(orderDate, date, orderCompleted, deviceId, masterId)
     }
     const handleSubmit = () => {
-        dispatch(insertOrder())
+        dispatch(insertOrder(orderDate, completionDate, orderCompleted, deviceId, masterId))
     }
-    const validateFields = (receiptNumber, orderDate, completionDate, orderCompleted, deviceId, masterId) => {
-        if (receiptNumber && orderCompleted !== null && deviceId && masterId) {
+    const validateFields = (orderDate, completionDate, orderCompleted, deviceId, masterId) => {
+        debugger
+        if (orderCompleted !== null && deviceId && masterId) {
             setDisable(false)
         }
         else setDisable(true)
@@ -56,6 +49,7 @@ const NewOrder = () => {
         dispatch(getInsertOrderInfo())
         setOrderDate(new Date())
         setCompletionDate(new Date())
+        setOrderCompleted(null)
     }, [dispatch])
 
     return (
@@ -103,17 +97,7 @@ const NewOrder = () => {
                     </MuiPickersUtilsProvider>
                 </div>
                 <div className={styles.autocompletes}>
-                    <div>
-                        <TextField
-                            className={styles.text_field_item}
-                            id="model"
-                            label="Номер заказа"
-                            type='number'
-                            value={receiptNumber}
-                            helperText={receiptNumber === "" ? 'Обязательное поле' : ' '}
-                            onChange={handleReceiptNumberChange}
-                        />
-                    </div>
+
                     <div>
                         <Autocomplete
                             id="name"
@@ -126,7 +110,7 @@ const NewOrder = () => {
                             onChange={(e, value) => {
                                 if (value) {
                                     setMasterId(value.id)
-                                    validateFields(receiptNumber, orderDate, completionDate, orderCompleted, deviceId, value.id)
+                                    validateFields(orderDate, completionDate, orderCompleted, deviceId, value.id)
                                 }
                             }}
                             renderInput={(params) => (
@@ -154,7 +138,7 @@ const NewOrder = () => {
                             onChange={(e, value) => {
                                 if (value) {
                                     setDeviceId(value.id)
-                                    validateFields(receiptNumber, orderDate, completionDate, orderCompleted, value.id, masterId)
+                                    validateFields(orderDate, completionDate, orderCompleted, value.id, masterId)
                                 }
                             }}
                             renderInput={(params) => (
@@ -187,8 +171,8 @@ const NewOrder = () => {
                                    let ready
                                    if (value.ready === 'Готов') ready = true
                                    if (value.ready === 'Не готов') ready = false
-                                   setReady(ready)
-                                   validateFields(receiptNumber, orderDate, completionDate, ready, deviceId, masterId)
+                                   setOrderCompleted(ready)
+                                   validateFields(orderDate, completionDate, ready, deviceId, masterId)
                                }
                            }}
                            renderInput={(params) => (

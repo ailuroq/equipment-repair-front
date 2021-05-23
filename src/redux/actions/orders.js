@@ -106,6 +106,7 @@ const _findOrder = (data) => ({
 })
 
 export const findOrder = (data) => {
+    console.log(data)
     return dispatch => {
         return axios
             .get(API_URL + 'orders/search?data=' + data)
@@ -123,11 +124,11 @@ const _insertOrder = (orderData) => ({
     payload: orderData
 })
 
-export const insertOrder = (receiptNumber, orderDate, completionDate, deviceId, masterId) => {
+export const insertOrder = (orderDate, completionDate, orderCompleted, deviceId, masterId) => {
     return dispatch => {
         return axios
             .post(API_URL + 'orders/', {
-                receiptNumber, orderDate, completionDate, deviceId, masterId
+                orderDate, completionDate, orderCompleted, deviceId, masterId
             })
             .then(result => {
                 dispatch(_insertOrder(result.data))

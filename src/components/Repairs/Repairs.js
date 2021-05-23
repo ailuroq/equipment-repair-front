@@ -56,11 +56,6 @@ const Repairs = () => {
                             </a>
                         </li>
                         <li>
-                            <a href={'repairs/view/' + params.getValue("id")}>
-                                <VisibilityTwoToneIcon style={{color: '#3e78b6'}}/>
-                            </a>
-                        </li>
-                        <li>
                             <DeleteIcon style={{color: '#4f4f4f'}}
                                         onClick={(e) => {
                                             setRepairId(params.getValue('id'))

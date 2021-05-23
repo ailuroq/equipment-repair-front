@@ -5,6 +5,7 @@ const Repair = (props) => {
     return (
         <div className={styles.repair}>
             <p>Цена: {props.info.price}р</p>
+            <p>id: {props.info.id}</p>
             {props.info.completion && <p>Состояние: Выполнено</p>}
             {!props.info.completion && <p>Состояние: Не выполнено</p>}
             <p>Вид работы: {props.info.type}</p>

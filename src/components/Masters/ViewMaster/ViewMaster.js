@@ -8,7 +8,7 @@ const ViewMaster = () => {
     const {id} = useParams()
 
     const dispatch = useDispatch()
-    const master = useSelector(state => state.masters.masterViewInfo.master)
+    const master = useSelector(state => state.masters.masterViewInfo?.master)
     console.log(master)
     useEffect(() => {
         dispatch(getMaster(id))

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {getOrders} from "../../redux/actions/orders";
+import {deleteOrders, getOrders} from "../../redux/actions/orders";
 import styles from './Orders.module.css'
 import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
 import VisibilityTwoToneIcon from "@material-ui/icons/VisibilityTwoTone";
@@ -12,10 +12,16 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions";
 import Dialog from "@material-ui/core/Dialog";
+import {caseOfNum} from "../common/convertCase";
+import {getPotentialDataToDelete} from "../../redux/actions/orders";
+import OrderFind from "./OrderFind";
+
 
 const Orders = () => {
     const [selectedRows, setSelectedRows] = useState([])
     const [alertDialogOpen, setAlertDialogOpen] = useState(false)
+    const [dialogOpen, setDialogOpen] = useState(false)
+    const [orderId, setOrderId] = useState()
     const columns = [
         {field: 'id', headerName: 'ID', width: 100, sortable: false},
         {field: 'receipt_number', headerName: 'Квитанция №', width: 160, sortable: false},
@@ -65,6 +71,11 @@ const Orders = () => {
                         </li>
                         <li>
                             <DeleteIcon style={{color: '#4f4f4f'}}
+                                        onClick={(e) => {
+                                            setOrderId(params.getValue("id"))
+                                            handleGetPotentialDataToDelete(params.getValue("id"))
+                                            handleOpenDialog()
+                                        }}
                                         cursor={'pointer'}
                             />
                         </li>
@@ -75,10 +86,23 @@ const Orders = () => {
     ]
     const dispatch = useDispatch()
     const {orders} = useSelector((state) => state.orders.orderData)
-    console.log(orders)
+    const potentialDataToDelete = useSelector(state => state.orders.potentialDataToDelete.problems)
+    console.log(potentialDataToDelete)
     useEffect(() => {
         dispatch(getOrders())
     }, [dispatch])
+    const handleOpenDialog = () => {
+        setDialogOpen(true)
+    }
+    const handleGetPotentialDataToDelete = (orderId) => {
+        dispatch(getPotentialDataToDelete(orderId))
+    }
+    const handleCloseDialog = () => {
+        setDialogOpen(false)
+    }
+    const handleDeleteOrderById = (ids) => {
+        dispatch(deleteOrders(ids))
+    }
     return (
         <div className={styles.orders}>
             {selectedRows.length !== 0 &&
@@ -88,8 +112,37 @@ const Orders = () => {
                 >Удалить выбранное</Button>
             </div>}
             <div className={styles.table}>
+                <OrderFind/>
                 {orders &&
                     <div>
+                        <Dialog
+                            open={dialogOpen}
+                            onClose={handleCloseDialog}
+                            aria-labelledby="alert-dialog-title"
+                            aria-describedby="alert-dialog-description"
+                        >
+                            <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
+                            <DialogContent>
+                                {potentialDataToDelete?.repairs &&
+                                <DialogContentText id="alert-dialog-description">
+                                    При удалении данного пользователя (id: {orderId}) могут быть удалены следующие данные: <br/>
+                                    В таблице работ: {potentialDataToDelete?.repairs} {caseOfNum(potentialDataToDelete?.repairs, ['строка', 'строки', 'строк'])}<br/>
+                                </DialogContentText>}
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleCloseDialog} color="primary">
+                                    Не удалять
+                                </Button>
+                                <Button onClick={()=>{
+                                    handleCloseDialog()
+                                    const array = []
+                                    array.push(orderId)
+                                    handleDeleteOrderById(array)
+                                }} color="primary" autoFocus>
+                                    Все равно удалить
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
                         <Dialog
                             open={alertDialogOpen}
                             onClose={() => setAlertDialogOpen(false)}
@@ -109,6 +162,7 @@ const Orders = () => {
                                 <Button onClick={()=>{
                                     setAlertDialogOpen(false)
                                     console.log(selectedRows)
+                                    handleDeleteOrderById(selectedRows)
                                 }} color="primary" autoFocus>
                                     Все равно удалить
                                 </Button>
@@ -122,6 +176,18 @@ const Orders = () => {
                             checkboxSelection
                             autoHeight={true}
                             disableSelectionOnClick={true}
+                            onSelectionModelChange={(GridSelectionModelChangeParams) => {
+                                // This will return {selections: [selected row indexes]}
+                                console.log(GridSelectionModelChangeParams);
+                                if (Array.isArray(GridSelectionModelChangeParams.selectionModel)) {
+                                    // Iterate the selection indexes:
+                                    setSelectedRows([])
+                                    GridSelectionModelChangeParams.selectionModel.forEach(
+                                        // Get the row data:
+                                        (selection_index) => setSelectedRows(selectedRows =>[...selectedRows, Number(selection_index)] )
+                                    );
+                                }
+                            }}
                         />
                     </div>
                 }

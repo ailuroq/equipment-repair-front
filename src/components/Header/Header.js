@@ -29,6 +29,9 @@ const Header = () => {
             <div>
                 <Link to='/complex-queries'>Запросы</Link>
             </div>
+            <div>
+                <Link to='/diagrams'>Диаграммы</Link>
+            </div>
         </div>
     );
 }

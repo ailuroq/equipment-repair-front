@@ -53,7 +53,7 @@ const EditOrder = () => {
         fieldValidation(receiptNumber, orderDate, date, orderCompleted, deviceId, masterId)
     }
     const fieldValidation = (receiptNumber, orderDate, completionDate, orderCompleted, deviceId, masterId) => {
-
+        debugger
         if (Number(receiptNumber) === updateInfo.current.receipt_number
         && new Date(orderDate).getTime() === new Date(updateInfo.current.order_date).getTime()
         && new Date(completionDate).getTime() === new Date(updateInfo.current.completion_date).getTime()
@@ -61,11 +61,13 @@ const EditOrder = () => {
         && masterId === updateInfo.current.master_id
         && orderCompleted === updateInfo.current.order_completed) setDisable(true)
         else setDisable(false)
-        if (new Date(orderDate) > new Date(completionDate)) {
-            setDisable(true)
-            setDateAlert(true)
+        if (completionDate !== 'null') {
+            if (new Date(orderDate) > new Date(completionDate)) {
+                setDisable(true)
+                setDateAlert(true)
+            }
+            else setDateAlert(false)
         }
-        else setDateAlert(false)
     }
 
     const handleSubmit = () => {

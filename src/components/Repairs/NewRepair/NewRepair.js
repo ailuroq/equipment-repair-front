@@ -16,7 +16,7 @@ const NewRepair = () => {
     const dispatch = useDispatch()
 
     const repairData = useSelector(state => state.repairs.repairData)
-    console.log(repairData)
+    console.log(repairData.orders)
     useEffect(() => {
         dispatch(getInsertRepairData())
     }, [dispatch])
@@ -59,7 +59,7 @@ const NewRepair = () => {
                     renderInput={(params) => (
                         <TextField
                             {...params}
-                            helperText='Выбрать заказ'
+                            helperText='Выбрать вид работы'
                             variant="outlined"
                             inputProps={{
                                 ...params.inputProps,
@@ -77,7 +77,7 @@ const NewRepair = () => {
                     autoHighlight
                     disableClearable
                     style={{ width: 200 }}
-                    getOptionLabel={(option) => option.id + ' ' + option.receipt_number}
+                    getOptionLabel={(option) => 'id заказа: ' + option.id + ' номер заказа: ' + option.receipt_number}
                     onChange={(e, value) => {
                         if (value) {
                             setOrderId(value.id)
@@ -87,7 +87,7 @@ const NewRepair = () => {
                     renderInput={(params) => (
                         <TextField
                             {...params}
-                            helperText='Выбрать работу'
+                            helperText='Выбрать заказ'
                             variant="outlined"
                             inputProps={{
                                 ...params.inputProps,

@@ -1,7 +1,8 @@
 import {
+    COUNT_FIRM_ORDERS_PER_PERIOD,
     GET_COUNT_MASTERS_PER_FIRMS,
     GET_COUNT_ORDERS_PER_FIRM,
-    GET_DEVICES_BY_BRAND,
+    GET_DEVICES_BY_BRAND, GET_FIRMS_WITH_NO_ORDER_PER_PERIOD,
     GET_MASTER_ORDERS_PER_PERIOD,
     GET_MASTERS_MORE_AVG_EXP,
     GET_THE_MOST_EXPENSIVE_ORDER,
@@ -15,6 +16,7 @@ const initialState = {
     deviceData: {},
     firmData: {},
     repairData: {},
+    ex: {}
 }
 
 export default function queries(state = initialState, action) {
@@ -63,6 +65,16 @@ export default function queries(state = initialState, action) {
             return {
                 ...state,
                 masterData: action.payload
+            }
+        case GET_FIRMS_WITH_NO_ORDER_PER_PERIOD:
+            return {
+                ...state,
+                firmData: action.payload
+            }
+        case COUNT_FIRM_ORDERS_PER_PERIOD:
+            return {
+                ...state,
+                ex: action.payload
             }
         default:
             return state

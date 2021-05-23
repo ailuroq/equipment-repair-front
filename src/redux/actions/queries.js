@@ -2,8 +2,9 @@ import {API_URL} from "../../constants/urlConstants";
 import axios from "axios";
 import moment from "moment";
 import {
+    COUNT_FIRM_ORDERS_PER_PERIOD,
     GET_COUNT_MASTERS_PER_FIRMS, GET_COUNT_ORDERS_PER_FIRM,
-    GET_DEVICES_BY_BRAND, GET_MASTERS_MORE_AVG_EXP, GET_THE_MOST_EXPENSIVE_ORDER,
+    GET_DEVICES_BY_BRAND, GET_FIRMS_WITH_NO_ORDER_PER_PERIOD, GET_MASTERS_MORE_AVG_EXP, GET_THE_MOST_EXPENSIVE_ORDER,
     GROUP_DEVICES_BY_COUNTRIES, GROUP_REPAIRS_BY_TYPE,
     LIST_OF_NOT_MADE_ORDERS
 } from "./types";
@@ -165,6 +166,42 @@ export const getMastersMoreAvgExp = () => {
             .get(API_URL + 'complex-queries/masters_exp_more_avg')
             .then(result => {
                 dispatch(_getMastersMoreAvgExp(result.data))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+const _getFirmWithNoOrderPerPeriod = data => ({
+    type: GET_FIRMS_WITH_NO_ORDER_PER_PERIOD,
+    payload: data
+})
+
+export const getFirmWithNoOrderPerPeriod = (from, to) => {
+    return dispatch => {
+        return axios
+            .get(API_URL + 'complex-queries/no_orders_per_period?from=' + moment(from).format('YYYY/MM/DD') + '&to=' + moment(to).format('YYYY/MM/DD'))
+            .then(result => {
+                dispatch(_getFirmWithNoOrderPerPeriod(result.data))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+const _countFirmOrdersPerPeriod = data => ({
+    type: COUNT_FIRM_ORDERS_PER_PERIOD,
+    payload: data
+})
+
+export const countFirmOrdersPerPeriod = (from, to, id) => {
+    return dispatch => {
+        return axios
+            .get(API_URL + 'complex-queries/count_orders_per_period?from=' + moment(from).format('YYYY/MM/DD') + '&to=' + moment(to).format('YYYY/MM/DD') + '&id=' + id)
+            .then(result => {
+                dispatch(_countFirmOrdersPerPeriod(result.data))
             })
             .catch(error => {
                 console.log(error)

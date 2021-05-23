@@ -94,3 +94,8 @@
 .count_orders_per_firm button {
     margin: 20px 0;
 }
+
+.no_order_per_period {
+    max-width: 400px;
+    margin: 0 auto;
+}

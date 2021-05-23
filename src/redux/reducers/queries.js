@@ -1,7 +1,12 @@
 import {
-    GET_COUNT_MASTERS_PER_FIRMS, GET_COUNT_ORDERS_PER_FIRM,
+    GET_COUNT_MASTERS_PER_FIRMS,
+    GET_COUNT_ORDERS_PER_FIRM,
     GET_DEVICES_BY_BRAND,
-    GET_MASTER_ORDERS_PER_PERIOD, GET_THE_MOST_EXPENSIVE_ORDER, GROUP_DEVICES_BY_COUNTRIES, GROUP_REPAIRS_BY_TYPE,
+    GET_MASTER_ORDERS_PER_PERIOD,
+    GET_MASTERS_MORE_AVG_EXP,
+    GET_THE_MOST_EXPENSIVE_ORDER,
+    GROUP_DEVICES_BY_COUNTRIES,
+    GROUP_REPAIRS_BY_TYPE,
     LIST_OF_NOT_MADE_ORDERS
 } from "../actions/types";
 
@@ -53,6 +58,11 @@ export default function queries(state = initialState, action) {
             return {
                 ...state,
                 orderData: action.payload
+            }
+        case GET_MASTERS_MORE_AVG_EXP:
+            return {
+                ...state,
+                masterData: action.payload
             }
         default:
             return state

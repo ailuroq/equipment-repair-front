@@ -14,6 +14,7 @@ import GroupRepairsByType from "./LabQueries/GroupRepairsByType";
 import CountOrdersPerFirm from "./LabQueries/CountOrdersPerFirm";
 import TheMostExpensiveOrder from "./LabQueries/TheMostExpensiveOrder";
 import MoreThanAvgExp from "./LabQueries/MoreThanAvgExp";
+import NoOrderPerPeriod from "./LabQueries/NoOrderPerPeriod";
 
 const QueriesRouter = () => {
     return (
@@ -30,12 +31,13 @@ const QueriesRouter = () => {
                 <p><Link to='/complex-queries/count-masters-per-firm'>Подсчет количества мастеров в каждой фирме</Link></p>
                 <p><Link to='/complex-queries/group-devices-by-counties'>Группировка техники по странам</Link></p>
                 <p><Link to='/complex-queries/group-repairs-by-type'>Группировка работы по типу</Link></p>
-                <p><Link>Фирмы у которых не было заказов в выбранном периоде</Link></p>
+                <p><Link to='/complex-queries/no-orders-per-period'>Фирмы у которых не было заказов в выбранном периоде</Link></p>
                 <p><Link to='/complex-queries/count-orders-per-firm'>Количество заказов у каждой фирмы</Link></p>
                 <p><Link>Количество заказов фирмы за указанный период</Link></p>
                 <p><Link to='/complex-queries/the-most-expensive-order'>Самый дорогой заказ</Link></p>
                 <p><Link to='/complex-queries/master-more-avg-exp'>Фирмы, у которых средний опыт работы сотрудников больше среднего</Link></p>
             </div>
+            <hr/>
             <Switch>
                 <Route exact path='/complex-queries/first' component={FirstQuery}/>
                 <Route exact path='/complex-queries/second' component={SecondQuery}/>
@@ -50,7 +52,7 @@ const QueriesRouter = () => {
                 <Route exact path='/complex-queries/count-orders-per-firm' component={CountOrdersPerFirm}/>
                 <Route exact path='/complex-queries/the-most-expensive-order' component={TheMostExpensiveOrder}/>
                 <Route exact path='/complex-queries/master-more-avg-exp' component={MoreThanAvgExp}/>
-
+                <Route exact path='/complex-queries/no-orders-per-period' component={NoOrderPerPeriod}/>
             </Switch>
         </div>
     )

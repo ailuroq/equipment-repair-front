@@ -3,7 +3,7 @@ import axios from "axios";
 import moment from "moment";
 import {
     GET_COUNT_MASTERS_PER_FIRMS, GET_COUNT_ORDERS_PER_FIRM,
-    GET_DEVICES_BY_BRAND, GET_THE_MOST_EXPENSIVE_ORDER,
+    GET_DEVICES_BY_BRAND, GET_MASTERS_MORE_AVG_EXP, GET_THE_MOST_EXPENSIVE_ORDER,
     GROUP_DEVICES_BY_COUNTRIES, GROUP_REPAIRS_BY_TYPE,
     LIST_OF_NOT_MADE_ORDERS
 } from "./types";
@@ -147,6 +147,24 @@ export const getTheMostExpensiveOrder = () => {
             .get(API_URL + 'complex-queries/the_most_expensive_order')
             .then(result => {
                 dispatch(_getTheMostExpensiveOrder(result.data))
+            })
+            .catch(error => {
+                console.log(error)
+            })
+    }
+}
+
+const _getMastersMoreAvgExp = data => ({
+    type: GET_MASTERS_MORE_AVG_EXP,
+    payload: data
+})
+
+export const getMastersMoreAvgExp = () => {
+    return dispatch => {
+        return axios
+            .get(API_URL + 'complex-queries/masters_exp_more_avg')
+            .then(result => {
+                dispatch(_getMastersMoreAvgExp(result.data))
             })
             .catch(error => {
                 console.log(error)

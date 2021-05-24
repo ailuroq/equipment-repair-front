@@ -5,7 +5,7 @@ import {Autocomplete} from "@material-ui/lab";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllCities} from "../../redux/actions/cities";
 import {get3DDiagram} from "../../redux/actions/diagrams";
-import ReactFusioncharts from "react-fusioncharts";
+import {Bar} from "react-chartjs-2";
 
 const ThirdDiagram = () => {
 
@@ -22,58 +22,26 @@ const ThirdDiagram = () => {
     let dataSource;
     if (thirdDiagram.result) {
         dataSource = {
-            chart: {
-                caption: "Количество самых некачественных брендов по городу",
-                xaxisname: "Годы",
-                yaxisname: "Количество техники",
-                formatnumberscale: "1",
-                plottooltext:
-                    "<b>$dataValue</b> количество техники марки <b>$seriesName</b> в городе $label",
-                theme: "fusion"
-            },
-            categories: [
+            labels: [thirdDiagram.result[0].name, thirdDiagram.result[1].name, thirdDiagram.result[2].name],
+            datasets: [
                 {
-                    category: [
-                        {
-                            label: thirdDiagram.result[0]?.name
-                        },
-                    ]
-                }
-            ],
-            dataset: [
-                {
-                    seriesname: thirdDiagram.result[0]?.brand,
-                    data: [
-                        {
-                            value: thirdDiagram.result[0]?.count,
-                        },
-                    ]
-                },
-                {
-                    seriesname: thirdDiagram.result[1]?.brand,
-                    data: [
-                        {
-                            value:thirdDiagram.result[1]?.count,
-                        },
-                    ]
-                },
-                {
-                    seriesname: thirdDiagram.result[2]?.brand,
-                    data: [
-                        {
-                            value: thirdDiagram.result[2]?.count,
-                        },
-                    ]
+                    label: 'Количество техники',
+                    backgroundColor: [
+                        'rgb(61,252,109)',
+                    ],
+                    borderColor: 'rgba(0,0,0,1)',
+                    borderWidth: 2,
+                    data: [thirdDiagram.result[0].count, thirdDiagram.result[1].count, thirdDiagram.result[2].count]
                 }
             ]
         };
     }
-    console.log(thirdDiagram)
+    console.log(dataSource)
     const handleSubmit = () => {
         dispatch(get3DDiagram(cityId))
     }
     return (
-        <div>
+        <div className={styles.third_diagram}>
             <div className={styles.autocomplete}>
                 <Autocomplete
                     id="autocomplete"
@@ -81,7 +49,7 @@ const ThirdDiagram = () => {
                     options={cities}
                     autoHighlight
                     disableClearable
-                    style={{ width: 200 }}
+                    style={{width: 200}}
                     getOptionLabel={(option) => option.id + ' ' + option.name}
                     onChange={(e, value) => {
                         if (value) {
@@ -109,14 +77,8 @@ const ThirdDiagram = () => {
                 disabled={disable}
             >Построить диаграмму
             </Button>
-            {thirdDiagram &&
-            <ReactFusioncharts
-                type="mscolumn3d"
-                width="100%"
-                height="50%"
-                dataFormat="JSON"
-                dataSource={dataSource}
-            />}
+            {dataSource &&
+            <Bar data={dataSource}/>}
         </div>
     )
 }

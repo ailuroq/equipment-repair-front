@@ -31,6 +31,7 @@ const NewOrder = () => {
         validateFields(orderDate, date, orderCompleted, deviceId, masterId)
     }
     const handleSubmit = () => {
+        if (!completionDate) setCompletionDate(null)
         dispatch(insertOrder(orderDate, completionDate, orderCompleted, deviceId, masterId))
     }
     const validateFields = (orderDate, completionDate, orderCompleted, deviceId, masterId) => {
@@ -77,6 +78,7 @@ const NewOrder = () => {
                             />
                         </Grid>
                     </MuiPickersUtilsProvider>
+                    {orderCompleted &&
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <Grid container justify="space-around">
                             <KeyboardDatePicker
@@ -93,7 +95,7 @@ const NewOrder = () => {
                                 }}
                             />
                         </Grid>
-                    </MuiPickersUtilsProvider>
+                    </MuiPickersUtilsProvider>}
                 </div>
                 <div className={styles.autocompletes}>
 

@@ -12,7 +12,6 @@ import {Autocomplete} from "@material-ui/lab";
 
 const EditOrder = () => {
     const {id} = useParams()
-    const [receiptNumber, setReceiptNumber] = useState()
     const [orderDate, setOrderDate] = useState(new Date())
     const [completionDate, setCompletionDate] = useState(new Date())
     const [deviceId, setDeviceId] = useState()
@@ -30,7 +29,6 @@ const EditOrder = () => {
 
     useEffect(() => {
         if (updateInfo.current) {
-            setReceiptNumber(updateInfo.current.receipt_number)
             setOrderDate(updateInfo.current.order_date)
             setCompletionDate(updateInfo.current.completion_date)
             setDeviceId(updateInfo.current.device_id)
@@ -39,28 +37,22 @@ const EditOrder = () => {
         }
     }, [updateInfo])
 
-    const handleReceiptNumberChange = (e) => {
-        const receiptNumber = e.target.value;
-        setReceiptNumber(receiptNumber);
-        fieldValidation(receiptNumber, orderDate, completionDate, orderCompleted, deviceId, masterId)
-    }
     const handleOrderDateChange = (date) => {
         setOrderDate(date)
-        fieldValidation(receiptNumber, date, completionDate, orderCompleted, deviceId, masterId)
+        fieldValidation(date, completionDate, orderCompleted, deviceId, masterId)
     }
     const handleCompletionDateChange = (date) => {
         setCompletionDate(date)
-        fieldValidation(receiptNumber, orderDate, date, orderCompleted, deviceId, masterId)
+        fieldValidation(orderDate, date, orderCompleted, deviceId, masterId)
     }
-    const fieldValidation = (receiptNumber, orderDate, completionDate, orderCompleted, deviceId, masterId) => {
-        if (Number(receiptNumber) === updateInfo.current.receipt_number
-        && new Date(orderDate).getTime() === new Date(updateInfo.current.order_date).getTime()
+    const fieldValidation = (orderDate, completionDate, orderCompleted, deviceId, masterId) => {
+        if (new Date(orderDate).getTime() === new Date(updateInfo.current.order_date).getTime()
         && new Date(completionDate).getTime() === new Date(updateInfo.current.completion_date).getTime()
         && deviceId === updateInfo.current.device_id
         && masterId === updateInfo.current.master_id
         && orderCompleted === updateInfo.current.order_completed) setDisable(true)
         else setDisable(false)
-        if (completionDate !== 'null') {
+        if (completionDate) {
             if (new Date(orderDate) > new Date(completionDate)) {
                 setDisable(true)
                 setDateAlert(true)
@@ -71,23 +63,13 @@ const EditOrder = () => {
 
     const handleSubmit = () => {
         if (!orderCompleted) setCompletionDate(null)
-        dispatch(updateOrder(id, receiptNumber, orderDate, completionDate, orderCompleted, deviceId, masterId))
+        dispatch(updateOrder(id, orderDate, completionDate, orderCompleted, deviceId, masterId))
     }
     return (
         <div>
             {updateInfo.current &&
             <div className={styles.forms}>
-                <div>
-                    <TextField
-                        className={styles.text_field_item}
-                        id="model"
-                        label="Номер заказа"
-                        type='number'
-                        value={receiptNumber}
-                        helperText={receiptNumber === "" ? 'Обязательное поле' : ' '}
-                        onChange={handleReceiptNumberChange}
-                    />
-                </div>
+
                 <div>
                     <Autocomplete
                         id="devices"
@@ -101,7 +83,7 @@ const EditOrder = () => {
                             if (value) {
                                 setDeviceId(value.id)
                                 console.log(deviceId)
-                                fieldValidation(receiptNumber, orderDate, completionDate, orderCompleted, value.id, masterId)
+                                fieldValidation(orderDate, completionDate, orderCompleted, value.id, masterId)
                             }
                         }}
                         renderInput={(params) => (
@@ -130,7 +112,7 @@ const EditOrder = () => {
                         onChange={(e, value) => {
                             if (value) {
                                 setMasterId(value.id)
-                                fieldValidation(receiptNumber, orderDate, completionDate, orderCompleted, deviceId, value.id)
+                                fieldValidation(orderDate, completionDate, orderCompleted, deviceId, value.id)
                             }
                         }}
                         renderInput={(params) => (
@@ -204,7 +186,7 @@ const EditOrder = () => {
                                 if (value.ready === 'Готов') ready = true
                                 if (value.ready === 'Не готов') ready = false
                                 setOrderCompleted(ready)
-                                fieldValidation(receiptNumber, orderDate, completionDate, ready, deviceId, masterId)
+                                fieldValidation(orderDate, completionDate, ready, deviceId, masterId)
                             }
                         }}
                         renderInput={(params) => (

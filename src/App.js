@@ -12,6 +12,8 @@ import './App.css'
 import ReferencesRouter from "./components/References/ReferencesRouter";
 import QueriesRouter from "./components/Queries/QueriesRouter";
 import React from 'react'
+import Diagrams from "./components/Diagrams/Diagrams";
+import Login from "./components/Login/Login";
 
 const App = () => {
     return (
@@ -21,6 +23,7 @@ const App = () => {
             <ErrorAlert/>
             <div className="content">
                 <Switch>
+                    <Route exact path='/' component={Login}/>
                     <Route path='/clients' component={ClientsRouter}/>
                     <Route path='/devices' component={DevicesRouter}/>
                     <Route path='/orders' component={OrdersRouter}/>
@@ -29,6 +32,7 @@ const App = () => {
                     <Route path='/repairs' component={RepairsRouter}/>
                     <Route path='/references' component={ReferencesRouter}/>
                     <Route path='/complex-queries' component={QueriesRouter}/>
+                    <Route path='/diagrams' component={Diagrams}/>
                 </Switch>
             </div>
         </div>

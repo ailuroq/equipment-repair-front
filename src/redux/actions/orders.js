@@ -147,11 +147,11 @@ const _updateOrder = (data) => ({
     payload: data
 })
 
-export const updateOrder = (id, receiptNumber, orderDate, completionDate, orderCompleted, deviceId, masterId) => {
+export const updateOrder = (id, orderDate, completionDate, orderCompleted, deviceId, masterId) => {
     return dispatch => {
         return axios
-            .post(API_URL + 'orders/update'+ id, {
-                receiptNumber, orderDate, completionDate, orderCompleted, deviceId, masterId
+            .post(API_URL + 'orders/update/'+ id, {
+                orderDate, completionDate, orderCompleted, deviceId, masterId
             })
             .then(result => {
                 dispatch(_updateOrder(result.data))

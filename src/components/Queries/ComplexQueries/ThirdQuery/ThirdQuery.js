@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getThirdQueryData} from "../../../../redux/actions/thirdQuery";
 import {DataGrid} from "@material-ui/data-grid";
 import styles from './ThirdQuery.module.css'
+import ExportCSV from "../../ExportCSV";
 
 const ThirdQuery = () => {
     const [selectedDate, setSelectedDate] = React.useState(Date.now());
@@ -61,14 +62,17 @@ const ThirdQuery = () => {
             </Button>
             <div>
                 {queryData &&
-                    <DataGrid
-                        rows={queryData}
-                        columns={columns}
-                        pageSize={50}
-                        rowsPerPageOptions={[50, 250, 500]}
-                        autoHeight={true}
-                        disableSelectionOnClick={true}
-                    />
+                    <div>
+                        <ExportCSV csvData={queryData} filename='thirdQueryExport'/>
+                        <DataGrid
+                            rows={queryData}
+                            columns={columns}
+                            pageSize={50}
+                            rowsPerPageOptions={[50, 250, 500]}
+                            autoHeight={true}
+                            disableSelectionOnClick={true}
+                        />
+                    </div>
                 }
             </div>
         </div>

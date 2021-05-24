@@ -5,6 +5,7 @@ import styles from './FirstQuery.module.css'
 import {Button, TextField} from "@material-ui/core";
 import {Autocomplete} from "@material-ui/lab";
 import {DataGrid} from "@material-ui/data-grid";
+import ExportCSV from "../../ExportCSV";
 
 const FirstQuery = () => {
     const [firmId, setFirmId] = useState()

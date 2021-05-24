@@ -17,6 +17,7 @@ import queries from './queries';
 import firstQuery from './firstQuery'
 import secondQuery from './secondQuery'
 import thirdQuery from './thirdQuery'
+import diagrams from './diagrams'
 
 export default combineReducers({
     clients,
@@ -34,6 +35,7 @@ export default combineReducers({
     works,
     deviceNames,
     queries,
+    diagrams,
     firstQuery,
     secondQuery,
     thirdQuery

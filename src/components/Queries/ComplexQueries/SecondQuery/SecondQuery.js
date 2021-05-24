@@ -4,6 +4,7 @@ import {getSecondQueryData, getSecondQueryData2} from "../../../../redux/actions
 import styles from './SecondQuery.module.css'
 import {Button} from "@material-ui/core";
 import {DataGrid} from "@material-ui/data-grid";
+import ExportCSV from "../../ExportCSV";
 
 const SecondQuery = () => {
     const columns1 = [
@@ -34,8 +35,9 @@ const SecondQuery = () => {
             </Button>
             <div className={styles.queries}>
                 <div>
-
                     {queryData.table &&
+                    <div>
+                        <ExportCSV csvData={queryData.table} filename='secondQueryExport'/>
                         <DataGrid
                             rows={queryData.table}
                             columns={columns1}
@@ -44,6 +46,7 @@ const SecondQuery = () => {
                             autoHeight={true}
                             disableSelectionOnClick={true}
                         />
+                    </div>
                     }
                 </div>
                 <div>

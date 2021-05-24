@@ -156,3 +156,5 @@ export const GET_2D_DIAGRAM = "GET_2D_DIAGRAM"
 export const GET_3D_DIAGRAM = "GET_3D_DIAGRAM"
 
 export const LOGIN = "LOGIN"
+
+export const GENERATE = "GENERATE"

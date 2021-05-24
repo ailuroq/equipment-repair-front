@@ -18,7 +18,7 @@ import Login from "./components/Login/Login";
 const App = () => {
     return (
         <div className="App">
-            <Header/>
+            {document.location.pathname !== '/' && <Header/>}
             <SuccessAlert/>
             <ErrorAlert/>
             <div className="content">

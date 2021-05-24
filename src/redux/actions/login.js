@@ -1,7 +1,7 @@
 import {API_URL} from "../../constants/urlConstants";
-import {LOGIN} from "./types";
+import {GENERATE, LOGIN} from "./types";
 import axios from "axios";
-import {errorAlert} from "./alerts";
+import {errorAlert, successAlert} from "./alerts";
 
 const _login = (data) => ({
     type: LOGIN,
@@ -20,6 +20,24 @@ export const login = (login, password) => {
             })
             .catch(error => {
                 dispatch(errorAlert())
+                console.log(error)
+            })
+    }
+}
+
+const _generate = () => ({
+    type: GENERATE
+})
+
+export const generate = () => {
+    return dispatch => {
+        return axios
+            .post(API_URL + 'generate/')
+            .then(result => {
+                dispatch(_generate())
+                if (result.status === 200) successAlert()
+            })
+            .catch(error => {
                 console.log(error)
             })
     }

@@ -2,12 +2,18 @@ import React from 'react'
 import styles from './Header.module.css'
 import {Link} from "react-router-dom";
 import {Button} from "@material-ui/core";
+import {generate} from "../../redux/actions/login";
+import {useDispatch} from "react-redux";
 
 const Header = () => {
+    const dispatch = useDispatch()
+    const handleGenerate = () => {
+        dispatch(generate())
+    }
     return (
         <div className={styles.header}>
             <div>
-                <Button>Генерация данных</Button>
+                <Button onClick={handleGenerate}>Генерация данных</Button>
             </div>
             <div>
                 <Link to='/clients'>Клиенты</Link>

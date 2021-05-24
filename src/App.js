@@ -11,7 +11,7 @@ import RepairsRouter from "./components/Repairs/RepairsRouter";
 import './App.css'
 import ReferencesRouter from "./components/References/ReferencesRouter";
 import QueriesRouter from "./components/Queries/QueriesRouter";
-import Diagrams from "./components/Diagrams/Diagrams";
+import React from 'react'
 
 const App = () => {
     return (
@@ -29,7 +29,6 @@ const App = () => {
                     <Route path='/repairs' component={RepairsRouter}/>
                     <Route path='/references' component={ReferencesRouter}/>
                     <Route path='/complex-queries' component={QueriesRouter}/>
-                    <Route path='/diagrams' component={Diagrams}/>
                 </Switch>
             </div>
         </div>

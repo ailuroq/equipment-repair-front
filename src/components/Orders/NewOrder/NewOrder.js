@@ -34,7 +34,6 @@ const NewOrder = () => {
         dispatch(insertOrder(orderDate, completionDate, orderCompleted, deviceId, masterId))
     }
     const validateFields = (orderDate, completionDate, orderCompleted, deviceId, masterId) => {
-        debugger
         if (orderCompleted !== null && deviceId && masterId) {
             setDisable(false)
         }

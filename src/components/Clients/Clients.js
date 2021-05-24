@@ -37,20 +37,20 @@ const Clients = () => {
                 <div>
                     <ul className={styles.buttons}>
                         <li>
-                            <a href={'clients/edit/' + params.getValue("id")}>
+                            <a href={'clients/edit/' + params.getValue('id')}>
                                 <EditTwoToneIcon style={{color: 'green'}}/>
                             </a>
                         </li>
                         <li>
-                            <a href={'clients/view/' + params.getValue("id")}>
+                            <a href={'clients/view/' + params.getValue('id')}>
                                 <VisibilityTwoToneIcon style={{color: '#3e78b6'}}/>
                             </a>
                         </li>
                         <li>
                             <DeleteIcon style={{color: '#4f4f4f'}}
                                         onClick={(e) => {
-                                            setUserId(params.getValue("id"))
-                                            handleGetPotentialDataToDelete(params.getValue("id"))
+                                            setUserId(params.getValue('id'))
+                                            handleGetPotentialDataToDelete(params.getValue('id'))
                                             handleOpenDialog()
                                         }}
                                         cursor={'pointer'}
@@ -63,7 +63,6 @@ const Clients = () => {
     ]
     const dispatch = useDispatch()
     const {clients} = useSelector((state) => state.clients.clientData)
-    console.log(clients)
     const potentialDataToDelete = useSelector((state) => state.clients.potentialDataToDelete)
 
     const handleDeleteClientById = (id) => {

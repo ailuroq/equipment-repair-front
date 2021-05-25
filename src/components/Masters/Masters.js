@@ -136,7 +136,8 @@ const Masters = () => {
                             <DialogTitle id="alert-dialog-title">{"Возможные нежелательные удаления данных"}</DialogTitle>
                             <DialogContent>
                                 <DialogContentText id="alert-dialog-description">
-                                    Вы действительно хотите удалить выбранные данные? Могут пострадать невинные
+                                    Вы действительно хотите удалить выбранные данные?
+                                    Могут быть нежелательные потери данных в таблицах: заказов и работ
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>

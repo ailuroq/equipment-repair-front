@@ -20,6 +20,7 @@ const NoOrderPerPeriod = () => {
 
     const dispatch = useDispatch()
     const {firms} = useSelector(state => state.queries.firmData)
+    console.log(firms)
     const handleFromDateChange = (date) => {
         setFrom(date)
         fieldValidation(date, to)
@@ -51,7 +52,7 @@ const NoOrderPerPeriod = () => {
                             format="dd/MM/yyyy"
                             margin="normal"
                             id="date-picker-inline"
-                            label="Выбор даты выполнения"
+                            label="Выбор даты заказа"
                             value={from}
                             onChange={handleFromDateChange}
                             KeyboardButtonProps={{

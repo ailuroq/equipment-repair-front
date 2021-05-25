@@ -33,7 +33,6 @@ const QueriesRouter = () => {
                 <p><Link to='/complex-queries/group-repairs-by-type'>Группировка работы по типу</Link></p>
                 <p><Link to='/complex-queries/no-orders-per-period'>Фирмы у которых не было заказов в выбранном периоде</Link></p>
                 <p><Link to='/complex-queries/count-orders-per-firm'>Количество заказов у каждой фирмы</Link></p>
-                <p><Link>Количество заказов фирмы за указанный период</Link></p>
                 <p><Link to='/complex-queries/the-most-expensive-order'>Самый дорогой заказ</Link></p>
                 <p><Link to='/complex-queries/master-more-avg-exp'>Фирмы, у которых средний опыт работы сотрудников больше среднего</Link></p>
             </div>

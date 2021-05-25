@@ -13,9 +13,6 @@ const Header = () => {
     return (
         <div className={styles.header}>
             <div>
-                <Button onClick={handleGenerate}>Генерация данных</Button>
-            </div>
-            <div>
                 <Link to='/clients'>Клиенты</Link>
             </div>
             <div>

@@ -60,6 +60,7 @@ export const deleteOrders = (ids) => {
             .then(result => {
                 dispatch(_deleteOrders(result.data))
                 dispatch(getOrders())
+                dispatch(successAlert())
             })
     }
 }
@@ -112,6 +113,7 @@ export const findOrder = (data) => {
             .get(API_URL + 'orders/search?data=' + data)
             .then(result => {
                 dispatch(_findOrder(result.data))
+                dispatch(successAlert())
             })
             .catch(error => {
                 console.log(error)
